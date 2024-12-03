@@ -8,6 +8,7 @@
  ## Tabela de Opções
 
  - [Visão Geral](#visao-geral)
+ - [Tipos de Usuários](#tipos-de-usuarios)
 - [Tecnologias Utilizadas](#tecnologias)
 - [Estrutura de Diretório](#estrutura-diretorio)
 - [Desenvolvedores](#desenvolvedores)
@@ -15,21 +16,41 @@
  ## Visão Geral
  
  <a name="visao-geral"></a>
+
+ O DemandLink é um sistema de gerenciamento de demandas projetado para otimizar a comunicação e o fluxo de trabalho em organizações. Ele centraliza a criação, acompanhamento e gestão de demandas, oferecendo painéis interativos e relatórios personalizados para maior controle e eficiência.
  
- ### Tipos de Usuários
- 
+ ### Funcionalidades Principais
+
+ - Cadastro e gestão de usuários e setores.
+ - Solicitação e acompanhamento em tempo real de demandas.
+ - Atualização de prioridades e geração de relatórios.
+ - Interface interativa para visualização e gestão de demandas por equipe e setor.
+
+ ## Tipos de Usuários
+
+ <a name="tipos-de-usuarios"></a>
+
+ - **Administradores**:  Acesso completo ao sistema, incluindo gerenciamento de usuários e setores.
+
+ - **Líderes**: Responsáveis pela gestão das demandas atribuídas aos estagiários.
+
+ - **Usuários Comuns**: Podem solicitar e acompanhar suas próprias demandas.
+
+ - **Estagiários**: Têm acesso limitado às suas demandas, sem possibilidade de atribuir tarefas a outros.
+
  ## Tecnologias Utilizadas
  
  <a name="tecnologias"></a>
  
  ### Front-end
- - 
+ - React.js
+ - HTML5, CSS3, JavaScript
  
  ### Back-end
- - 
+ - Node.js
  
  ### Banco de Dados
- - 
+ - MySQL
  
  ## Estrutura de Diretório
  
@@ -50,5 +71,5 @@
  
  `Guilherme Alexandre Cunha Silva` <br>
  `João Vitor Garcia Moreira` <br>
- `maria Luiza Bernardo Madeira`
+ `Maria Luiza Bernardo Madeira`
  
