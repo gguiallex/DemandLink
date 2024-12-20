@@ -43,14 +43,16 @@
  <a name="tecnologias"></a>
  
  ### Front-end
- - React.js
- - HTML5, CSS3, JavaScript
+ - **React.js** ^18.x
+ - **Vite** ^4.0 (usado para bundling e desenvolvimento)
+ - **HTML5**, **CSS3**, **JavaScript**
  
  ### Back-end
- - Node.js
+ - **Node.js** 20.12.1
+ - **Express.js** (para criar e configurar o servidor)
  
  ### Banco de Dados
- - MySQL
+ - **MySQL** (utilizado com MySQL Workbench 8.0 para gerenciamento e desenvolvimento)
  
  ## Estrutura de Diretório
  
@@ -62,6 +64,7 @@
  |   |-- Diagramas/
  |   |-- Requisitos/
  |-- Padrões Adotados/
+ |-- app/ 
  |-- README.md
  ```
 
