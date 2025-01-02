@@ -64,6 +64,7 @@
  |   |-- Diagramas/
  |   |-- Requisitos/
  |-- Padrões Adotados/
+ |-- api/
  |-- app/ 
  |-- README.md
  ```
