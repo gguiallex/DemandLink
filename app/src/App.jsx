@@ -8,11 +8,13 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
+
     <BrowserRouter>
       <Routes>
-        <Route patch='/' element={<LoginPage/>}/>
+        <Route path='/' element={<LoginPage/>}/>
       </Routes>
     </BrowserRouter>
+
   )
 }
 
