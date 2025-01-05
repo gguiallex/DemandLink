@@ -14,6 +14,12 @@ const FirstPage = ({ }) => {
 
   const [date, setDate] = useState(new Date());
 
+  const dataFormatada = date.toLocaleDateString('pt-BR', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
+  });
+
   const usuario = "usuario1"
 
   const data = [
@@ -35,6 +41,16 @@ const FirstPage = ({ }) => {
     ["Em atraso", 8],
   ];
 
+  const mes = [
+    ["Meses", "Quantidade"],
+    ["Jan", 30],
+    ["Fev", 0],
+    ["Mar", 0],
+    ["Abr", 0],
+    ["Mai", 0],
+    ["Jun", 0],
+  ];
+
   const options = {
     chart: {
       title: "Resumo Semanal",
@@ -46,61 +62,76 @@ const FirstPage = ({ }) => {
     title: "Resumo Diario",
   };
 
+  const optionsMes = {
+    title: "Demandas do Mês"
+  }
+
   return (
     <div className="container-inicio">
-      <div className="menu">
+      <div className="menuLateral">
         <SideMenu />
       </div>
       <div className="info">
-        
-      <div className="infosTop">
 
-        <div className="TopEsquerda">
-        <div className="data">
-          <p><BiCalendarAlt />{date.toDateString()}</p>
-        </div>
-        </div>
+        <div className="infosTop">
 
-        <div className="TopDireita">
-          <div className="botoesTop">
-          <button><BiBell /></button>
-        </div>
-        <div className="botoesTop">
-          <button><BiUser /></button>
-        </div>
-        <div>
-          <p>{usuario}</p>
-        <div />
-        </div>
+          <div className="TopEsquerda">
+            <div className="data">
+              <p><BiCalendarAlt />{dataFormatada}</p>
+            </div>
+          </div>
 
-      </div>
+          <div className="TopDireita">
+            <div className="botoesTop">
+              <button><BiBell /></button>
+              <button><BiUser /></button>
+            </div>
+            <div>
+              <p>{usuario}</p>
+              <div />
+            </div>
 
-      </div>
-      <div className="infosPrincipais">
+          </div>
 
-        <div className="GraficoDiario">
-        <Chart
-      chartType="PieChart"
-      data={diario}
-      options={optionsDiario}
-      width={"100%"}
-      height={"287px"}
-    />
         </div>
 
-        <div className="graficoSemanal">
-          <Chart
-            chartType="Bar"
-            data={data}
-            options={options}
-            width={"100%"}
-            height={"390px"}
-          />
+        <div className="infosPrincipais">
+
+          <div className="principalCima">
+            
+            <div className="GraficoDiario">
+              <Chart className="GraficoDiario"
+                chartType="PieChart"
+                data={diario}
+                options={optionsDiario}
+                width={"100%"}
+                height={"287px"}
+                border-radius={"25%"}
+              />
+            </div>
+
+            <div className="graficoMensal">
+              <Chart chartType="ColumnChart" options={optionsMes} width="100%" height="100%" data={mes} />
+            </div>
+
+            <div className="demandasNovas">
+
+            </div>
+          </div>
+
+          <div className="graficoSemanal">
+            <Chart
+              chartType="Bar"
+              data={data}
+              options={options}
+              width={"100%"}
+              height={"390px"}
+            />
+          </div>
         </div>
-      </div>
       </div>
     </div>
-    
+
   )
 
 }
