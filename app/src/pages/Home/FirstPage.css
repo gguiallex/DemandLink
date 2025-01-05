@@ -1,0 +1,43 @@
+.container-inicio{
+    height: 100vw;
+    width: 100vw;
+    display: flex;
+    align-items: flex-start;
+}
+
+.info{
+    flex-direction: column;
+}
+
+.infosTop{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.botoesTop{
+    button{
+        width: 37px;
+        height: 37px;
+        border-radius: 50%;
+        border: none;
+    }
+}
+
+.infosPrincipais{
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    width: 1087px;
+    height: 894px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.268);
+}
+
+.graficoSemanal{
+    width: 730px;
+    height: 390px;
+}

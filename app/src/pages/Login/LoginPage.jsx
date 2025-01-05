@@ -38,7 +38,7 @@ const LoginPage = ({ }) => {
                 setLoading(false);
                 //Armazena o email utilizado no login
                 //setEmailLogado(email);
-                navigate('/');
+                navigate('/inicio');
             }, 1000);
         } catch (err) {
             alert('algo deu errado: ' + err);

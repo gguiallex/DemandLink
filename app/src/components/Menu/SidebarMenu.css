@@ -9,8 +9,9 @@
     border-radius: 0 20px 20px 0;
     transition: width 0.3s ease-in-out;
     position: fixed;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 0;
   }
   
   .sidebar.open {
@@ -20,7 +21,6 @@
   /* Cabeçalho */
   .header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 20px;
   }
@@ -32,16 +32,23 @@
   }
   
   .toggle-button {
+    position: absolute;
+    top: 20px; /* Ajuste conforme necessário */
+    right: -22px; /* Metade da largura do botão para fora */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #fff;
     color: #000;
     border: none;
     cursor: pointer;
     border-radius: 50%;
     font-size: 1rem;
-    width: 30px;
-    height: 30px;
+    width: 44px;
+    height: 44px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: all 0.3s;
+    z-index: 10;
   }
   
   .toggle-button:hover {
@@ -54,7 +61,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 20px 0;
+    padding: 0 0;
   }
   
   .menu-item {
