@@ -1,17 +1,22 @@
-body{
-    background-image: url(../../imgs/login-fundo.png);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+.fundo {
+    background-image: url('../../imgs/login-fundo.png'); /* Atualize o caminho se necessário */
+    background-size: cover; /* Faz com que a imagem cubra toda a área, mesmo que precise cortar */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Evita que a imagem se repita */
+    width: 100vw; /* Garante que ocupe 100% da largura da tela */
+    height: 100vh; /* Garante que ocupe 100% da altura da tela */
+    display: flex;
     background-size: cover;
-}
+    justify-content: center;
+    align-items: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
 
 .container{
     align-items: center;
     display: flex;
     justify-content: center;
-}
-
-BiEnvelope{
-    border-right: #fff;
 }
 
 .containerCentral{
@@ -49,57 +54,109 @@ BiEnvelope{
     display: flex;
 }
 
-.inputEmail, .inputSenha{
-    input, MaskedInput{
-        width: 600px;
-        height: 45px;
-        border: none;
-        border-radius: 15px;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        font-weight: 76.37;
-        font-size: 22px;
-        line-height: 29.26px;
-        color: rgba(255, 255, 255, 0.5);
-        padding-left: 8px;
-    }
-
-    input::placeholder, MaskedInput::placeholder{
-        font-weight: 76.37;
-        font-size: 22px;
-        line-height: 29.26px;
-        color: rgba(255, 255, 255, 0.5);
-        padding-left: 8px;
-    }
-
-    input:focus{
-        outline: none;
-    }
-
-}
-
-.inputEmail svg,
-.inputSenha svg {
-
-font-size: 2.2rem;
-color: #fff;
-}
-
-.inputEmail{
-    margin-bottom: 57px;
+.inputEmail, .inputSenha {
+    position: relative; /* Necessário para posicionar ícones dentro do campo */
+    display: flex; /* Alinha o ícone e o input horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    background-color: rgba(255, 255, 255, 0.1); /* Fundo translúcido */
+    border-radius: 10px; /* Bordas arredondadas */
+    padding: 10px; /* Espaço interno para o ícone e o texto */
+    margin: 10px 0; /* Espaço entre os campos */
+    width: 600px;
+    height: 35px;
+  }
+  
+  .inputEmail input, .inputSenha input {
+    flex: 1; /* Faz o campo de texto ocupar o espaço restante */
+    border: none; /* Remove bordas padrão */
+    outline: none; /* Remove contorno ao focar */
+    background: transparent; /* Fundo transparente */
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 16px; /* Tamanho do texto */
+    margin-left: 10px; /* Espaço entre o ícone e o texto */
+    font-size: 20px;
+  }
+  
+  .inputEmail input::placeholder, .inputSenha input::placeholder {
+    color: rgba(255, 255, 255, 0.5); /* Cor do placeholder */
+    font-size: 20px;
+  }
+  
+  .inputEmail svg, .inputSenha svg {
+    color: #fff; /* Cor do ícone */
+    font-size: 2.2rem; /* Tamanho do ícone */
+  }
+  
+  .inputEmail:focus-within, .inputSenha:focus-within {
+    background-color: rgba(255, 255, 255, 0.2); /* Realce ao focar no campo */
+  }
+  
+  .inputEmail{
+    margin-bottom: 45px;
 }
 
 .inputSenha{
-    margin-bottom: 90px;
     margin-bottom: 0;
 }
 
 .conectadoSenha{
     display: flex;
     justify-content: space-between;
+    font-size: 17px;
     color: #fff;
-    cursor: pointer;
 }
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer; /* Cursor de "mão" ao passar por cima */
+    color: #fff; /* Cor do texto */
+    gap: 10px; /* Espaço entre o checkbox e o texto */
+    position: relative; /* Para posicionamento da checkbox personalizada */
+  }
+  
+  /* Checkbox invisível */
+  .checkbox-container input[type="checkbox"] {
+    display: none; /* Oculta a checkbox padrão */
+  }
+  
+  /* Estilo do quadrado personalizado */
+  .custom-checkbox {
+    width: 18px;
+    height: 18px;
+    background-color: rgba(255, 255, 255, 0.1); /* Fundo translúcido */
+    border-radius: 4px; /* Borda levemente arredondada */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Ícone de seleção (checkmark) */
+  .custom-checkbox::after {
+    content: "";
+    width: 11px;
+    height: 11px;
+    border: solid #fff;
+    border-width: 0 2.7px 2px 0;
+    transform: rotate(43deg);
+    position: absolute;
+    margin-top: -6px;
+    margin-left: 1px;
+    opacity: 0; /* Começa invisível */
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Alterações ao marcar */
+  .checkbox-container input[type="checkbox"]:checked + .custom-checkbox {
+    background-color: #6200ea; /* Cor de fundo ao selecionar (roxo) */
+    box-shadow: 0 0 5px rgba(98, 0, 234, 0.7); /* Glow ao marcar */
+  }
+  
+  .checkbox-container input[type="checkbox"]:checked + .custom-checkbox::after {
+    opacity: 1; /* Torna o checkmark visível */
+  }
 
 label:hover{
     text-decoration: none;
@@ -108,7 +165,7 @@ label:hover{
 }
 
 .esqueceuSenha{
-    font-size: 17px;
+    cursor: pointer;
     color: #fff;
     text-decoration: none;
 }

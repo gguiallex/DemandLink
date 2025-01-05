@@ -13,6 +13,7 @@ const LoginPage = ({ }) => {
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
+        
         event.preventDefault();
 
         //Caso deixar campos em branco
@@ -47,30 +48,37 @@ const LoginPage = ({ }) => {
     }
 
     return (
-        <div className="container">
-            <div className="containerCentral">
+        <div className="fundo">
+            <div className="container">
 
-                <div className="centralDireito">
-                    <form className="form" onSubmit={handleSubmit}>
-                        <div className="login">
-                            <h1 className="tituloSite">Bem Vindo</h1>
-                            <p className="subtituloSite" >Faça login para entrar!</p>
-                            <div className="inputEmail">
-                            <BiEnvelope/><input type='email' placeholder="E-mail" onChange={(e) => setEmail(e.target.value)} />
-                            </div>
-                            <div className="inputSenha">
-                                <BiHide/><input type='password' placeholder="Senha" onChange={(e) => setPassword(e.target.value)} />
-                            </div>
-                            <div className="conectadoSenha">
-                                <label><input type="checkbox" /> Manter-me Conectado</label>
-                                <a href="/" className="esqueceuSenha">Esqueci a senha!</a>
-                            </div>
+                <div className="containerCentral">
 
-                            <button className='entrar' type='submit'>Entrar</button>
-                        </div>
-                    </form>
+                    <div className="centralDireito">
+                        <form className="form" onSubmit={handleSubmit}>
+                            <div className="login">
+                                <h1 className="tituloSite">Bem Vindo</h1>
+                                <p className="subtituloSite" >Faça login para entrar!</p>
+                                <div className="inputEmail">
+                                    <BiEnvelope /><input type='email' placeholder="E-mail" onChange={(e) => setEmail(e.target.value)} />
+                                </div>
+                                <div className="inputSenha">
+                                    <BiHide /><input type='password' placeholder="Senha" onChange={(e) => setPassword(e.target.value)} />
+                                </div>
+                                <div className="conectadoSenha">
+                                    <label className="checkbox-container">
+                                        <input type="checkbox" />
+                                        <span className="custom-checkbox"></span>
+                                        Manter-me Conectado
+                                    </label>
+                                    <a href="/" className="esqueceuSenha">Esqueci a senha!</a>
+                                </div>
+
+                                <button className='entrar' type='submit'>Entrar</button>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
-
             </div>
         </div>
     )
