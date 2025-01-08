@@ -10,4 +10,12 @@ router.get("/", (req, res) => {
 
 router.get('/usuarios', usersController.getAll);
 
+router.get('/estagiarios', usersController.getEstagiarios);
+
+router.get('/administradores', usersController.getAdministradores);
+
+router.get('/lideres', usersController.getLideres);
+
+router.get('/comuns', usersController.getComuns);
+
 module.exports = router;
