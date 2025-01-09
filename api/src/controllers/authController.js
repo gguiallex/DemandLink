@@ -1,3 +1,5 @@
+require('dotenv').config(); // Carrega variáveis de ambiente do arquivo .env
+
 const authModel = require('../models/authModel');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
