@@ -3,40 +3,45 @@ const connection = require('./connection');
 const getAll = async () => {
     const [users] =  await connection.execute(' SELECT * FROM Usuarios');
     return users;
-};
-
-// ====================== ESTAGIÁRIOS ======================
-
-const getEstagiarios = async () => {
-    const [estagiarios] = await connection.execute('SELECT * FROM Usuarios WHERE tipo = Estagiario');
-    return estagiarios;
 }
 
-// ====================== ADMINISTRADORES ======================
-
-const getAdministradores = async () => {
-    const [administradores] = await connection.execute('SELECT * FROM Usuarios WHERE tipo = Administrador');
-    return administradores;
+const getUser = async (idUsuario) => {
+    const [user] = await connection.execute('SELECT * FROM Usuarios where idUsuario = ?', [idUsuario]);
+    return user;
 }
 
-// ====================== LÍDERES ======================
-
-const getLideres = async () => {
-    const [lideres] = await connection.execute('SELECT * FROM Usuarios WHERE tipo = Lider');
-    return lideres;
+const getUsersType = async (tipo) => {
+    const [users] = await connection.execute('SELECT * FROM Usuarios WHERE tipo = ?', [tipo]);
+    return users;
 }
 
-// ====================== USUÁRIOS COMUNS ======================
+const addUser = async (idUsuario, newUsuario) => {
+    const {tagSetor, nomeSistema, tipo, nome, email, senha} = newUsuario;
 
-const getComuns = async () => {
-    const [comuns] = await connection.execute('SELECT * FROM Usuarios WHERE tipo = Comum');
-    return comuns;
+    const query = 'UPDATE Usuarios set tagSetor = ?, nomeSistema = ?, tipo = ?, nome = ?, email = ?, senha = ? WHERE idUsuario = ?';
+    const [newUser] = await connection.execute(query, [tagSetor, nomeSistema, tipo, nome, email, senha, idUsuario]);
+    return newUser;
+}
+
+const removeUser = async (idUsuario) => {
+    const [removedUser] = await connection.execute('DELETE FROM Usuarios WHERE idUsuario = ?', [idUsuario]);
+    return removedUser;
+}
+
+const editUser = async (idUsuario, Usuario) => {
+
+    const {tagSetor, nomeSistema, tipo, nome, email, senha} = Usuario;
+
+    const query = 'UPDATE Usuarios set tagSetor = ?, nomeSistema = ?, tipo = ?, nome = ?, email = ?, senha = ? WHERE idUsuario = ?';
+    const [editedUser] = await connection.execute(query, [tagSetor, nomeSistema, tipo, nome, email, senha, idUsuario]);
+    return editedUser;
 }
 
 module.exports = {
     getAll,
-    getEstagiarios,
-    getAdministradores,
-    getLideres,
-    getComuns,
+    getUser,
+    getUsersType,
+    addUser,
+    removeUser,
+    editUser,
 }

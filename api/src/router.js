@@ -1,5 +1,7 @@
 const express = require('express'); 
 const usersController =  require('./controllers/usersController');
+const sectorController = require('./controllers/sectorController');
+const demandController = require('./controllers/demandController');
 
 const router = express.Router();
 
@@ -8,14 +10,20 @@ router.get("/", (req, res) => {
     return res.json("hello world");
 });
 
-router.get('/usuarios', usersController.getAll);
+// ====================== USUÁRIOS ======================
+router.get('/usuarios', usersController.getAll); // exibir todos os usuários
+router.get('/usuario/:idUsuario', usersController.getUser); // exibir usuário expecífico
+router.get('/usuarios/:tipo', usersController.getUsersType); // exibir todos os usuários de um tipo expecífico
+router.post('/usuario', usersController.addUser); // adicionar um novo usuário
+router.put('/usuario/:idUsuario',usersController.editUser); // editar usuário expecífico
+router.delete('/usuario/:idUsuario', usersController.removeUser); // remover usuário expecífico
 
-router.get('/estagiarios', usersController.getEstagiarios);
+// ====================== SETORES ======================
+router.get('/setores', sectorController.getAllSectors); // exibir todos os setores
+router.get('/setor/:tagSetor', sectorController.getSector); // exibir setor específico
 
-router.get('/administradores', usersController.getAdministradores);
-
-router.get('/lideres', usersController.getLideres);
-
-router.get('/comuns', usersController.getComuns);
+// ====================== DEMANDAS ======================
+router.get('/demandas', demandController.getAllDemands); // exibir todas as demandas
+router.get('/demanda/:tagDemanda', demandController.getDemand); // exibir demanda específica
 
 module.exports = router;

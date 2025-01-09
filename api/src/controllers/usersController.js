@@ -1,44 +1,48 @@
 const usersModel = require('../models/usersModel');
 
-// ====================== TODOS USUÁRIOS ======================
-
 const getAll = async (req, res) => {
     const users = await usersModel.getAll();
     return res.status(200).json(users);
 }
 
-// ====================== ESTAGIÁRIOS ======================
+const getUser = async (req, res) => {
+    const {idUsuario} = req.params;
 
-const getEstagiarios = async (req, res) => {
-    const estagiarios = await usersModel.getEstagiarios();
-    return res.status(200).json(estagiarios);
+    const user = await usersModel.getUser(idUsuario);
+    return res.status(200).json(user);
 }
 
-// ====================== ADMINISTRADORES ======================
+const getUsersType = async (req, res) => {
+    const {tipo} = req.params;
 
-const getAdministradores = async (req, res) => {
-    const administradores = await usersModel.getAdministradores();
-    return res.status(200).json(administradores);
+    const users = await usersModel.getUsersType(tipo);
+    return res.status(200).json(users);
 }
 
-// ====================== LÍDERES ======================
-
-const getLideres = async (req, res) => {
-    const lideres = await usersModel.getLideres();
-    return res.status(200).json(lideres);
+const addUser = async (req, res) => {
+    await usersModel.addUser(req.body);
+    return res.status(204).json({message: 'Usuário criado com sucesso'});
 }
 
-// ====================== USUÁRIOS COMUNS ======================
+const removeUser = async (req, res) => { 
+    const {idUsuario} = req.params;
 
-const getComuns = async (req, res) => {
-    const comuns = await usersModel.getComuns();
-    return res.status(200).json(comuns);
+    await usersModel.removeUser(idUsuario);
+    return res.status(204).json({message: 'Usuário apagado com sucesso'});
+}
+
+const editUser = async (req, res) => {
+    const {idUsuario} = req.params;
+
+    const editedUser = await usersModel.editUser(idUsuario, req.body);
+    return res.status(200).json(editedUser);
 }
 
 module.exports = {
     getAll,
-    getEstagiarios,
-    getAdministradores,
-    getLideres,
-    getComuns,
+    getUser,
+    getUsersType,
+    addUser,
+    removeUser,
+    editUser,
 }
