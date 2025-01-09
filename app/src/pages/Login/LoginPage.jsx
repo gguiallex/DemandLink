@@ -11,6 +11,7 @@ const LoginPage = ({ }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
@@ -27,7 +28,9 @@ const LoginPage = ({ }) => {
             setLoading(true)
 
             // Faz a requisição para a API
-            const response = await login(email, password);
+            const response = await login(email, password, rememberMe);
+
+            const token = response.token; // Supondo que a API retorne um token
 
             // Armazena o token no localStorage ou cookies (opcional)
             if (rememberMe) {
@@ -66,7 +69,10 @@ const LoginPage = ({ }) => {
                                 </div>
                                 <div className="conectadoSenha">
                                     <label className="checkbox-container">
-                                        <input type="checkbox" />
+                                        <input 
+                                        type="checkbox" 
+                                        checked={rememberMe}
+                                        onChange={(e) => setRememberMe(e.target.checked)}/>
                                         <span className="custom-checkbox"></span>
                                         Manter-me Conectado
                                     </label>

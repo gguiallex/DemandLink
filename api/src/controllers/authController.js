@@ -1,11 +1,12 @@
 const authModel = require('../models/authModel');
+const jwt = require('jsonwebtoken');
+const jwtSecret = process.env.JWT_SECRET;
 
 const autenticar = async (req, res) => {
-    const { email, senha } = req.body;
-
+    const { email, password, rememberMe } = req.body;
     try {
         // Autentica o usuário no banco de dados
-        const user = await authModel.autenticar(email, senha);
+        const user = await authModel.autenticar(email, password);
 
         if (user) {
             const { tagSetor, nomeSistema, tipo, nome } = user;
