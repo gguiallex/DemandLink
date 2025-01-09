@@ -30,14 +30,15 @@ const LoginPage = ({ }) => {
             // Faz a requisição para a API
             const response = await login(email, password, rememberMe);
 
-            const token = response.token; // Supondo que a API retorne um token
+            const { token, Nome, Tipo, NomeSistema, TagSetor } = response // Supondo que a API retorne um token
 
-            // Armazena o token no localStorage ou cookies (opcional)
-            if (rememberMe) {
-                localStorage.setItem('authToken', token);
-            } else {
-                sessionStorage.setItem('authToken', token);
-            }
+            const storage = rememberMe ? localStorage : sessionStorage;
+            // Armazenando os dados no armazenamento local ou de sessão
+            storage.setItem("authToken", token);
+            storage.setItem("Nome", Nome);
+            storage.setItem("Tipo", Tipo);
+            storage.setItem("NomeSistema", NomeSistema);
+            storage.setItem("TagSetor", TagSetor);
 
             setTimeout(() => {
                 alert('login bem-sucedido!');

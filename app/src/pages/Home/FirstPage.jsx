@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "./FirstPage.css"
 import SideMenu from "../../components/Menu/SidebarMenu"
 import { Chart } from "react-google-charts";
@@ -6,21 +6,35 @@ import { BiCalendarAlt, BiUser, BiBell } from "react-icons/bi";
 
 const FirstPage = ({ }) => {
 
-  /*const dataBase = {
-      semanas: ["seg", "ter", "qua", "qui", "sex", "sab", "dom"],
-      concluidas: [480, 320, 310, 480, 150, 390, 390],
-      atraso: [220, 110, 250, 380, 230, 230, 310]
-  };*/
-
   const [date, setDate] = useState(new Date());
+  const [userName, setUserName] = useState("");
+  const [userType, setUserType] = useState('');
+  const [sistemName, setSystemName] = useState('');
+
+  useEffect(() => {
+    const storedUserName =
+        localStorage.getItem("Nome") || sessionStorage.getItem("Nome");
+    const storedUserType =
+        localStorage.getItem("Tipo") || sessionStorage.getItem("Tipo");
+    const storedSystemName =
+        localStorage.getItem("NomeSistema") || sessionStorage.getItem("NomeSistema");
+
+    if (storedUserName) {
+        setUserName(storedUserName);
+    }
+    if (storedUserType) {
+        setUserType(storedUserType); // Exemplo: setar um estado com o tipo do usuário
+    }
+    if (storedSystemName) {
+        setSystemName(storedSystemName); // Exemplo: setar um estado com o nome do sistema
+    }
+}, []);
 
   const dataFormatada = date.toLocaleDateString('pt-BR', {
     weekday: 'long',
     day: '2-digit',
     month: 'long',
   });
-
-  const usuario = "usuario1"
 
   const data = [
     ["Semanas", "Concluidas", "Atrasadas"],
@@ -87,7 +101,7 @@ const FirstPage = ({ }) => {
               <button><BiUser /></button>
             </div>
             <div>
-              <p>{usuario}</p>
+              <p>{userName || "Usuário"}</p>
               <div />
             </div>
 
@@ -98,7 +112,7 @@ const FirstPage = ({ }) => {
         <div className="infosPrincipais">
 
           <div className="principalCima">
-            
+
             <div className="GraficoDiario">
               <Chart className="GraficoDiario"
                 chartType="PieChart"
