@@ -30,7 +30,11 @@ const LoginPage = ({ }) => {
             const response = await login(email, password);
 
             // Armazena o token no localStorage ou cookies (opcional)
-            localStorage.setItem('token', response.token);
+            if (rememberMe) {
+                localStorage.setItem('authToken', token);
+            } else {
+                sessionStorage.setItem('authToken', token);
+            }
 
             setTimeout(() => {
                 alert('login bem-sucedido!');

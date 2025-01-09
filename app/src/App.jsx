@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
 import './App.css'
 
@@ -7,7 +7,7 @@ import FirstPage from './pages/Home/FirstPage'
 
 function App() {
 
-  const navigate = useNavigate(); // hook para navegar para outras páginas
+  /*const navigate = useNavigate(); // hook para navegar para outras páginas
 
   useEffect(() => {
     // Verificar se o token existe no localStorage ou sessionStorage
@@ -20,7 +20,7 @@ function App() {
       // Caso contrário, redireciona para a página de login
       navigate('/');
     }
-  }, [navigate]);
+  }, [navigate]); */
 
   return (
 
