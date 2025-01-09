@@ -1,5 +1,6 @@
 import React from "react"
 import "./LoginPage.css"
+import { login } from '../../services/authService';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { BiEnvelope, BiHide } from "react-icons/bi";
@@ -12,7 +13,7 @@ const LoginPage = ({ }) => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         
         event.preventDefault();
 
@@ -22,30 +23,25 @@ const LoginPage = ({ }) => {
             return;
         }
 
-        //verifica o vetor se há uma conta com as credenciais informadas
-        //const contaExiste = contas.find(conta => conta.email === email && conta.password === password);
-
-        //caso não existir
-        /* if(!contaExiste){
-           alert('Usuário ou senha incorretos.')
-           return;
-         }*/
-
         try {
             setLoading(true)
+
+            // Faz a requisição para a API
+            const response = await login(email, password);
+
+            // Armazena o token no localStorage ou cookies (opcional)
+            localStorage.setItem('token', response.token);
+
             setTimeout(() => {
-                alert('login bem sucedido');
+                alert('login bem-sucedido!');
                 setLoading(false);
-                //Armazena o email utilizado no login
-                //setEmailLogado(email);
                 navigate('/inicio');
             }, 1000);
         } catch (err) {
             alert('algo deu errado: ' + err);
             setLoading(false);
         }
-
-    }
+    };
 
     return (
         <div className="fundo">

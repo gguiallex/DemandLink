@@ -2,6 +2,7 @@ const express = require('express');
 const usersController =  require('./controllers/usersController');
 const sectorController = require('./controllers/sectorController');
 const demandController = require('./controllers/demandController');
+const authController = require('./controllers/authController');
 
 const router = express.Router();
 
@@ -9,6 +10,8 @@ const router = express.Router();
 router.get("/", (req, res) => {
     return res.json("hello world");
 });
+
+router.post('/autenticar', authController.autenticar);
 
 // ====================== USUÁRIOS ======================
 router.get('/usuarios', usersController.getAll); // exibir todos os usuários
