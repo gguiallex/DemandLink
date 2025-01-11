@@ -37,10 +37,8 @@ const InfoTop = () => {
     return (
         <div className="infosTop">
           <div className="TopEsquerda">
-            <div className="data">
                 <BiCalendarAlt />
                 <p>{dataFormatada}</p>
-            </div>
           </div>
 
           <div className="TopDireita">

@@ -11,28 +11,23 @@
  height: 24px;
 }
 
-.topEsquerda{
+.TopEsquerda{
     display: flex;
     align-items: center;
     flex-direction: row;
+    font-size: 20px;
 }
 
-.topEsquerda .data {
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Espaço entre o ícone e o texto */
-    font-size: 16px;
-    font-weight: 500;
-    flex-direction: row;
-  }
-
-div.topDireita{
+.TopDireita{
     display: flex;
     align-items: center;
     gap: 15px;
     flex-direction: row;
-
+    font-size: 20px;
 }
+
+
+
 
 .botoesTop{
     display: flex;

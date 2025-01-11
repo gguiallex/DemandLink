@@ -42,8 +42,7 @@ const FirstPage = ({ }) => {
     chart: {
       title: "Resumo Semanal",
     },
-    colors: ["#28a745", "#dc3545"], // Verde para concluídas, vermelho para atrasadas
-    legend: { position: "top", alignment: "end" },
+    colors: ["#10A064", "#C10707"], // Verde para concluídas, vermelho para atrasadas
     chartArea: {
       width: "80%",
       height: "70%",
@@ -60,10 +59,10 @@ const FirstPage = ({ }) => {
   const optionsDiario = {
     title: "Resumo Diario",
     slices: {
-      0: { color: "#28a745" }, // Concluídas
-      1: { color: "#007bff" }, // Em andamento
+      0: { color: "#10A064" }, // Concluídas
+      1: { color: "#1086A0" }, // Em andamento
       2: { color: "#57009B" }, // Não iniciadas
-      3: { color: "#dc3545" }, // Em atraso
+      3: { color: "#C10707" }, // Em atraso
     },
     chartArea: {
       width: "80%",
@@ -73,7 +72,7 @@ const FirstPage = ({ }) => {
 
   const optionsMes = {
     title: "Demandas do Mês",
-    colors: ["#6f42c1"], // Cor das colunas
+    colors: ["#6000AA"], // Cor das colunas
     legend: { position: "none" },
     chartArea: {
       width: "80%",
@@ -111,6 +110,8 @@ const FirstPage = ({ }) => {
                 data={diario}
                 options={optionsDiario}
                 border-radius={"25%"}
+                width={"300px"}
+                height={"287px"}
               />
             </div>
 
@@ -157,10 +158,11 @@ const FirstPage = ({ }) => {
               data={data}
               options={options}
               width={"100%"}
-              height={"350px"}
+              height={"260px"}
             />
 
-            <div className="Demandada">
+            <div className="demandada">
+              
               <div className="infoDireita1">
                 <div className="escrito">
                 <p className="titulo">Demandas Da Semana</p>
