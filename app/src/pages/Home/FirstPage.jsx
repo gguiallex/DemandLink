@@ -157,7 +157,7 @@ const FirstPage = ({ }) => {
               chartType="Bar"
               data={data}
               options={options}
-              width={"100%"}
+              width={"97%"}
               height={"260px"}
             />
 
