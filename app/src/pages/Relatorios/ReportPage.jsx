@@ -6,7 +6,7 @@ import InfoTop from "../../components/InfoTop/InfoTop"
 
 const ReportPage = ({ }) => {
     return(
-        <div className="container-base">
+        <div className="container-inicio">
             <div className="menuLateral">
                 <SideMenu />
             </div> 

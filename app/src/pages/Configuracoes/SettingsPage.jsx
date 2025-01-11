@@ -5,7 +5,7 @@ import InfoTop from "../../components/InfoTop/InfoTop"
 
 const SettingsPage = ({ }) => {
     return(
-        <div className="container-base">
+        <div className="container-inicio">
             <div className="menuLateral">
                 <SideMenu />
             </div> 

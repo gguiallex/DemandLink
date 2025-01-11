@@ -1,6 +1,15 @@
 .NovaDemanda{
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 95%;
+    padding-top: 1%;
+    gap: 30px;
+}
+
+.BotaoDemandaa{
+  display: flex;
+  align-self: flex-start;
 }
 
 /* Container da Tabela */
@@ -10,6 +19,7 @@
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     overflow-x: auto;
+    width: 98%;
   }
   
   /* Estilização da Tabela */

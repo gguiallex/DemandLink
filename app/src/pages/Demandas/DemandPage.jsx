@@ -6,7 +6,7 @@ import BotaoDemanda from "../../components/Botões/BotaoDemanda"
 
 const DemandPage = ({ }) => {
     return (
-        <div className="container-base">
+        <div className="container-inicio">
             <div className="menuLateral">
                 <SideMenu />
             </div>
@@ -16,7 +16,9 @@ const DemandPage = ({ }) => {
 
                 <div className="infosPrincipais">
                     <div className="NovaDemanda">
-                        <BotaoDemanda />
+                        <div className="BotaoDemandaa">
+                            <BotaoDemanda/>
+                        </div>
 
                         <div class="table-container">
                             <table class="custom-table">
