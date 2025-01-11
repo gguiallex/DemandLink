@@ -1,70 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SidebarMenu.css";
+import { useNavigate, useLocation } from "react-router-dom";
 import { BiCategory, BiChevronsRight, BiChevronsLeft, BiFile, BiBarChartAlt2, BiCog, BiLogOut, BiClinic } from "react-icons/bi";
 
 const SidebarMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const savedState = localStorage.getItem("sidebarState");
+    if (savedState !== null) {
+      setIsOpen(savedState === "true");
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("sidebarState", isOpen.toString());
+  }, [isOpen]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSubmit = (event) => {
-        
-    event.preventDefault();
+  const handleLogout = () => {
+    // Remove dados de autenticação
+    localStorage.clear(); // Limpa todos os dados do localStorage
+    sessionStorage.clear(); // Limpa todos os dados do sessionStorage
+    // Redireciona para a página de login
+    navigate("/");
+  };
 
-    //Caso deixar campos em branco
-
-    //verifica o vetor se há uma conta com as credenciais informadas
-    //const contaExiste = contas.find(conta => conta.email === email && conta.password === password);
-
-    //caso não existir
-    /* if(!contaExiste){
-       alert('Usuário ou senha incorretos.')
-       return;
-     }*/
-
-    try {
-        setLoading(true)
-        setTimeout(() => {
-            setLoading(false);
-            //Armazena o email utilizado no login
-            //setEmailLogado(email);
-            navigate('/');
-        }, 1000);
-    } catch (err) {
-        alert('algo deu errado: ' + err);
-        setLoading(false);
-    }
-  }
+  // Verifica se a rota atual corresponde à rota do item
+  const isActive = (path) => location.pathname === path;
 
   return (
     <div className={`sidebar ${isOpen ? "open" : ""}`}>
       <div className="header">
-        {!isOpen && <h2>DL.</h2> }
+        {!isOpen && <h2>DL</h2> }
         {isOpen && <h2>DemandLink</h2>}
         <button className="toggle-button" onClick={toggleSidebar}>
           {isOpen ? <BiChevronsLeft /> : <BiChevronsRight/>}
         </button>
       </div>
       <div className="menu">
-        <div className="menu-item">
+        <div className={`menu-item ${isActive("/Dashboard") ? "active" : ""}`} onClick={() => navigate("/Dashboard")}>
           <i className="icon"><BiCategory/></i>
           {isOpen && <span>Dashboard</span>}
         </div>
-        <div className="menu-item">
+        <div className={`menu-item ${isActive("/Demandas") ? "active" : ""}`} onClick={() => navigate("/Demandas")}>
           <i className="icon"><BiFile/></i>
           {isOpen && <span>Minhas Demandas</span>}
         </div>
-        <div className="menu-item">
+        <div className={`menu-item ${isActive("/Relatorios") ? "active" : ""}`} onClick={() => navigate("/Relatorios")}>
           <i className="icon"><BiBarChartAlt2/></i>
           {isOpen && <span>Relatórios</span>}
         </div>
-        <div className="menu-item">
+        <div className={`menu-item ${isActive("/Configuracoes") ? "active" : ""}`} onClick={() => navigate("/Configuracoes")}>
           <i className="icon"><BiCog/></i>
           {isOpen && <span>Configurações</span>}
         </div>
-        <div className="menu-item">
+        <div className="menu-item" onClick={handleLogout}>
           <i className="icon"><BiLogOut/></i>
           {isOpen && <span>Sair</span>}
         </div>

@@ -1,12 +1,11 @@
 /* Container principal */
 .sidebar {
-    width: 70px;
+    width: 80px;
     height: 100vh;
     background-color: #f8f9fa;
     color: #000;
     display: flex;
     flex-direction: column;
-    border-radius: 0 20px 20px 0;
     transition: width 0.3s ease-in-out;
     position: fixed;
     overflow: visible;
@@ -89,5 +88,27 @@
   /* Logout estilizado */
   .menu-item:last-child {
     margin-top: auto;
+  }
+
+  .menu-item.active {
+    position: relative;
+    background-color: transparent; /* Fundo transparente */
+    color: #000; /* Texto em destaque */
+    font-weight: bold; /* Negrito */
+  }
+  
+  .menu-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 8px; /* Ajusta a largura do "corte" */
+    top: -4px;
+    bottom: 5px;
+    width: 103%;
+    background-color: rgba(240, 240, 240, 1);
+    box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 15px 0px 0px 15px; /* Bordas arredondadas */
+    z-index: -1; /* Envia para trás do texto */
   }
   

@@ -1,40 +1,13 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import "./FirstPage.css"
+import { Chart } from "react-google-charts"
+import { BiFile, BiUser } from "react-icons/bi"
+
 import SideMenu from "../../components/Menu/SidebarMenu"
-import { Chart } from "react-google-charts";
-import { BiCalendarAlt, BiUser, BiBell } from "react-icons/bi";
+import InfoTop from "../../components/InfoTop/InfoTop"
+import BotaoDemanda from "../../components/Botões/BotaoDemanda"
 
 const FirstPage = ({ }) => {
-
-  const [date, setDate] = useState(new Date());
-  const [userName, setUserName] = useState("");
-  const [userType, setUserType] = useState('');
-  const [sistemName, setSystemName] = useState('');
-
-  useEffect(() => {
-    const storedUserName =
-        localStorage.getItem("Nome") || sessionStorage.getItem("Nome");
-    const storedUserType =
-        localStorage.getItem("Tipo") || sessionStorage.getItem("Tipo");
-    const storedSystemName =
-        localStorage.getItem("NomeSistema") || sessionStorage.getItem("NomeSistema");
-
-    if (storedUserName) {
-        setUserName(storedUserName);
-    }
-    if (storedUserType) {
-        setUserType(storedUserType); // Exemplo: setar um estado com o tipo do usuário
-    }
-    if (storedSystemName) {
-        setSystemName(storedSystemName); // Exemplo: setar um estado com o nome do sistema
-    }
-}, []);
-
-  const dataFormatada = date.toLocaleDateString('pt-BR', {
-    weekday: 'long',
-    day: '2-digit',
-    month: 'long',
-  });
 
   const data = [
     ["Semanas", "Concluidas", "Atrasadas"],
@@ -68,16 +41,53 @@ const FirstPage = ({ }) => {
   const options = {
     chart: {
       title: "Resumo Semanal",
-      subtitle: "Sales and Expenses over the Years",
+    },
+    colors: ["#28a745", "#dc3545"], // Verde para concluídas, vermelho para atrasadas
+    legend: { position: "top", alignment: "end" },
+    chartArea: {
+      width: "80%",
+      height: "70%",
+    },
+    hAxis: {
+      title: "Quantidade",
+      minValue: 0,
+    },
+    vAxis: {
+      title: "Dias da Semana",
     },
   };
 
   const optionsDiario = {
     title: "Resumo Diario",
+    slices: {
+      0: { color: "#28a745" }, // Concluídas
+      1: { color: "#007bff" }, // Em andamento
+      2: { color: "#57009B" }, // Não iniciadas
+      3: { color: "#dc3545" }, // Em atraso
+    },
+    chartArea: {
+      width: "80%",
+      height: "80%",
+    },
   };
 
   const optionsMes = {
-    title: "Demandas do Mês"
+    title: "Demandas do Mês",
+    colors: ["#6f42c1"], // Cor das colunas
+    legend: { position: "none" },
+    chartArea: {
+      width: "80%",
+      height: "70%",
+    },
+    hAxis: {
+      title: "Meses",
+      textStyle: { fontSize: 12 },
+    },
+    vAxis: {
+      title: "Quantidade",
+      textStyle: { fontSize: 12 },
+    },
+
   }
 
   return (
@@ -85,29 +95,11 @@ const FirstPage = ({ }) => {
       <div className="menuLateral">
         <SideMenu />
       </div>
+
       <div className="info">
 
-        <div className="infosTop">
+        <InfoTop />
 
-          <div className="TopEsquerda">
-            <div className="data">
-              <p><BiCalendarAlt />{dataFormatada}</p>
-            </div>
-          </div>
-
-          <div className="TopDireita">
-            <div className="botoesTop">
-              <button><BiBell /></button>
-              <button><BiUser /></button>
-            </div>
-            <div>
-              <p>{userName || "Usuário"}</p>
-              <div />
-            </div>
-
-          </div>
-
-        </div>
 
         <div className="infosPrincipais">
 
@@ -118,29 +110,88 @@ const FirstPage = ({ }) => {
                 chartType="PieChart"
                 data={diario}
                 options={optionsDiario}
-                width={"100%"}
-                height={"287px"}
                 border-radius={"25%"}
               />
             </div>
 
             <div className="graficoMensal">
-              <Chart chartType="ColumnChart" options={optionsMes} width="100%" height="100%" data={mes} />
+              <Chart chartType="ColumnChart" options={optionsMes} width="350px" height="287px" data={mes} />
             </div>
 
             <div className="demandasNovas">
+              <p className="TituloNovasDemandas">Novas Demandas</p>
 
+              <div className="demanda">
+                <BiUser className="icon" />
+                <div className="infoUser">
+                  <p className="username">Usuário 1</p>
+                  <p className="projeto">Nome do Projeto</p>
+                </div>
+                <p className="urgencia vermelho">Urgência</p>
+              </div>
+
+              <div className="demanda">
+                <BiUser className="icon" />
+                <div className="infoUser">
+                  <p className="username">Usuário 2</p>
+                  <p className="projeto">Nome do Projeto</p>
+                </div>
+                <p className="urgencia verde">Urgência</p>
+              </div>
+
+              <div className="demanda">
+                <BiUser className="icon" />
+                <div className="infoUser">
+                  <p className="username">Usuário 3</p>
+                  <p className="projeto">Nome do Projeto</p>
+                </div>
+                <p className="urgencia laranja">Urgência</p>
+              </div>
             </div>
+
           </div>
 
-          <div className="graficoSemanal">
+          <div className="principalBaixo">
             <Chart
               chartType="Bar"
               data={data}
               options={options}
               width={"100%"}
-              height={"390px"}
+              height={"350px"}
             />
+
+            <div className="Demandada">
+              <div className="infoDireita1">
+                <div className="escrito">
+                <p className="titulo">Demandas Da Semana</p>
+                <p className="dados">15 Demandas</p>
+                </div>
+                <BiFile />
+              </div>
+
+              <div className="infoDireita2">
+                <div className="escrito">
+                  <p className="titulo">Demandas Urgentes</p>
+                  <p className="dados">5 Demandas</p>
+                </div>
+                <BiFile />
+              </div>
+
+              <div className="infoDireita3">
+              <div className="escrito">
+                <p className="titulo">Demandas Em Atraso</p>
+                <p className="dados">2 Demandas</p>
+                </div>
+                <BiFile />
+              </div>
+            </div>
+          </div>
+
+          <div className="botoesInferioresGrade" >
+            <div className="botoesInferiores">
+              <BotaoDemanda />
+              <button>Atualizar Informações</button>
+            </div>
           </div>
         </div>
       </div>

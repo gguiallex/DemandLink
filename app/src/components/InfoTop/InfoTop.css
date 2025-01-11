@@ -1,0 +1,64 @@
+.infosTop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    flex-direction: row;
+}
+
+.infosTop svg{
+ width: 24px;
+ height: 24px;
+}
+
+.topEsquerda{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.topEsquerda .data {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaço entre o ícone e o texto */
+    font-size: 16px;
+    font-weight: 500;
+    flex-direction: row;
+  }
+
+div.topDireita{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-direction: row;
+
+}
+
+.botoesTop{
+    display: flex;
+    gap: 10px;
+}
+
+.botoesTop button {
+    width: 37px;
+    height: 37px;
+    border-radius: 50%;
+    border: none;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Leve sombra */
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.botoesTop button:hover {
+    background-color: #e0e0e0; /* Cor ao passar o mouse */
+}
+
+.topDireita p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+  }

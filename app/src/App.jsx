@@ -4,6 +4,9 @@ import './App.css'
 
 import LoginPage from './pages/Login/LoginPage'
 import FirstPage from './pages/Home/FirstPage'
+import DemandPage from './pages/Demandas/DemandPage'
+import ReportPage from './pages/Relatorios/ReportPage'
+import SettingsPage from './pages/Configuracoes/SettingsPage'
 
 function App() {
 
@@ -25,10 +28,15 @@ function App() {
   return (
 
     <BrowserRouter>
+
       <Routes>
         <Route path='/' element={<LoginPage/>}/>
-        <Route path='/inicio' element={<FirstPage/>}/>
+        <Route path='/Dashboard' element={<FirstPage/>}/>
+        <Route path='/Demandas' element={<DemandPage/>}/>
+        <Route path='/Relatorios' element={<ReportPage/>}/>
+        <Route path='/Configuracoes' element={<SettingsPage/>}/>
       </Routes>
+
     </BrowserRouter>
 
   )

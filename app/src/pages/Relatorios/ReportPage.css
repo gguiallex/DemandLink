@@ -1,0 +1,7 @@
+.container-base{
+    height: 100vw;
+    width: 100vw;
+    display: flex;
+    align-items: flex-start;
+    background-color: rgba(240, 240, 240, 1);
+}

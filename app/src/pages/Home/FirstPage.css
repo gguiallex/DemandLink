@@ -1,5 +1,4 @@
 .container-inicio{
-    height: 100vw;
     width: 100vw;
     display: flex;
     align-items: flex-start;
@@ -8,46 +7,11 @@
 
 .info{
     flex-direction: column;
-    height: 100vw;
     width: 73vw;
 }
 
 .menuLateral{
     width: 18%;
-}
-
-.infosTop{
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-}
-
-.infosTop svg{
- width: 24px;
- height: 24px;
-}
-
-.topEsquerda{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.topDireita{
-    display: flex;
-    flex-direction: row;
-}
-
-.botoesTop{
-    gap: 50px;
-    button{
-        width: 37px;
-        height: 37px;
-        border-radius: 50%;
-        border: none;
-        background-color: #fff;
-    }
 }
 
 .infosPrincipais{
@@ -58,21 +22,157 @@
     align-items: center;
     justify-items: center;
     width: 1087px;
-    height: 894px;
-    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.268);
+    box-shadow: 0px 0px 19.1px -7px rgba(0, 0, 0, 0.11);
+    gap: 10px;
 }
 
 .principalCima{
     display: flex;
     flex-direction: row;
+    gap: 10px;
+}
+
+.principalBaixo{
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
+    width: 1087px;
+}
+
+.demandasNovas {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .TituloNovasDemandas {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .demanda {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+    gap: 10px;
+  }
+  
+  .demanda:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .icon {
+    font-size: 24px;
+    color: #6c757d;
+  }
+  
+  .infoUser {
+    flex: 1;
+    margin-left: 10px;
+  }
+  
+  .username {
+    font-weight: bold;
+    margin: 0;
+    text-align: start;
+  }
+  
+  .projeto {
+    margin: 0;
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  .urgencia {
+    font-weight: bold;
+  }
+  
+  .vermelho {
+    color: #dc3545;
+  }
+  
+  .verde {
+    color: #28a745;
+  }
+  
+  .laranja {
+    color: #fd7e14;
+  }
+
+  .demandada{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20%;
+  }
+
+.infoDireita1, .infoDireita2, .infoDireita3{
+    display: flex;
+    padding: 0;
+    margin: 0;
+    width: 310px;
+    height: 123.62px;
+    border-radius: 25px;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    text-align: left;
+    padding-left: 10px;
+    .dados{
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+        font-size: 29px;
+    }
+    .titulo{
+        margin: 0;
+        padding: 0;
+        font-size: 21px;
+    }
+}
+
+.infoDireita1 svg, .infoDireita2 svg, .infoDireita3 svg{
+    display: flex;
+    width: 57px;
+    height: 64px;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.infoDireita1{
+    background: linear-gradient(135deg, #9b5de5, #6a4c93);
+}
+
+.infoDireita2{
+    background: linear-gradient(135deg, #e7db50, #daae2a);
+}
+
+.infoDireita3{
+    background: linear-gradient(135deg, #ff6b6b, #d63031);
+}
+
+.botoesInferiores{
+    display: flex;
+    flex-direction: row;
     gap: 50px;
-}
-
-.graficoDiario{
-    border-radius: 25%;
-}
-
-.graficoSemanal{
-    width: 730px;
-    height: 390px;
+    button{
+        border: none;
+        border-radius: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: rgba(53, 0, 94, 1);
+        background-color: #fff;
+        width: 194.29px;
+        height: 60px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
 }

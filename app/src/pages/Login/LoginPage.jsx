@@ -43,7 +43,7 @@ const LoginPage = ({ }) => {
             setTimeout(() => {
                 alert('login bem-sucedido!');
                 setLoading(false);
-                navigate('/inicio');
+                navigate('/Dashboard');
             }, 1000);
         } catch (err) {
             alert('algo deu errado: ' + err);
