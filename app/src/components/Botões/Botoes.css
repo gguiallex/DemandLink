@@ -71,7 +71,87 @@
 .step.active::before {
     content: ""; /* Remove o ícone no passo ativo */
 }
+/*-----------------------*/
+.selectSetor {
+    font-size: 14px; /* Tamanho da fonte */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #dcdcdc; /* Cor da borda */
+    border-radius: 8px; /* Bordas arredondadas */
+    width: 100%; /* Ocupa a largura do container */
+    background-color: #fff; /* Cor de fundo */
+    color: #333; /* Cor do texto */
+    margin-top: 8px; /* Espaçamento superior */
+    margin-bottom: 16px; /* Espaçamento inferior */
+  }
+  
+  .selectSetor:focus {
+    border-color: #6c63ff; /* Cor da borda ao focar */
+    outline: none; /* Remove a borda padrão do foco */
+    box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.3); /* Sombra ao focar */
+  }
+  
+  .selectSetor option {
+    font-size: 14px; /* Tamanho do texto nas opções */
+    padding: 8px; /* Espaçamento interno nas opções */
+  }
 
+  /* Estilo geral do campo React-Select */
+.selectEnvolvidos {
+    font-size: 14px; /* Tamanho da fonte */
+    width: 100%; /* Ocupa a largura do container */
+    margin-top: 8px; /* Espaçamento superior */
+    margin-bottom: 16px; /* Espaçamento inferior */
+  }
+  
+  /* Campo de entrada */
+  .selectEnvolvidos .css-1s2u09g-control {
+    border: 1px solid #dcdcdc; /* Cor da borda */
+    border-radius: 8px; /* Bordas arredondadas */
+    min-height: 50px; /* Altura mínima */
+    font-size: 14px; /* Tamanho da fonte */
+    padding: 5px; /* Espaçamento interno */
+    background-color: #fff; /* Cor de fundo */
+  }
+  
+  /* Hover no campo */
+  .selectEnvolvidos .css-1s2u09g-control:hover {
+    border-color: #6c63ff; /* Cor da borda ao passar o mouse */
+  }
+  
+  /* Opções no dropdown */
+  .selectEnvolvidos .css-26l3qy-menu {
+    font-size: 14px; /* Tamanho do texto nas opções */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  /* Itens dentro do dropdown */
+  .selectEnvolvidos .css-1n7v3ny-option {
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 4px; /* Bordas arredondadas */
+  }
+  
+  /* Cor ao selecionar uma opção */
+  .selectEnvolvidos .css-1n7v3ny-option--is-selected {
+    background-color: #6c63ff; /* Cor de fundo ao selecionar */
+    color: #fff; /* Cor do texto */
+  }
+  
+  /* Tags de seleção múltipla */
+  .selectEnvolvidos .css-12jo7m5 {
+    background-color: #e0e0e0; /* Cor de fundo das tags */
+    font-size: 12px; /* Tamanho do texto das tags */
+    padding: 4px 8px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+  }
+  
+  /* Botão de remover tags */
+  .selectEnvolvidos .css-xb97g8 {
+    font-size: 12px; /* Tamanho do ícone de remoção */
+    color: #333;
+  }
+  
+/*-----------------------*/
 .modalContent input, textarea {
     width: 430px;
     height: 40px;

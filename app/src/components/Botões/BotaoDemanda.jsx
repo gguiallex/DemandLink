@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react"
 import "./Botoes.css"
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 import { BiSolidCheckCircle } from "react-icons/bi"
-import { fetchAreas, fetchEnvolvidos } from '../../services/apiService';
+import { fetchAreas, fetchEnvolvidosBySetor } from '../../services/apiService';
 
 const BotaoDemanda = () => {
     const [showModal, setShowModal] = useState(false);
@@ -11,6 +13,8 @@ const BotaoDemanda = () => {
     const [filteredEnvolvidos, setFilteredEnvolvidos] = useState([]); // Usuários filtrados pelo setor
     const [selectedArea, setSelectedArea] = useState(""); // setor selecionada
     const [selectedEnvolvidos, setSelectedEnvolvidos] = useState([]); // Usuários selecionados
+
+    const animatedComponents = makeAnimated();
 
     const handleOpenModal = () => setShowModal(true);
     const handleCloseModal = () => {
@@ -47,26 +51,23 @@ const BotaoDemanda = () => {
     }, [showModal]);
 
     const handleSelectArea = async (event) => {
-        const selectedAreaId = event.target.value;
-        setSelectedArea(selectedAreaId);
-
+        const setorTag = event.target.value;
+        setSelectedArea(setorTag);
+    
         try {
-            // Chamar a API para buscar os usuários do setor selecionado
-            const envolvidos = await fetchEnvolvidosBySetor(selectedAreaId);
-            setFilteredEnvolvidos(envolvidos);
+          const envolvidos = await fetchEnvolvidosBySetor(setorTag);
+          const formattedEnvolvidos = envolvidos.map((envolvido) => ({
+            value: envolvido.idUsuario,
+            label: envolvido.nome,
+          }));
+          setFilteredEnvolvidos(formattedEnvolvidos);
         } catch (error) {
-            console.error("Erro ao carregar usuários do setor:", error);
-            setFilteredEnvolvidos([]); // Garantir que a lista fique vazia em caso de erro
+          console.error("Erro ao carregar usuários do setor:", error);
+          setFilteredEnvolvidos([]);
         }
-
-        setSelectedEnvolvidos([]); // Resetar os envolvidos selecionados ao mudar de área
-    };
-
-    const handleToggleEnvolvido = (id) => {
-        setSelectedEnvolvidos((prev) =>
-            prev.includes(id) ? prev.filter((e) => e !== id) : [...prev, id]
-        );
-    };
+    
+        setSelectedEnvolvidos([]);
+      };
 
     return (
         <div className="botoesInferiores">
@@ -99,14 +100,14 @@ const BotaoDemanda = () => {
                                     <div className="AreaSolicitacao">
                                         <label className="perguntaTexto">
                                             Para qual área será sua solicitação?
-                                            <select
+                                            <select className="selectSetor"
                                                 value={selectedArea}
                                                 onChange={handleSelectArea}
                                             >
                                                 <option value="">Selecione uma área</option>
                                                 {areas.map((setor) => (
                                                     <option key={setor.tagSetor} value={setor.tagSetor}>
-                                                        {setor.nome}
+                                                      {setor.tagSetor} - {setor.nome}
                                                     </option>
                                                 ))}
                                             </select>
@@ -117,32 +118,14 @@ const BotaoDemanda = () => {
                                         <div className="EnvolvidosSolicitacao">
                                             <label className="perguntaTexto">
                                                 Quem serão os envolvidos na sua solicitação?
-                                                <div className="multiSelect">
-                                                    {filteredEnvolvidos.length > 0 ? (
-                                                        filteredEnvolvidos.map((envolvido) => (
-                                                            <label key={envolvido.id}>
-                                                                <input
-                                                                    type="checkbox"
-                                                                    value={envolvido.id}
-                                                                    checked={selectedEnvolvidos.includes(
-                                                                        envolvido.id
-                                                                    )}
-                                                                    onChange={() =>
-                                                                        handleToggleEnvolvido(
-                                                                            envolvido.id
-                                                                        )
-                                                                    }
-                                                                />
-                                                                {envolvido.nome}
-                                                            </label>
-                                                        ))
-                                                    ) : (
-                                                        <p>
-                                                            Nenhum envolvido encontrado para esta
-                                                            área.
-                                                        </p>
-                                                    )}
-                                                </div>
+                                                <Select className="selectEnvolvidos"
+                                                    components={animatedComponents}
+                                                    isMulti
+                                                    options={filteredEnvolvidos}
+                                                    value={selectedEnvolvidos}
+                                                    onChange={setSelectedEnvolvidos}
+                                                    placeholder="Informe o nome dos usuários"
+                                                />
                                             </label>
                                         </div>
                                     )}
