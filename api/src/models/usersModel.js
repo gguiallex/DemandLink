@@ -10,8 +10,13 @@ const getUser = async (idUsuario) => {
     return user;
 }
 
-const getUsersType = async (tipo) => {
+const getUsersByType = async (tipo) => {
     const [users] = await connection.execute('SELECT * FROM Usuarios WHERE tipo = ?', [tipo]);
+    return users;
+}
+
+const getUsersBySector = async (tagSetor) => {
+    const [users] = await connection.execute('SELECT * FROM Usuarios WHERE tagSetor = ?'[tagSetor]);
     return users;
 }
 
@@ -40,7 +45,8 @@ const editUser = async (idUsuario, Usuario) => {
 module.exports = {
     getAll,
     getUser,
-    getUsersType,
+    getUsersByType,
+    getUsersBySector,
     addUser,
     removeUser,
     editUser,

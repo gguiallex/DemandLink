@@ -12,10 +12,17 @@ const getUser = async (req, res) => {
     return res.status(200).json(user);
 }
 
-const getUsersType = async (req, res) => {
+const getUsersByType = async (req, res) => {
     const {tipo} = req.params;
 
-    const users = await usersModel.getUsersType(tipo);
+    const users = await usersModel.getUsersByType(tipo);
+    return res.status(200).json(users);
+}
+
+const getUsersBySector = async (req, res) => {
+    const {tagSetor} = req.params;
+
+    const users = await usersModel.getUsersBySector(tagSetor);
     return res.status(200).json(users);
 }
 
@@ -41,7 +48,8 @@ const editUser = async (req, res) => {
 module.exports = {
     getAll,
     getUser,
-    getUsersType,
+    getUsersByType,
+    getUsersBySector,
     addUser,
     removeUser,
     editUser,
