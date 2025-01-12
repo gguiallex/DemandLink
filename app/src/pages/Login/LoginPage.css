@@ -104,6 +104,12 @@
     justify-content: space-between;
     font-size: 17px;
     color: #fff;
+
+  label:hover{
+      text-decoration: none;
+      color: #aa96b8;
+      cursor: pointer;
+  }
 }
 
 .checkbox-container {
@@ -157,12 +163,6 @@
   .checkbox-container input[type="checkbox"]:checked + .custom-checkbox::after {
     opacity: 1; /* Torna o checkmark visível */
   }
-
-label:hover{
-    text-decoration: none;
-    color: #aa96b8;
-    cursor: pointer;
-}
 
 .esqueceuSenha{
     cursor: pointer;
