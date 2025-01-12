@@ -7,18 +7,18 @@ const BotaoDemanda = () => {
     const [showModal, setShowModal] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
 
-    const [areas, setAreas] = useState([]); // Para armazenar opções de áreas
-    const [filteredEnvolvidos, setFilteredEnvolvidos] = useState([]); // Envolvidos filtrados pela área
-    const [selectedArea, setSelectedArea] = useState(""); // Área selecionada
-    const [selectedEnvolvidos, setSelectedEnvolvidos] = useState([]); // Envolvidos selecionados
+    const [areas, setAreas] = useState([]); // Para armazenar opções de setores
+    const [filteredEnvolvidos, setFilteredEnvolvidos] = useState([]); // Usuários filtrados pelo setor
+    const [selectedArea, setSelectedArea] = useState(""); // setor selecionada
+    const [selectedEnvolvidos, setSelectedEnvolvidos] = useState([]); // Usuários selecionados
 
     const handleOpenModal = () => setShowModal(true);
     const handleCloseModal = () => {
         setShowModal(false);
         setCurrentStep(1); // Resetar para a primeira etapa ao fechar
-        setSelectedArea(""); // Resetar área
-        setSelectedEnvolvidos([]); // Resetar envolvidos selecionados
-        setFilteredEnvolvidos([]); // Resetar a lista filtrada
+        setSelectedArea(""); // Resetar setor
+        setSelectedEnvolvidos([]); // Resetar usuários selecionados
+        setFilteredEnvolvidos([]); // Resetar a lista de usuários filtrados
     };
 
     const nextStep = () => setCurrentStep((prevStep) => Math.min(prevStep + 1, 3));
@@ -104,9 +104,9 @@ const BotaoDemanda = () => {
                                                 onChange={handleSelectArea}
                                             >
                                                 <option value="">Selecione uma área</option>
-                                                {areas.map((area) => (
-                                                    <option key={area.id} value={area.id}>
-                                                        {area.nome}
+                                                {areas.map((setor) => (
+                                                    <option key={setor.tagSetor} value={setor.tagSetor}>
+                                                        {setor.nome}
                                                     </option>
                                                 ))}
                                             </select>
