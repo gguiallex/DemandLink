@@ -26,10 +26,11 @@ const DemandPage = ({ }) => {
                                     <tr>
                                         <th>Tag</th>
                                         <th>Setor</th>
-                                        <th>Título</th>
+                                        <th>Projeto</th>
                                         <th>Descrição</th>
                                         <th>Envolvidos</th>
                                         <th>Entrega</th>
+                                        <th>Urgência</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -37,29 +38,32 @@ const DemandPage = ({ }) => {
                                     <tr>
                                         <td>01.</td>
                                         <td>Marketing</td>
-                                        <td>$40,500</td>
-                                        <td>8 Months</td>
-                                        <td>12%</td>
-                                        <td>$2,000 / month</td>
-                                        <td><button class="status-btn">Repay</button></td>
+                                        <td>Digital</td>
+                                        <td>Dia Das Mães</td>
+                                        <td>Maria Luiza|Guilherme Alexandre</td>
+                                        <td>11/05</td>
+                                        <td>Urgente</td>
+                                        <td><button class="status-btn">Pendente</button></td>
                                     </tr>
                                     <tr>
                                         <td>02.</td>
                                         <td>ESG</td>
-                                        <td>$250,000</td>
-                                        <td>36 Months</td>
-                                        <td>10%</td>
-                                        <td>$8,000 / month</td>
-                                        <td><button class="status-btn">Repay</button></td>
+                                        <td>ODS</td>
+                                        <td>Cronograma</td>
+                                        <td>João Pedro|Sofia Teixeira</td>
+                                        <td>16/01</td>
+                                        <td>Muito Urgente</td>
+                                        <td><button class="status-btn">Em And...</button></td>
                                     </tr>
                                     <tr>
                                         <td>03.</td>
                                         <td>Saúde e...</td>
-                                        <td>$40,500</td>
-                                        <td>12 Months</td>
-                                        <td>12%</td>
-                                        <td>$5,000 / month</td>
-                                        <td><button class="status-btn">Repay</button></td>
+                                        <td>AD</td>
+                                        <td>Banner Lançamento</td>
+                                        <td>Sofia|Maria Luiza</td>
+                                        <td>30/01</td>
+                                        <td>Pouco Urgente</td>
+                                        <td><button class="status-btn">Concluído</button></td>
                                     </tr>
                                 </tbody>
                             </table>
