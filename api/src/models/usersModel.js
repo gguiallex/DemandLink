@@ -16,7 +16,7 @@ const getUsersByType = async (tipo) => {
 }
 
 const getUsersBySector = async (tagSetor) => {
-    const [users] = await connection.execute('SELECT * FROM Usuarios WHERE tagSetor = ?'[tagSetor]);
+    const [users] = await connection.execute('SELECT * FROM Usuarios WHERE tagSetor = ?', [tagSetor]);
     return users;
 }
 
