@@ -11,7 +11,7 @@ const api = axios.create({
 });
 
 // Função para buscar todos os setores
-export const fetchAreas = async () => {
+export const fetchSetores = async () => {
     try {
         const response = await api.get('/setores');
         return response.data;
@@ -21,7 +21,7 @@ export const fetchAreas = async () => {
 };
 
 // Função para buscar todos os usuários
-export const fetchEnvolvidos = async () => {
+export const fetchUsuarios = async () => {
     try {
         const response = await api.get('/usuarios');
         return response.data;
@@ -31,7 +31,7 @@ export const fetchEnvolvidos = async () => {
 };
 
 // Função para buscar os usuários de um determinado setor
-export const fetchEnvolvidosBySetor = async (tagSetor) => {
+export const fetchUsuariosBySetor = async (tagSetor) => {
     try {
         const response = await api.get(`/usuarios/setor/${tagSetor}`);
         return response.data;
