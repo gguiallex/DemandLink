@@ -11,7 +11,13 @@ const getDemand = async (req, res) => {
     return res.status(200).json(demand);
 }
 
+const addDemand = async (req, res) => {
+    await usersModel.addDemand(req.body);
+    return res.status(204).json({message: 'Demanda criada com sucesso'});
+}
+
 module.exports = {
     getAllDemands,
     getDemand,
+    addDemand,
 };

@@ -29,5 +29,6 @@ router.get('/setor/:tagSetor', sectorController.getSector); // exibir setor espe
 // ====================== DEMANDAS ======================
 router.get('/demandas', demandController.getAllDemands); // exibir todas as demandas
 router.get('/demanda/:tagDemanda', demandController.getDemand); // exibir demanda específica
+router.post('/demanda', demandController.addDemand); // adicionar uma nova demanda
 
 module.exports = router;
