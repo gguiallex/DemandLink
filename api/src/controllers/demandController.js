@@ -16,8 +16,34 @@ const addDemand = async (req, res) => {
     return res.status(204).json({message: 'Demanda criada com sucesso'});
 }
 
+const getAllDemandUsers = async (req, res) => {
+    const demandUsers = await demandModel.getDemandUsers();
+    return res.status(200).json(demandUsers);
+}
+
+const getDemandUser = async (req, res) => {
+    const {idUsuario} = req.params;
+    const demandsUser = await demandModel.getDemandUser(idUsuario);
+    return res.status(200).json(demandsUser);
+}
+
+const getUsersDemand = async (req, res) => {
+    const {tagDemanda} = req.params;
+    const usersDemand = await demandModel.getUsersDemand(tagDemanda);
+    return res.status(200).json(usersDemand);
+}
+
+const addDemandUsers = async (req, res) => {
+    await usersModel.addDemandUsers(req.body);
+    return res.status(204).json({message: 'Usuário(s) registrado(s) com sucesso na demanda!'})
+}
+
 module.exports = {
     getAllDemands,
     getDemand,
     addDemand,
+    getAllDemandUsers,
+    getDemandUser,
+    getUsersDemand,
+    addDemandUsers,
 };
