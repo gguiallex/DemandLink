@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {API_URL} from './apiService'
+
+const API_URL = 'https://demand-link-backend.vercel.app';
 
 export const login = async (email, password) => {
     try {
