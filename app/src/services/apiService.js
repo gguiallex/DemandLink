@@ -30,6 +30,24 @@ export const fetchUsuarios = async () => {
     }
 };
 
+export const fetchDemandas = async () => {
+    try {
+        const response = await api.get('/demandas');
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar demandas';
+    }
+};
+
+export const fetchUsuariosByDemanda = async (tagDemanda) => {
+    try {
+        const response = await api.get(`/usuarios/demanda/${tagDemanda}`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar usuários vinculados à demanda';
+    }
+};
+
 // Função para buscar os usuários de um determinado setor
 export const fetchUsuariosBySetor = async (tagSetor) => {
     try {
@@ -37,6 +55,24 @@ export const fetchUsuariosBySetor = async (tagSetor) => {
         return response.data;
     } catch (error) {
         throw error.response?.data?.message || 'Erro ao buscar usuários do setor';
+    }
+};
+
+export const createDemanda = async (data) => {
+    try {
+        const response = await api.post('/demanda', data);
+        return response.data; // Retorna os dados da nova demanda (incluindo o `tagDemanda`)
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao criar demanda';
+    }
+};
+
+export const createEnvolvidoDemanda = async (data) => {
+    try {
+        const response = await api.post('/demanda/usuario', data);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao adicionar usuario à demanda';
     }
 };
 

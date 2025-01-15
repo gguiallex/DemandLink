@@ -12,7 +12,8 @@ const getDemand = async (req, res) => {
 }
 
 const addDemand = async (req, res) => {
-    const newDemand = await usersModel.addDemand(req.body);
+    const newDemand = await demandModel.addDemand(req.body);
+    console.log(newDemand);
     return res.status(200).json(newDemand);
 }
 
@@ -34,7 +35,7 @@ const getUsersDemand = async (req, res) => {
 }
 
 const addDemandUsers = async (req, res) => {
-    await usersModel.addDemandUsers(req.body);
+    await demandModel.addDemandUsers(req.body);
     return res.status(204).json({message: 'Usuário(s) registrado(s) com sucesso na demanda!'})
 }
 

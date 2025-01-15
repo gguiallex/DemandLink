@@ -1,10 +1,53 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import "./DemandPage.css"
 import SideMenu from "../../components/Menu/SidebarMenu"
 import InfoTop from "../../components/InfoTop/InfoTop"
 import BotaoDemanda from "../../components/Botões/BotaoDemanda"
 
+import { fetchDemandas, fetchUsuariosByDemanda } from "../../services/apiService";
+
 const DemandPage = ({ }) => {
+    const [demandas, setDemandas] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const loadDemandas = async () => {
+        try {
+            setLoading(true);
+            const demandasData = await fetchDemandas();
+
+            const demandasWitchUsers = await Promise.all(
+                demandasData.map(async (demanda) => {
+                    const usuarios = await fetchUsuariosByDemanda(demanda.tagDemanda);
+                    const envolvidos = usuarios.map((user) => user.nome).join(" | ");
+                    return { ...demanda, envolvidos };
+                })
+            );
+            console.log(demandasWitchUsers);
+
+            setDemandas(demandasWitchUsers);
+        } catch (err) {
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        loadDemandas();
+    }, []);
+
+    const formatDate = (date) => {
+        const options = {
+            day: "2-digit",
+            month: "2-digit",
+        };
+        return new Intl.DateTimeFormat('pt-BR', options).format(new Date(date));
+    };
+
+    if (loading) return <div>Carregando...</div>;
+    if (error) return <div>Erro: {error}</div>;
+
     return (
         <div className="container-inicio">
             <div className="menuLateral">
@@ -17,7 +60,7 @@ const DemandPage = ({ }) => {
                 <div className="infosPrincipais">
                     <div className="NovaDemanda">
                         <div className="BotaoDemandaa">
-                            <BotaoDemanda/>
+                            <BotaoDemanda onDemandCreated={loadDemandas}/>
                         </div>
 
                         <div class="table-container">
@@ -35,36 +78,18 @@ const DemandPage = ({ }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>01.</td>
-                                        <td>Marketing</td>
-                                        <td>Digital</td>
-                                        <td>Dia Das Mães</td>
-                                        <td>Maria Luiza|Guilherme Alexandre</td>
-                                        <td>11/05</td>
-                                        <td>Urgente</td>
-                                        <td><button class="status-btn">Pendente</button></td>
+                                    {demandas.map((demanda, index) => (
+                                    <tr key={index}>
+                                        <td>{demanda.tagDemanda}</td>
+                                        <td>{demanda.tagSetor}</td>
+                                        <td>{demanda.projeto}</td>
+                                        <td>{demanda.descricao}</td>
+                                        <td>{demanda.envolvidos}</td>
+                                        <td>{formatDate(demanda.dataFim)}</td>
+                                        <td>{demanda.urgencia}</td>
+                                        <td><button class="status-btn">{demanda.status}</button></td>
                                     </tr>
-                                    <tr>
-                                        <td>02.</td>
-                                        <td>ESG</td>
-                                        <td>ODS</td>
-                                        <td>Cronograma</td>
-                                        <td>João Pedro|Sofia Teixeira</td>
-                                        <td>16/01</td>
-                                        <td>Muito Urgente</td>
-                                        <td><button class="status-btn">Em And...</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>03.</td>
-                                        <td>Saúde e...</td>
-                                        <td>AD</td>
-                                        <td>Banner Lançamento</td>
-                                        <td>Sofia|Maria Luiza</td>
-                                        <td>30/01</td>
-                                        <td>Pouco Urgente</td>
-                                        <td><button class="status-btn">Concluído</button></td>
-                                    </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

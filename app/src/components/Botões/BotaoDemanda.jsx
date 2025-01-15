@@ -3,9 +3,9 @@ import "./Botoes.css"
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { BiSolidCheckCircle } from "react-icons/bi"
-import { fetchSetores, fetchUsuarios } from '../../services/apiService';
+import { fetchSetores, fetchUsuarios, createDemanda, createEnvolvidoDemanda } from '../../services/apiService';
 
-const BotaoDemanda = () => {
+const BotaoDemanda = ({ onDemandCreated }) => {
     const [showModal, setShowModal] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
 
@@ -16,6 +16,7 @@ const BotaoDemanda = () => {
 
     const [projeto, setProjeto] = useState("");
     const [descricaoDemanda, setDescricaoDemanda] = useState("");
+    const [urgencia, setUrgencia] = useState("");
     const [prazo, setPrazo] = useState("");
 
     const [errors, setErrors] = useState({});
@@ -110,6 +111,45 @@ const BotaoDemanda = () => {
         return Object.keys(newErrors).length === 0;
     };
 
+    const criarDemanda = async () => {
+        try {
+            // Cria a nova demanda
+            const newDemanda = {
+                tagSetor: selectedSetor,
+                projeto,
+                descricao: descricaoDemanda,
+                urgencia: urgencia,
+                dataFim: prazo, // Enviar a data de entrega como prazo
+            };
+
+            const createdDemanda = await createDemanda(newDemanda); // API retorna o `tagDemanda`
+
+            console.log(createdDemanda);
+
+            const tagDemanda = createdDemanda.tagDemanda;
+
+            console.log(tagDemanda);
+
+            // Adiciona os envolvidos na tabela `EnvolvidosDemanda`
+            const envolvidosPromises = selectedEnvolvidos.map((envolvido) =>
+                createEnvolvidoDemanda({ tagDemanda, tagSetor: selectedSetor, idUsuario: envolvido.value })
+            );
+
+            await Promise.all(envolvidosPromises); // Espera a criação de todos os envolvidos
+
+            alert("Demanda criada com sucesso!");
+            handleCloseModal(); // Fecha o modal
+            
+            // Chama a função de recarregamento da `DemandPage`
+            if (onDemandCreated) {
+                onDemandCreated();
+            }
+        } catch (error) {
+            console.error("Erro ao criar demanda e/ou envolvidos:", error);
+            alert("Erro ao criar a demanda. Tente novamente.");
+        }
+    };
+
     return (
         <div className="botoesInferiores">
             <button onClick={handleOpenModal}>Solicitar Demanda</button>
@@ -141,7 +181,7 @@ const BotaoDemanda = () => {
                                     <div className="AreaSolicitacao">
                                         <label className="perguntaTexto">
                                             Para qual área será sua solicitação?
-                                            <select className={`selectSetor ${ attemptedSubmit && errors.selectedSetor ? "error" : ""}`}
+                                            <select className={`selectSetor ${attemptedSubmit && errors.selectedSetor ? "error" : ""}`}
                                                 value={selectedSetor}
                                                 onChange={(e) => setSelectedSetor(e.target.value)}
                                             >
@@ -191,7 +231,7 @@ const BotaoDemanda = () => {
                                             type="text" placeholder="Projeto ao qual a demanda está relacionada"
                                             value={projeto}
                                             onChange={(e) => setProjeto(e.target.value)} />
-                                            {attemptedSubmit && errors.projeto && (
+                                        {attemptedSubmit && errors.projeto && (
                                             <p className="errorText">{errors.projeto}</p>
                                         )}
                                     </label>
@@ -207,6 +247,22 @@ const BotaoDemanda = () => {
                                             <p className="errorText">{errors.descricaoDemanda}</p>
                                         )}
                                     </label>
+                                    <label className="perguntaTexto">
+                                        Nivel de urgencia
+                                        <select
+                                            className={attemptedSubmit && errors.urgencia ? "error" : ""}
+                                            value={urgencia}
+                                            onChange={(e) => setUrgencia(e.target.value)}
+                                        >
+                                            <option value="">Selecione o nível de urgência</option>
+                                            <option value="alta">Alta</option>
+                                            <option value="media">Média</option>
+                                            <option value="baixa">Baixa</option>
+                                        </select>
+                                        {attemptedSubmit && errors.urgencia && (
+                                            <p className="errorText">{errors.urgencia}</p>
+                                        )}
+                                    </label>
                                 </form>
                             </div>
                         )}
@@ -218,7 +274,7 @@ const BotaoDemanda = () => {
                                         Prazo de entrega.
                                         <p className="perguntaInfo">Informe a data limite para a entrega da demanda, garantindo que tenhamos tempo suficiente para atender suas necessidades com qualidade.</p>
                                         <input
-                                            className={attemptedSubmit && errors.prazo ? "error" : ""} 
+                                            className={attemptedSubmit && errors.prazo ? "error" : ""}
                                             type="date"
                                             value={prazo}
                                             onChange={(e) => setPrazo(e.target.value)} placeholder="dd/mm/aaaa" />
@@ -243,10 +299,10 @@ const BotaoDemanda = () => {
                                 </button>
                             )}
                             {currentStep === 3 && (
-                                <button type="submit" onClick={() => {
+                                <button type="submit" onClick={async () => {
                                     setAttemptedSubmit(true);
                                     if (validateFields("all")) {
-                                        handleCloseModal(); // Só fecha o modal se os campos estiverem válidos
+                                        await criarDemanda(); // Cria a demanda e os envolvidos
                                     }
                                 }}>
                                     Finalizar
