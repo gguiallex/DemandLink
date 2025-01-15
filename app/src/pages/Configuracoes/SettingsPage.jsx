@@ -17,7 +17,8 @@ const SettingsPage = () => {
     const [message, setMessage] = useState("");
 
     const API_URL = 'https://demand-link.vercel.app';
-    
+    const defaultProfilePicture = "../../imgs/icone-padrao.png";
+
     // Carrega dados do LocalStorage/SessionStorage
     useEffect(() => {
         const storedIdUser = localStorage.getItem("IdUsuario") || sessionStorage.getItem("IdUsuario");
@@ -93,24 +94,26 @@ const SettingsPage = () => {
                                 />
                             ) : perfilPictureUser ? (
                                 <img
-                                  src={perfilPictureUser}
-                                  alt="Foto de Perfil"
-                                  style={{
-                                    width: "250px",
-                                    height: "250px",
-                                    borderRadius: "50%",
-                                    objectFit: "cover",
-                                  }}
-                                />
-                              ) : (
-                                <div
+                                    src={perfilPictureUser}
+                                    alt="Foto de Perfil"
                                     style={{
-                                        width: '250px',
-                                        height: '250px',
-                                        borderRadius: '50%',
-                                        backgroundColor: '#ccc',
+                                        width: "250px",
+                                        height: "250px",
+                                        borderRadius: "50%",
+                                        objectFit: "cover",
                                     }}
-                                ></div>
+                                />
+                            ) : (
+                                <img
+                                    src={defaultProfilePicture}
+                                    alt="Foto de Perfil Padrão"
+                                    style={{
+                                        width: "250px",
+                                        height: "250px",
+                                        borderRadius: "50%",
+                                        objectFit: "cover",
+                                    }}
+                                />
                             )}
                         </div>
                         <input
