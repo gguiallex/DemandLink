@@ -11,7 +11,7 @@ const autenticar = async (req, res) => {
         const user = await authModel.autenticar(email, password);
 
         if (user) {
-            const { idUsuario, tagSetor, fotoPerfil, nomeSistema, tipo, nome } = user;
+            const { idUsuario, tagSetor, fotoPerfil, nomeSistema, tipo, nome, email, senha } = user;
             
             // Gera um token JWT com as informações do usuário
             const token = jwt.sign({
