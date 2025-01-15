@@ -12,8 +12,8 @@ const getDemand = async (req, res) => {
 }
 
 const addDemand = async (req, res) => {
-    await usersModel.addDemand(req.body);
-    return res.status(204).json({message: 'Demanda criada com sucesso'});
+    const newDemand = await usersModel.addDemand(req.body);
+    return res.status(204).json(newDemand);
 }
 
 const getAllDemandUsers = async (req, res) => {
