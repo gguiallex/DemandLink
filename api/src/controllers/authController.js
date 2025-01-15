@@ -11,9 +11,11 @@ const autenticar = async (req, res) => {
         const user = await authModel.autenticar(email, password);
 
         if (user) {
-            const { tagSetor, nomeSistema, tipo, nome } = user;
+            const { idUsuario, tagSetor, nomeSistema, tipo, nome } = user;
+            
             // Gera um token JWT com as informações do usuário
-            const token = jwt.sign({ 
+            const token = jwt.sign({
+                IdUsuario: idUsuario, 
                 TagSetor: tagSetor,
                 NomeSistema: nomeSistema,
                 Nome: nome, 
@@ -23,6 +25,7 @@ const autenticar = async (req, res) => {
             res.json({ 
                 token,
                 expiresIn: rememberMe ? '7d' : '8h',
+                IdUsuario: idUsuario,
                 TagSetor: tagSetor,
                 NomeSistema: nomeSistema,
                 Nome: nome, 
