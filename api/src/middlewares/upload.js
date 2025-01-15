@@ -1,17 +1,32 @@
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 // Configuração do armazenamento
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '../uploads/')); // Define a pasta de destino
+        const { idUsuario } = req.params; // Obtém o ID do usuário a partir da rota
+        const folder = 'profilePictures'; // A pasta base para as fotos de perfil
+
+        // Define o caminho de upload com a subpasta baseada no ID do usuário
+        const uploadPath = path.join(__dirname, '../uploads', folder, idUsuario);
+
+        // Verifica se a pasta existe; se não, cria
+        fs.mkdir(uploadPath, { recursive: true }, (err) => {
+            if (err) {
+                console.error('Erro ao criar a subpasta:', err);
+                return cb(err); // Retorna o erro no callback
+            }
+            cb(null, uploadPath); // Define o caminho de destino
+        });
     },
     filename: (req, file, cb) => {
-        const uniqueName = `${Date.now()}-${file.originalname}`;
-        cb(null, uniqueName); // Define o nome único do arquivo
+        const uniqueName = `${Date.now()}-${file.originalname}`; // Gera um nome único para o arquivo
+        cb(null, uniqueName);
     }
 });
 
+// Instância do multer
 const upload = multer({ storage });
 
 module.exports = upload;

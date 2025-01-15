@@ -3,22 +3,38 @@ import "./SettingsPage.css"
 import axios from 'axios';
 import SideMenu from "../../components/Menu/SidebarMenu"
 import InfoTop from "../../components/InfoTop/InfoTop"
-import { uploadProfilePicture } from "../../services/apiService";
+import { API_URL, uploadProfilePicture } from "../../services/apiService";
 
 const SettingsPage = () => {
 
     const [selectedFile, setSelectedFile] = useState(null);
-    const [idUser, setIdUser] = useState("");
-    const [typeUser, setTypeUser] = useState("");
+    const [idUser, setIdUser] = useState(""); // id usuario
+    const [typeUser, setTypeUser] = useState(""); // tipo usuario
+    const [emailUser, setEmailUser] = useState(""); // email usuario
+    const [passwordUser, setPasswordUser] = useState(""); // senha usuario
+    const [perfilPictureUser, setPerfilPictureUser] = useState(null); // foto de perfil do usuario
     const [preview, setPreview] = useState(null);
     const [message, setMessage] = useState("");
 
+    // Carrega dados do LocalStorage/SessionStorage
     useEffect(() => {
-        const storedIdUser = localStorage.getItem("idUsuario") || sessionStorage.getItem("idUsuario");
-        const storedTypeUser = localStorage.getItem("tipo") || sessionStorage.getItem("tipo");
+        const storedIdUser = localStorage.getItem("IdUsuario") || sessionStorage.getItem("IdUsuario");
+        const storedTypeUser = localStorage.getItem("Tipo") || sessionStorage.getItem("Tipo");
+        const storedEmailUser = localStorage.getItem("Email") || sessionStorage.getItem("Email");
+        const storedPasswordUser = localStorage.getItem("Senha") || sessionStorage.getItem("Senha");
+        const storedPerfilPictureUser = localStorage.getItem("FotoPerfil") || sessionStorage.getItem("FotoPerfil");
 
         if (storedIdUser) setIdUser(storedIdUser);
         if (storedTypeUser) setTypeUser(storedTypeUser);
+        if (storedEmailUser) setEmailUser(storedEmailUser);
+        if (storedPasswordUser) setPasswordUser(storedPasswordUser);
+        if (storedPerfilPictureUser) {
+            const urlCompleta = `${API_URL}${storedPerfilPictureUser}`;
+            setPerfilPictureUser(urlCompleta);
+        } else {
+            console.warn("Nenhuma foto de perfil encontrada no armazenamento.");
+        }
+
     }, [])
 
     const handleFileChange = (e) => {
@@ -36,7 +52,7 @@ const SettingsPage = () => {
         try {
             const response = await uploadProfilePicture(idUser, formData);
             setMessage(response.message);
-            console.log("Caminho da nova foto:", response.caminhoFotoPerfil);
+            setProfilePicture(response.caminhoFotoPerfil);
         } catch (error) {
             setMessage("Erro ao enviar a foto de perfil.");
         }
@@ -67,17 +83,28 @@ const SettingsPage = () => {
                                     src={preview}
                                     alt="Preview"
                                     style={{
-                                        width: '150px',
-                                        height: '150px',
+                                        width: '250px',
+                                        height: '250px',
                                         borderRadius: '50%',
                                         objectFit: 'cover',
                                     }}
                                 />
-                            ) : (
+                            ) : perfilPictureUser ? (
+                                <img
+                                  src={perfilPictureUser}
+                                  alt="Foto de Perfil"
+                                  style={{
+                                    width: "250px",
+                                    height: "250px",
+                                    borderRadius: "50%",
+                                    objectFit: "cover",
+                                  }}
+                                />
+                              ) : (
                                 <div
                                     style={{
-                                        width: '150px',
-                                        height: '150px',
+                                        width: '250px',
+                                        height: '250px',
                                         borderRadius: '50%',
                                         backgroundColor: '#ccc',
                                     }}
@@ -108,11 +135,11 @@ const SettingsPage = () => {
                         </div>
                         <div className="input-group">
                             <label>Senha</label>
-                            <input type="password" placeholder="Placeholder" />
+                            <input type="password" placeholder="Digite sua senha atual..." />
                         </div>
                         <div className="input-group">
                             <label>Nova Senha</label>
-                            <input type="password" placeholder="Placeholder" />
+                            <input type="password" placeholder="Digite sua nova senha..." />
                         </div>
                     </div>
                 </div>

@@ -59,7 +59,7 @@ const editUser = async (idUsuario, Usuario) => {
 const updateUserPicture = async (idUsuario, caminhoFotoPerfil) => {
     const query = 'UPDATE Usuarios SET fotoPerfil = ? WHERE idUsuario = ?';
     await connection.execute(query, [caminhoFotoPerfil, idUsuario]);
-};
+}
 
 module.exports = {
     getAll,

@@ -30,16 +30,19 @@ const LoginPage = ({ }) => {
             // Faz a requisição para a API
             const response = await login(email, password, rememberMe);
 
-            const { token, idUsuario, Nome, Tipo, NomeSistema, TagSetor } = response // Supondo que a API retorne um token
+            const { token, IdUsuario, Nome, Tipo, NomeSistema, TagSetor, FotoPerfil, Email, Senha } = response // Supondo que a API retorne um token
 
             const storage = rememberMe ? localStorage : sessionStorage;
             // Armazenando os dados no armazenamento local ou de sessão
             storage.setItem("authToken", token);
-            storage.setItem("idUsuario", idUsuario);
+            storage.setItem("IdUsuario", IdUsuario);
             storage.setItem("Nome", Nome);
             storage.setItem("Tipo", Tipo);
             storage.setItem("NomeSistema", NomeSistema);
             storage.setItem("TagSetor", TagSetor);
+            storage.setItem("FotoPerfil", FotoPerfil);
+            storage.setItem("Email", Email);
+            storage.setItem("Senha", Senha);
 
             setTimeout(() => {
                 alert('login bem-sucedido!');

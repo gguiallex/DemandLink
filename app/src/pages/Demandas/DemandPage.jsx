@@ -23,7 +23,6 @@ const DemandPage = ({ }) => {
                     return { ...demanda, envolvidos };
                 })
             );
-            console.log(demandasWitchUsers);
 
             setDemandas(demandasWitchUsers);
         } catch (err) {

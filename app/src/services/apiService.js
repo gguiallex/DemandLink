@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://demand-link-backend.vercel.app';
+export const API_URL = 'http://localhost:4444';
 
 // Instância do axios com configuração base
 const api = axios.create({
@@ -30,6 +30,7 @@ export const fetchUsuarios = async () => {
     }
 };
 
+// Função para buscar todas as demandas
 export const fetchDemandas = async () => {
     try {
         const response = await api.get('/demandas');
@@ -39,6 +40,7 @@ export const fetchDemandas = async () => {
     }
 };
 
+// Função para buscar todos os usuarios de uma demanda
 export const fetchUsuariosByDemanda = async (tagDemanda) => {
     try {
         const response = await api.get(`/usuarios/demanda/${tagDemanda}`);
@@ -58,6 +60,7 @@ export const fetchUsuariosBySetor = async (tagSetor) => {
     }
 };
 
+// Função para criar uma nova demanda
 export const createDemanda = async (data) => {
     try {
         const response = await api.post('/demanda', data);
@@ -67,6 +70,7 @@ export const createDemanda = async (data) => {
     }
 };
 
+// Função para adicionar usuarios na nova demanda
 export const createEnvolvidoDemanda = async (data) => {
     try {
         const response = await api.post('/demanda/usuario', data);
@@ -76,6 +80,7 @@ export const createEnvolvidoDemanda = async (data) => {
     }
 };
 
+// Função para atualizar a foto de perfil de um determinado usuario
 export const uploadProfilePicture = async (idUsuario, formData) => {
     try {
       const response = await api.post(

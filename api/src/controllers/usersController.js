@@ -48,7 +48,7 @@ const editUser = async (req, res) => {
 const updateUserPicture = async (req, res) => {
     try {
         const { idUsuario } = req.params;
-        const caminhoFotoPerfil = `/uploads/profilePictures/${req.file.filename}`;
+        const caminhoFotoPerfil = `/uploads/profilePictures/${idUsuario}/${req.file.filename}`;
 
         await usersModel.updateUserPicture(idUsuario, caminhoFotoPerfil);
 
