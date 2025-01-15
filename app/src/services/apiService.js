@@ -76,5 +76,23 @@ export const createEnvolvidoDemanda = async (data) => {
     }
 };
 
+export const uploadProfilePicture = async (idUsuario, formData) => {
+    try {
+      const response = await api.post(
+        `/usuarios/${idUsuario}/atualizarFotoPerfil`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao fazer upload da foto de perfil:", error);
+      throw error;
+    }
+  };
+
 // Exportar o objeto axios caso precise fazer chamadas customizadas
 export default api;

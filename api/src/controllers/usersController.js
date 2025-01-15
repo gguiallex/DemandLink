@@ -45,6 +45,20 @@ const editUser = async (req, res) => {
     return res.status(200).json(editedUser);
 }
 
+const updateUserPicture = async (req, res) => {
+    try {
+        const { idUsuario } = req.params;
+        const caminhoFotoPerfil = `/uploads/profilePictures/${req.file.filename}`;
+
+        await usersModel.updateUserPicture(idUsuario, caminhoFotoPerfil);
+
+        res.status(200).json({message: 'Foto de perfil atualizada com sucesso!', caminhoFotoPerfil});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro ao fazer upload da foto de perfil.' });
+    }
+}
+
 module.exports = {
     getAll,
     getUser,
@@ -53,4 +67,5 @@ module.exports = {
     addUser,
     removeUser,
     editUser,
+    updateUserPicture,
 }

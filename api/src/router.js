@@ -1,4 +1,5 @@
 const express = require('express'); 
+const upload = require('./middlewares/upload');
 const usersController =  require('./controllers/usersController');
 const sectorController = require('./controllers/sectorController');
 const demandController = require('./controllers/demandController');
@@ -20,6 +21,7 @@ router.get('/usuarios/:tipo', usersController.getUsersByType); // exibir todos o
 router.get('/usuarios/setor/:tagSetor', usersController.getUsersBySector); // exibir todos os usuários de um setor expecífico
 router.post('/usuario', usersController.addUser); // adicionar um novo usuário
 router.put('/usuario/:idUsuario',usersController.editUser); // editar usuário expecífico
+router.post('/:idUsuario/atualizarFotoPerfil', upload.single('profilePicture'), usersController.updateUserPicture); // upload da foto de perfil
 router.delete('/usuario/:idUsuario', usersController.removeUser); // remover usuário expecífico
 
 // ====================== SETORES ======================

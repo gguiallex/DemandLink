@@ -1,0 +1,65 @@
+.infosPrincipaisSettings{
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+    box-shadow: 0px 0px 19.1px -7px rgba(0, 0, 0, 0.11);
+    gap: 10%;
+}
+
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+  }
+  
+  .edit-photo-button {
+    background-color: #5b24f2;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .edit-photo-button:hover {
+    background-color: #4a1ec2;
+  }
+  
+  .form-section {
+    width: 60%;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  .input-group label {
+    font-size: 14px;
+    color: #5b24f2;
+    margin-bottom: 5px;
+  }
+  
+  .input-group input {
+    border: 1px solid #5b24f2;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .input-group input::placeholder {
+    color: #aaa;
+  }

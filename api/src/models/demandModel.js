@@ -51,8 +51,6 @@ const getUsersDemand = async (tagDemanda) => {
         JOIN Usuarios u ON e.idUsuario = u.idUsuario
         WHERE e.tagDemanda = ?`, [tagDemanda]
     );
-
-    console.log(UsersDemand);
     return UsersDemand;
 }
 
