@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import "./SettingsPage.css"
-import axios from 'axios';
 import SideMenu from "../../components/Menu/SidebarMenu"
 import InfoTop from "../../components/InfoTop/InfoTop"
 import { uploadProfilePicture } from "../../services/apiService";
@@ -16,8 +15,9 @@ const SettingsPage = () => {
     const [preview, setPreview] = useState(null);
     const [message, setMessage] = useState("");
 
+
     const API_URL = 'https://demand-link-backend.vercel.app';
-    const DEFAULT_PROFILE_PICTURE = "../../imgs/icone-padrao.png";
+    const DEFAULT_PROFILE_PICTURE = "/imgs/icone-padrao.png";
 
     // Carrega dados do LocalStorage/SessionStorage
     useEffect(() => {
