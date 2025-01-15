@@ -13,7 +13,7 @@ const getDemand = async (req, res) => {
 
 const addDemand = async (req, res) => {
     const newDemand = await usersModel.addDemand(req.body);
-    return res.status(204).json(newDemand);
+    return res.status(200).json(newDemand);
 }
 
 const getAllDemandUsers = async (req, res) => {
