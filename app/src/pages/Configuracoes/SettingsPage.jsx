@@ -16,8 +16,8 @@ const SettingsPage = () => {
     const [preview, setPreview] = useState(null);
     const [message, setMessage] = useState("");
 
-    const API_URL = 'https://demand-link.vercel.app';
-    const defaultProfilePicture = "../../imgs/icone-padrao.png";
+    const API_URL = 'https://demand-link-backend.vercel.app';
+    const DEFAULT_PROFILE_PICTURE = "../../imgs/icone-padrao.png";
 
     // Carrega dados do LocalStorage/SessionStorage
     useEffect(() => {
@@ -92,21 +92,10 @@ const SettingsPage = () => {
                                         objectFit: 'cover',
                                     }}
                                 />
-                            ) : perfilPictureUser ? (
-                                <img
-                                    src={perfilPictureUser}
-                                    alt="Foto de Perfil"
-                                    style={{
-                                        width: "250px",
-                                        height: "250px",
-                                        borderRadius: "50%",
-                                        objectFit: "cover",
-                                    }}
-                                />
                             ) : (
                                 <img
-                                    src={defaultProfilePicture}
-                                    alt="Foto de Perfil Padrão"
+                                    src={perfilPictureUser || DEFAULT_PROFILE_PICTURE}
+                                    alt="Foto de Perfil"
                                     style={{
                                         width: "250px",
                                         height: "250px",
