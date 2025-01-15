@@ -11,15 +11,18 @@ const autenticar = async (req, res) => {
         const user = await authModel.autenticar(email, password);
 
         if (user) {
-            const { idUsuario, tagSetor, nomeSistema, tipo, nome } = user;
+            const { idUsuario, tagSetor, fotoPerfil, nomeSistema, tipo, nome } = user;
             
             // Gera um token JWT com as informações do usuário
             const token = jwt.sign({
                 IdUsuario: idUsuario, 
                 TagSetor: tagSetor,
+                FotoPerfil: fotoPerfil,
                 NomeSistema: nomeSistema,
                 Nome: nome, 
                 Tipo: tipo,
+                Email: email,
+                Senha: senha,
             }, jwtSecret, { expiresIn: rememberMe ? '7d' : '8h' });
 
             res.json({ 
@@ -27,9 +30,12 @@ const autenticar = async (req, res) => {
                 expiresIn: rememberMe ? '7d' : '8h',
                 IdUsuario: idUsuario,
                 TagSetor: tagSetor,
+                FotoPerfil: fotoPerfil,
                 NomeSistema: nomeSistema,
                 Nome: nome, 
-                Tipo: tipo
+                Tipo: tipo,
+                Email: email,
+                Senha: senha
             });
         } else {
             res.status(401).json({ message: 'Credenciais inválidas' });
