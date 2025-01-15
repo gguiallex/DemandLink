@@ -79,7 +79,7 @@ export const createEnvolvidoDemanda = async (data) => {
 export const uploadProfilePicture = async (idUsuario, formData) => {
     try {
       const response = await api.post(
-        `/usuarios/${idUsuario}/atualizarFotoPerfil`,
+        `/${idUsuario}/atualizarFotoPerfil`,
         formData,
         {
           headers: {
