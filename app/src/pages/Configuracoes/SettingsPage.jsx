@@ -3,7 +3,7 @@ import "./SettingsPage.css"
 import axios from 'axios';
 import SideMenu from "../../components/Menu/SidebarMenu"
 import InfoTop from "../../components/InfoTop/InfoTop"
-import { API_URL, uploadProfilePicture } from "../../services/apiService";
+import { uploadProfilePicture } from "../../services/apiService";
 
 const SettingsPage = () => {
 
@@ -16,6 +16,8 @@ const SettingsPage = () => {
     const [preview, setPreview] = useState(null);
     const [message, setMessage] = useState("");
 
+    const API_URL = 'https://demand-link.vercel.app';
+    
     // Carrega dados do LocalStorage/SessionStorage
     useEffect(() => {
         const storedIdUser = localStorage.getItem("IdUsuario") || sessionStorage.getItem("IdUsuario");
