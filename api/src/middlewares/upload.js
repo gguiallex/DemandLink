@@ -36,4 +36,12 @@ const upload = multer({
     },
 });
 
+// Uso do upload no controlador
+app.post('/upload', upload.single('profilePicture'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'Nenhum arquivo enviado.' });
+    }
+    res.json({ message: 'Upload bem-sucedido', file: req.file });
+});
+
 module.exports = upload;

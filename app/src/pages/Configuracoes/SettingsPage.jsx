@@ -14,6 +14,7 @@ const SettingsPage = () => {
     const [perfilPictureUser, setPerfilPictureUser] = useState(null); // foto de perfil do usuario
     const [preview, setPreview] = useState(null);
     const [message, setMessage] = useState("");
+    const [isUploading, setIsUploading] = useState(false);
 
     const API_URL = 'https://demand-link-backend.vercel.app';
     const DEFAULT_PROFILE_PICTURE = "/imgs/icone-padrao.png";
@@ -54,6 +55,9 @@ if (storedPerfilPictureUser && storedPerfilPictureUser !== 'null' && storedPerfi
     const handleUpload = async () => {
         if (!selectedFile) return alert('Selecione uma foto antes de enviar.');
 
+        // Configuração para evitar múltiplos envios simultâneos
+        setIsUploading(true);
+
         // Validação do tipo de arquivo
         const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
         if (!allowedTypes.includes(selectedFile.type)) {
@@ -70,11 +74,14 @@ if (storedPerfilPictureUser && storedPerfilPictureUser !== 'null' && storedPerfi
 
         try {
             const response = await uploadProfilePicture(idUser, formData);
+            console.log('Caminho da foto de perfil:', response.caminhoFotoPerfil);
             setMessage("Foto de perfil modificada com sucesso!");
             setProfilePicture(response.caminhoFotoPerfil);
             localStorage.setItem("FotoPerfil", response.caminhoFotoPerfil);
         } catch (error) {
             setMessage("Erro ao enviar a foto de perfil.");
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -130,8 +137,9 @@ if (storedPerfilPictureUser && storedPerfilPictureUser !== 'null' && storedPerfi
                         />
                         <button className="edit-photo-button" onClick={() => document.getElementById('profile-photo-input').click()}>Editar foto de Perfil</button>
                         {selectedFile && (
-                            <button className="edit-photo-button" onClick={handleUpload}>
-                                Enviar Foto
+                            <button className="edit-photo-button" onClick={handleUpload}
+                            disabled={isUploading || !selectedFile}>
+                                {isUploading ? 'Enviando...' : 'Enviar Foto'}
                             </button>
                         )}
                     </div>
