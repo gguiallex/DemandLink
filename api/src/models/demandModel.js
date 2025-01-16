@@ -40,17 +40,33 @@ const getAllDemandUsers = async () => {
 }
 
 const getDemandUser = async (idUsuario) => {
-    const [demandUser] = await connection.execute(' SELECT * FROM EnvolvidosDemanda WHERE idUsuario = ?', [idUsuario]);
-    return demandUser;
+    const [demandUser] = await connection.execute(
+        'SELECT tagDemanda FROM EnvolvidosDemanda WHERE idUsuario = ?',
+        [idUsuario]
+    );
+
+    // Extraia as tags de demanda
+    const tagsDemanda = demandUser.map((row) => row.tagDemanda);
+
+    if (tagsDemanda.length === 0) {
+        return []; // Retorna uma lista vazia se o usuário não estiver envolvido em nenhuma demanda
+    }
+
+    // Busque as informações detalhadas das demandas com base nas tags
+    const [demands] = await connection.execute(
+        `SELECT * FROM Demandas WHERE tagDemanda IN (${tagsDemanda.map(() => '?').join(',')})`,
+        tagsDemanda
+    );
+    return demands;
 }
 
 const getUsersDemand = async (tagDemanda) => {
     const [UsersDemand] = await connection.execute
-    (`SELECT u.nome, e.tagDemanda, e.tagSetor
+        (`SELECT u.nome, e.tagDemanda, e.tagSetor
         FROM EnvolvidosDemanda e
         JOIN Usuarios u ON e.idUsuario = u.idUsuario
         WHERE e.tagDemanda = ?`, [tagDemanda]
-    );
+        );
     return UsersDemand;
 }
 
