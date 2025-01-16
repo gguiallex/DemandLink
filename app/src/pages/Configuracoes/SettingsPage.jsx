@@ -36,6 +36,7 @@ const SettingsPage = () => {
             setPerfilPictureUser(urlCompleta);
         } else {
             console.warn("Nenhuma foto de perfil encontrada no armazenamento.");
+            setPerfilPictureUser(DEFAULT_PROFILE_PICTURE);
         }
 
     }, [])
