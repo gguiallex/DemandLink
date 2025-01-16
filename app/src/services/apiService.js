@@ -80,6 +80,16 @@ export const createEnvolvidoDemanda = async (data) => {
     }
 };
 
+// Função para atualizar informações do usuário
+export const updateUserInfo = async (idUsuario, data) => {
+    try{
+        const response = await api.put(`/usuario/${idUsuario}`, data);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao atualizar informações do usuário';
+    }
+}
+
 // Função para atualizar a foto de perfil de um determinado usuario
 export const uploadProfilePicture = async (idUsuario, formData) => {
     try {

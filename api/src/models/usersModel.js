@@ -40,7 +40,7 @@ const addUser = async (newUsuario) => {
     const fotoPerfil = null;
 
     const query = 'INSERT INTO Usuarios(tagSetor, fotoPerfil, tipo, nome, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    const [newUser] = await connection.execute(query, [tagSetor, fotoPerfil, nomeSistema, tipo, nome, email, senha]);
+    const [newUser] = await connection.execute(query, [tagSetor, fotoPerfil, tipo, nome, email, senha]);
     return newUser;
 }
 
@@ -54,7 +54,7 @@ const editUser = async (idUsuario, Usuario) => {
     const { tagSetor, tipo, nome, email, senha } = Usuario;
 
     const query = 'UPDATE Usuarios set tagSetor = ?, tipo = ?, nome = ?, email = ?, senha = ? WHERE idUsuario = ?';
-    const [editedUser] = await connection.execute(query, [tagSetor, nomeSistema, tipo, nome, email, senha, idUsuario]);
+    const [editedUser] = await connection.execute(query, [tagSetor, tipo, nome, email, senha, idUsuario]);
     return editedUser;
 }
 

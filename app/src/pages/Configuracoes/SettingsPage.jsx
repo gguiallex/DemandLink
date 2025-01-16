@@ -10,6 +10,7 @@ const SettingsPage = () => {
     const [idUser, setIdUser] = useState(""); // id usuario
     const [nameUser, setNameUser] = useState(""); //nome usuario
     const [typeUser, setTypeUser] = useState(""); // tipo usuario
+    const [sectorUser, setSectorUser] = useState(""); // setor usuario
     const [emailUser, setEmailUser] = useState(""); // email usuario
     const [passwordUser, setPasswordUser] = useState(""); // senha usuario
     const [perfilPictureUser, setPerfilPictureUser] = useState(null); // foto de perfil do usuario
@@ -18,6 +19,7 @@ const SettingsPage = () => {
     const [isUploading, setIsUploading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
+        name: "",
         email: "",
         password: "",
     });
@@ -28,6 +30,7 @@ const SettingsPage = () => {
     // Carrega dados do LocalStorage/SessionStorage
     useEffect(() => {
         const storedIdUser = localStorage.getItem("IdUsuario") || sessionStorage.getItem("IdUsuario");
+        const storedSectorUser = localStorage.getItem("tagSetor") || sessionStorage.getItem("tagSetor");
         const storedNameUser = localStorage.getItem("Nome") || sessionStorage.getItem("Nome");
         const storedTypeUser = localStorage.getItem("Tipo") || sessionStorage.getItem("Tipo");
         const storedEmailUser = localStorage.getItem("Email") || sessionStorage.getItem("Email");
@@ -35,6 +38,7 @@ const SettingsPage = () => {
         const storedPerfilPictureUser = localStorage.getItem("FotoPerfil") || sessionStorage.getItem("FotoPerfil");
 
         if (storedIdUser) setIdUser(storedIdUser);
+        if (storedSectorUser) setSectorUser(storedSectorUser);
         if (storedNameUser) setNameUser(storedNameUser);
         if (storedTypeUser) setTypeUser(storedTypeUser);
         if (storedEmailUser) setEmailUser(storedEmailUser);
@@ -112,18 +116,44 @@ const SettingsPage = () => {
         });
     };
 
-    const handleSave = () => {
-        setIsEditing(false);
-        setNameUser(dormData.name);
-        setEmailUser(formData.email);
-        setPasswordUser(formData.password);
-        setMessage("Informações atualizadas com sucesso!");
-        setTimeout(() => setMessage(""), 3000);
+    const handleSave = async () => {
+        if (formData.passwordAtual !== passwordUser) {
+            setMessage("A senha atual está incorreta.");
+            setTimeout(() => setMessage(""), 3000);
+            return;
+        }
 
-        // Salvar as informações no LocalStorage
-        localStorage.setItem("Nome", formData.name);
-        localStorage.setItem("Email", formData.email);
-        localStorage.setItem("Senha", formData.password);
+        setIsEditing(false);
+
+        // Atualizar apenas a senha se o campo nova senha não estiver vazio
+        const novaSenha = formData.novaSenha?.trim() ? formData.novaSenha : passwordUser;
+
+        // Dados para enviar à API
+        const dataToUpdate = {
+            tagSetor: sectorUser,
+            tipo: typeUser,
+            nome: formData.name,
+            email: formData.email,
+            senha: novaSenha,
+        };
+
+        try {
+            const response = await updateUserInfo(idUser, dataToUpdate);
+            setNameUser(formData.name);
+            setEmailUser(formData.email);
+            setPasswordUser(novaSenha);
+
+            setMessage("Informações atualizadas com sucesso!");
+            setTimeout(() => setMessage(""), 3000);
+
+            // Salvar as informações no LocalStorage
+            localStorage.setItem("Nome", formData.name);
+            localStorage.setItem("Email", formData.email);
+            localStorage.setItem("Senha", novaSenha);
+        } catch (error) {
+            setMessage(`Erro ao atualizar: ${error}`);
+            setTimeout(() => setMessage(""), 3000);
+        }
     };
 
     const handleCancel = () => {
@@ -136,7 +166,8 @@ const SettingsPage = () => {
     };
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData((prevState) => ({ ...prevState, [name]: value }))
     };
 
     return (
@@ -218,15 +249,17 @@ const SettingsPage = () => {
                                 </div>
                                 <div className="input-group">
                                     <label>Nova Senha</label>
-                                    <input type="password" name="password" onChange={handleChange} />
+                                    <input type="password" name="novaSenha"
+                                        value={formData.novaSenha} onChange={handleChange} />
                                 </div>
                                 <div className="input-group">
                                     <label>Senha Atual</label>
-                                    <input type="password" name="password" onChange={handleChange} />
+                                    <input type="password" name="passwordAtual"
+                                        value={formData.passwordAtual} onChange={handleChange} />
                                 </div>
                                 <div className="button-forms-edit">
-                                <button className="edit-photo-button" onClick={handleSave}>Salvar</button>
-                                <button className="edit-photo-button" onClick={handleCancel}>Cancelar</button>
+                                    <button className="edit-photo-button" onClick={handleSave}>Salvar</button>
+                                    <button className="edit-photo-button" onClick={handleCancel}>Cancelar</button>
                                 </div>
                             </>
                         )}
