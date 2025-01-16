@@ -1,5 +1,4 @@
 const mysql = require('mysql2/promise');
-const cloudinary = require('cloudinary').v2;
 
 require('dotenv').config();
 
@@ -14,11 +13,5 @@ const connection = mysql.createPool({
     queueLimit: 0,  // Limite de solicitações em fila quando o pool atinge o máximo de conexões (0 = sem limite)
     ssl: { rejectUnauthorized: false }, // Configuração para ignorar validação de certificado SSL (útil para ambientes de desenvolvimento)
 });
-
-cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
-  });
 
 module.exports = connection;
