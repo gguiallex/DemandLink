@@ -3,7 +3,6 @@ import "./DemandPage.css"
 import SideMenu from "../../components/Menu/SidebarMenu"
 import InfoTop from "../../components/InfoTop/InfoTop"
 import BotaoDemanda from "../../components/Botões/BotaoDemanda"
-
 import { fetchDemandas, fetchUsuariosByDemanda } from "../../services/apiService";
 
 const DemandPage = ({ }) => {
@@ -58,9 +57,7 @@ const DemandPage = ({ }) => {
 
                 <div className="infosPrincipais">
                     <div className="NovaDemanda">
-                        <div className="BotaoDemandaa">
-                            <BotaoDemanda onDemandCreated={loadDemandas}/>
-                        </div>
+
 
                         <div class="table-container">
                             <table class="custom-table">

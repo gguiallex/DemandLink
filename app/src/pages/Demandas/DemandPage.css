@@ -9,7 +9,7 @@
 
 .BotaoDemandaa{
   display: flex;
-  align-self: flex-start;
+  align-self: flex-end;
 }
 
 /* Container da Tabela */

@@ -31,16 +31,20 @@
   }
   
   .edit-photo-button {
-    background-color: #5b24f2;
+    background-color: rgba(53, 0, 94, 1);
+    font-size: 18px;
     color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
   
   .edit-photo-button:hover {
-    background-color: #4a1ec2;
+    background-color: #fff;
+    color: rgba(53, 0, 94, 1);
+    transition: all 0.3s ease; 
   }
   
   .form-section {
@@ -59,6 +63,16 @@
     color: #5b24f2;
     margin-bottom: 5px;
   }
+
+  .input-group p {
+    text-align: start;
+    font-size: 16px;
+    color: #000;
+    padding: 10px;
+    margin: 0;
+    border: 1px solid #5b24f2;
+    border-radius: 5px;
+  }
   
   .input-group input {
     border: 1px solid #5b24f2;
@@ -70,3 +84,20 @@
   .input-group input::placeholder {
     color: #aaa;
   }
+
+  .button-forms-edit{
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .form-section button{
+    display: flex;
+    justify-content: end;
+  }
+
+  .message-box {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+}

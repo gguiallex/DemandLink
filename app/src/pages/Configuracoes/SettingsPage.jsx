@@ -8,6 +8,7 @@ const SettingsPage = () => {
 
     const [selectedFile, setSelectedFile] = useState(null);
     const [idUser, setIdUser] = useState(""); // id usuario
+    const [nameUser, setNameUser] = useState(""); //nome usuario
     const [typeUser, setTypeUser] = useState(""); // tipo usuario
     const [emailUser, setEmailUser] = useState(""); // email usuario
     const [passwordUser, setPasswordUser] = useState(""); // senha usuario
@@ -15,6 +16,11 @@ const SettingsPage = () => {
     const [preview, setPreview] = useState(null);
     const [message, setMessage] = useState("");
     const [isUploading, setIsUploading] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
 
     const API_URL = 'https://demand-link-backend.vercel.app';
     const DEFAULT_PROFILE_PICTURE = "/imgs/icone-padrao.png";
@@ -22,29 +28,31 @@ const SettingsPage = () => {
     // Carrega dados do LocalStorage/SessionStorage
     useEffect(() => {
         const storedIdUser = localStorage.getItem("IdUsuario") || sessionStorage.getItem("IdUsuario");
+        const storedNameUser = localStorage.getItem("Nome") || sessionStorage.getItem("Nome");
         const storedTypeUser = localStorage.getItem("Tipo") || sessionStorage.getItem("Tipo");
         const storedEmailUser = localStorage.getItem("Email") || sessionStorage.getItem("Email");
         const storedPasswordUser = localStorage.getItem("Senha") || sessionStorage.getItem("Senha");
         const storedPerfilPictureUser = localStorage.getItem("FotoPerfil") || sessionStorage.getItem("FotoPerfil");
 
         if (storedIdUser) setIdUser(storedIdUser);
+        if (storedNameUser) setNameUser(storedNameUser);
         if (storedTypeUser) setTypeUser(storedTypeUser);
         if (storedEmailUser) setEmailUser(storedEmailUser);
         if (storedPasswordUser) setPasswordUser(storedPasswordUser);
-    
-// Verificando a foto de perfil
-if (storedPerfilPictureUser && storedPerfilPictureUser !== 'null' && storedPerfilPictureUser.trim() !== "") {
-    // Corrigindo a URL da foto de perfil se não for 'null'
-    const urlCompleta = storedPerfilPictureUser.startsWith("http") 
-        ? storedPerfilPictureUser 
-        : `${API_URL}${storedPerfilPictureUser.startsWith('/') ? '' : '/'}${storedPerfilPictureUser}`;
-    console.log("URL completa da foto de perfil:", urlCompleta);
-    setPerfilPictureUser(urlCompleta);
-} else {
-    console.warn("Foto de perfil inválida ou não encontrada.");
-    setPerfilPictureUser(DEFAULT_PROFILE_PICTURE); // Usando imagem padrão
-}
-}, []);
+
+        // Verificando a foto de perfil
+        if (storedPerfilPictureUser && storedPerfilPictureUser !== 'null' && storedPerfilPictureUser.trim() !== "") {
+            // Corrigindo a URL da foto de perfil se não for 'null'
+            const urlCompleta = storedPerfilPictureUser.startsWith("http")
+                ? storedPerfilPictureUser
+                : `${API_URL}${storedPerfilPictureUser.startsWith('/') ? '' : '/'}${storedPerfilPictureUser}`;
+            console.log("URL completa da foto de perfil:", urlCompleta);
+            setPerfilPictureUser(urlCompleta);
+        } else {
+            console.warn("Foto de perfil inválida ou não encontrada.");
+            setPerfilPictureUser(DEFAULT_PROFILE_PICTURE); // Usando imagem padrão
+        }
+    }, []);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -61,38 +69,75 @@ if (storedPerfilPictureUser && storedPerfilPictureUser !== 'null' && storedPerfi
         // Validação do tipo de arquivo
         const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
         if (!allowedTypes.includes(selectedFile.type)) {
-            return alert('Apenas imagens JPEG, PNG e JPG são permitidas.');
+            setMessage('Apenas imagens JPEG, PNG e JPG são permitidas.');
+            setTimeout(() => setMessage(""), 3000);
+            return;
         }
 
         // Validação do tamanho do arquivo (limite de 5MB)
         const maxSize = 5 * 1024 * 1024; // 5MB
         if (selectedFile.size > maxSize) {
-            return alert('O arquivo não pode exceder 5MB.');
+            setMessage('O arquivo não pode exceder 5MB.');
+            setTimeout(() => setMessage(""), 3000);
+            return;
         }
+
         const formData = new FormData();
         formData.append('profilePicture', selectedFile);
 
         try {
             const response = await uploadProfilePicture(idUser, formData);
-            console.log('Caminho da foto de perfil:', response.caminhoFotoPerfil);
+
+            setPerfilPictureUser(response.caminhoFotoPerfil);
             setMessage("Foto de perfil modificada com sucesso!");
-            setProfilePicture(response.caminhoFotoPerfil);
             localStorage.setItem("FotoPerfil", response.caminhoFotoPerfil);
+
+            // Limpar pré-visualização após sucesso
+            setPreview(null);
+            setSelectedFile(null);
         } catch (error) {
-            setMessage("Erro ao enviar a foto de perfil.");
+            setMessage("Erro ao enviar a foto de perfil. Tente novamente.");
+            setTimeout(() => setMessage(""), 3000);
         } finally {
             setIsUploading(false);
         }
     };
 
-    // Limpa o URL da pré-visualização para evitar vazamento de memória
-    useEffect(() => {
-        return () => {
-            if (preview) {
-                URL.revokeObjectURL(preview);
-            }
-        };
-    }, [preview]);
+    const handleEdit = () => {
+        setIsEditing(true);
+        setFormData({
+            name: nameUser,
+            email: emailUser,
+            password: passwordUser,
+        });
+    };
+
+    const handleSave = () => {
+        setIsEditing(false);
+        setNameUser(dormData.name);
+        setEmailUser(formData.email);
+        setPasswordUser(formData.password);
+        setMessage("Informações atualizadas com sucesso!");
+        setTimeout(() => setMessage(""), 3000);
+
+        // Salvar as informações no LocalStorage
+        localStorage.setItem("Nome", formData.name);
+        localStorage.setItem("Email", formData.email);
+        localStorage.setItem("Senha", formData.password);
+    };
+
+    const handleCancel = () => {
+        setIsEditing(false);
+        setFormData({
+            name: nameUser,
+            email: emailUser,
+            password: passwordUser,
+        });
+    };
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
     return (
         <div className="container-inicio">
@@ -138,33 +183,58 @@ if (storedPerfilPictureUser && storedPerfilPictureUser !== 'null' && storedPerfi
                         <button className="edit-photo-button" onClick={() => document.getElementById('profile-photo-input').click()}>Editar foto de Perfil</button>
                         {selectedFile && (
                             <button className="edit-photo-button" onClick={handleUpload}
-                            disabled={isUploading || !selectedFile}>
+                                disabled={isUploading || !selectedFile}>
                                 {isUploading ? 'Enviando...' : 'Enviar Foto'}
                             </button>
                         )}
                     </div>
                     <div className="form-section">
-                        <div className="input-group">
-                            <label>Usuário</label>
-                            <input type="text" placeholder="Placeholder" />
-                        </div>
-                        <div className="input-group">
-                            <label>E-mail</label>
-                            <input type="email" placeholder="Placeholder" />
-                        </div>
-                        <div className="input-group">
-                            <label>Senha</label>
-                            <input type="password" placeholder="Digite sua senha atual..." />
-                        </div>
-                        <div className="input-group">
-                            <label>Nova Senha</label>
-                            <input type="password" placeholder="Digite sua nova senha..." />
-                        </div>
+                        {!isEditing ? (
+                            <>
+                                <div className="input-group">
+                                    <label>Usuário</label>
+                                    <p>{nameUser}</p>
+                                </div>
+                                <div className="input-group">
+                                    <label>E-mail</label>
+                                    <p>{emailUser}</p>
+                                </div>
+                                <div className="input-group">
+                                    <label>Senha</label>
+                                    <p>{'*'.repeat(passwordUser.length)}</p>
+                                </div>
+                                <button className="edit-photo-button" onClick={handleEdit}>Editar Informações</button>
+                            </>
+                        ) : (
+                            <>
+                                <div className="input-group">
+                                    <label>Nome</label>
+                                    <input type="text" name="name" value={formData.name} onChange={handleChange} />
+                                </div>
+                                <div className="input-group">
+                                    <label>E-mail</label>
+                                    <input type="email" name="email" value={formData.email} onChange={handleChange} />
+                                </div>
+                                <div className="input-group">
+                                    <label>Nova Senha</label>
+                                    <input type="password" name="password" onChange={handleChange} />
+                                </div>
+                                <div className="input-group">
+                                    <label>Senha Atual</label>
+                                    <input type="password" name="password" onChange={handleChange} />
+                                </div>
+                                <div className="button-forms-edit">
+                                <button className="edit-photo-button" onClick={handleSave}>Salvar</button>
+                                <button className="edit-photo-button" onClick={handleCancel}>Cancelar</button>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
+                {message && <p className="message">{message}</p>}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default SettingsPage;

@@ -52,9 +52,9 @@ const SidebarMenu = () => {
           <i className="icon"><BiFile/></i>
           {isOpen && <span>Minhas Demandas</span>}
         </div>
-        <div className={`menu-item ${isActive("/Relatorios") ? "active" : ""}`} onClick={() => navigate("/Relatorios")}>
+        <div className={`menu-item ${isActive("/Solicitacoes") ? "active" : ""}`} onClick={() => navigate("/Solicitacoes")}>
           <i className="icon"><BiBarChartAlt2/></i>
-          {isOpen && <span>Relatórios</span>}
+          {isOpen && <span>Solicitações</span>}
         </div>
         <div className={`menu-item ${isActive("/Configuracoes") ? "active" : ""}`} onClick={() => navigate("/Configuracoes")}>
           <i className="icon"><BiCog/></i>
