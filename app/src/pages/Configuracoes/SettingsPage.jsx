@@ -191,8 +191,9 @@ const SettingsPage = () => {
                     <div className="form-section">
                         {!isEditing ? (
                             <>
+
                                 <div className="input-group">
-                                    <label>Usuário</label>
+                                    <label>Nome de Exibição</label>
                                     <p>{nameUser}</p>
                                 </div>
                                 <div className="input-group">
