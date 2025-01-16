@@ -31,7 +31,7 @@ const SettingsPage = () => {
         if (storedTypeUser) setTypeUser(storedTypeUser);
         if (storedEmailUser) setEmailUser(storedEmailUser);
         if (storedPasswordUser) setPasswordUser(storedPasswordUser);
-        if (storedPerfilPictureUser) {
+        if (storedPerfilPictureUser != null) {
             const urlCompleta = `${API_URL}${storedPerfilPictureUser}`;
             setPerfilPictureUser(urlCompleta);
         } else {
