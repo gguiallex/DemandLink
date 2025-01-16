@@ -1,9 +1,9 @@
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
-const multerStorageCloudinary = require('multer-storage-cloudinary');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 // Configuração do multer para usar o Cloudinary
-const storage = multerStorageCloudinary({
+const storage = CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: 'profilePictures', // Pasta onde as imagens serão armazenadas no Cloudinary
