@@ -47,24 +47,22 @@ const editUser = async (req, res) => {
 }
 
 // Função para fazer o upload no Cloudinary
-const uploadToCloudinary = async (fileBuffer, fileName) => {
-    try {
-        const result = await cloudinary.uploader.upload_stream(
+const uploadToCloudinary = (fileBuffer, fileName) => {
+    return new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream(
             {
                 folder: 'profile_pictures', // Pasta no Cloudinary
                 public_id: fileName,
             },
             (error, result) => {
                 if (error) {
-                    throw new Error('Erro ao fazer upload para o Cloudinary: ' + error.message);
+                    reject(new Error('Erro ao fazer upload para o Cloudinary: ' + error.message));
+                } else {
+                    resolve(result); // Resolve a Promise com o resultado
                 }
-                return result;
             }
         ).end(fileBuffer); // Envia o buffer diretamente
-        return result.secure_url; // Retorna a URL da imagem
-    } catch (error) {
-        throw new Error('Erro ao fazer upload para o Cloudinary: ' + error.message);
-    }
+    });
 };
 
 // Controlador para atualizar a foto de perfil
@@ -78,7 +76,10 @@ const updateUserPicture = async (req, res) => {
       }
   
       const fileName = `${idUsuario}_${Date.now()}`; // Nome único com base no ID e data
-      const caminhoFotoPerfil = await uploadToCloudinary(file.buffer, fileName);
+  
+      // Realiza o upload no Cloudinary e aguarda a URL da imagem
+      const result = await uploadToCloudinary(file.buffer, fileName);
+      const caminhoFotoPerfil = result.secure_url; // URL da foto no Cloudinary
   
       // Atualiza o caminho da foto no banco de dados
       await usersModel.updateUserPicture(idUsuario, caminhoFotoPerfil);
@@ -88,7 +89,7 @@ const updateUserPicture = async (req, res) => {
       console.error('Erro ao atualizar foto de perfil:', error);
       res.status(500).json({ error: 'Erro ao atualizar foto de perfil.' });
     }
-  };
+};
 
 module.exports = {
     getAll,
