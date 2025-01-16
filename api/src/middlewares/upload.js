@@ -1,9 +1,9 @@
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+//const path = require('path');
+//const fs = require('fs');
 
 // Configuração do armazenamento
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const { idUsuario } = req.params; // Obtém o ID do usuário a partir da rota
         const folder = 'profilePictures'; // A pasta base para as fotos de perfil
@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
         const uniqueName = `${Date.now()}-${file.originalname}`; // Gera um nome único para o arquivo
         cb(null, uniqueName);
     }
-});
+});*/
 
 // Instância do multer
 const upload = multer({ storage });
