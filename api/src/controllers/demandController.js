@@ -28,7 +28,8 @@ const getAllDemandUsers = async (req, res) => {
 
 // retorna todas as Demandas do criador das demandas
 const getAllDemandsCreated = async (req, res) => {
-    const demandsCreated = await demandModel.getAllDemandsCreated();
+    const {idUsuario} = req.params;
+    const demandsCreated = await demandModel.getAllDemandsCreated(idUsuario);
     return res.status(200).json(demandsCreated);
 }
 
