@@ -27,6 +27,6 @@ const multer = require('multer');
 });*/
 
 // Instância do multer
-const upload = multer({ storage });
+const upload = multer({ dest: 'uploads/' });
 
 module.exports = upload;
