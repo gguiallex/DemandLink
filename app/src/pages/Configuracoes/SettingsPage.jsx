@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import "./SettingsPage.css"
 import SideMenu from "../../components/Menu/SidebarMenu"
 import InfoTop from "../../components/InfoTop/InfoTop"
-import { uploadProfilePicture } from "../../services/apiService";
+import { uploadProfilePicture, updateUserInfo } from "../../services/apiService";
 
 const SettingsPage = () => {
 
@@ -50,10 +50,8 @@ const SettingsPage = () => {
             const urlCompleta = storedPerfilPictureUser.startsWith("http")
                 ? storedPerfilPictureUser
                 : `${API_URL}${storedPerfilPictureUser.startsWith('/') ? '' : '/'}${storedPerfilPictureUser}`;
-            console.log("URL completa da foto de perfil:", urlCompleta);
             setPerfilPictureUser(urlCompleta);
         } else {
-            console.warn("Foto de perfil inválida ou não encontrada.");
             setPerfilPictureUser(DEFAULT_PROFILE_PICTURE); // Usando imagem padrão
         }
     }, []);
@@ -94,6 +92,7 @@ const SettingsPage = () => {
 
             setPerfilPictureUser(response.caminhoFotoPerfil);
             setMessage("Foto de perfil modificada com sucesso!");
+            setTimeout(() => setMessage(""), 3000);
             localStorage.setItem("FotoPerfil", response.caminhoFotoPerfil);
 
             // Limpar pré-visualização após sucesso
@@ -170,6 +169,20 @@ const SettingsPage = () => {
         setFormData((prevState) => ({ ...prevState, [name]: value }))
     };
 
+    // Redirecionamento para as funções específicas
+    const goToManageSectors = () => {
+        console.log("Redirecionar para Gerenciar Setores");
+    };
+
+    const goToManageUsers = () => {
+        console.log("Redirecionar para Gerenciar Usuários");
+    };
+
+    const viewTeam = () => {
+        console.log("Redirecionar para Visualizar Pessoas Lideradas");
+    };
+
+
     return (
         <div className="container-inicio">
             <div className="menuLateral">
@@ -177,95 +190,116 @@ const SettingsPage = () => {
             </div>
 
             <div className="info">
+            {message && <p className="message">{message}</p>}
                 <InfoTop />
                 <div className="infosPrincipaisSettings">
-                    <div className="profile-section">
-                        <div className="profile-photo">
-                            {preview ? (
-                                <img
-                                    src={preview}
-                                    alt="Preview"
-                                    style={{
-                                        width: '250px',
-                                        height: '250px',
-                                        borderRadius: '50%',
-                                        objectFit: 'cover',
-                                    }}
-                                />
-                            ) : (
-                                <img
-                                    src={perfilPictureUser || DEFAULT_PROFILE_PICTURE}
-                                    alt="Foto de Perfil"
-                                    style={{
-                                        width: "250px",
-                                        height: "250px",
-                                        borderRadius: "50%",
-                                        objectFit: "cover",
-                                    }}
-                                />
+                    <div className="edit-Perfil">
+                        <div className="profile-section">
+                            <div className="profile-photo">
+                                {preview ? (
+                                    <img
+                                        src={preview}
+                                        alt="Preview"
+                                        style={{
+                                            width: '250px',
+                                            height: '250px',
+                                            borderRadius: '50%',
+                                            objectFit: 'cover',
+                                        }}
+                                    />
+                                ) : (
+                                    <img
+                                        src={perfilPictureUser || DEFAULT_PROFILE_PICTURE}
+                                        alt="Foto de Perfil"
+                                        style={{
+                                            width: "250px",
+                                            height: "250px",
+                                            borderRadius: "50%",
+                                            objectFit: "cover",
+                                        }}
+                                    />
+                                )}
+                            </div>
+                            <input
+                                type="file"
+                                style={{ display: 'none' }}
+                                id="profile-photo-input"
+                                onChange={handleFileChange}
+                            />
+                            <button className="edit-photo-button" onClick={() => document.getElementById('profile-photo-input').click()}>Editar foto de Perfil</button>
+                            {selectedFile && (
+                                <button className="edit-photo-button" onClick={handleUpload}
+                                    disabled={isUploading || !selectedFile}>
+                                    {isUploading ? 'Enviando...' : 'Enviar Foto'}
+                                </button>
                             )}
                         </div>
-                        <input
-                            type="file"
-                            style={{ display: 'none' }}
-                            id="profile-photo-input"
-                            onChange={handleFileChange}
-                        />
-                        <button className="edit-photo-button" onClick={() => document.getElementById('profile-photo-input').click()}>Editar foto de Perfil</button>
-                        {selectedFile && (
-                            <button className="edit-photo-button" onClick={handleUpload}
-                                disabled={isUploading || !selectedFile}>
-                                {isUploading ? 'Enviando...' : 'Enviar Foto'}
-                            </button>
-                        )}
-                    </div>
-                    <div className="form-section">
-                        {!isEditing ? (
-                            <>
+                        <div className="form-section">
+                            {!isEditing ? (
+                                <>
 
-                                <div className="input-group">
-                                    <label>Nome de Exibição</label>
-                                    <p>{nameUser}</p>
-                                </div>
-                                <div className="input-group">
-                                    <label>E-mail</label>
-                                    <p>{emailUser}</p>
-                                </div>
-                                <div className="input-group">
-                                    <label>Senha</label>
-                                    <p>{'*'.repeat(passwordUser.length)}</p>
-                                </div>
-                                <button className="edit-photo-button" onClick={handleEdit}>Editar Informações</button>
-                            </>
-                        ) : (
-                            <>
-                                <div className="input-group">
-                                    <label>Nome</label>
-                                    <input type="text" name="name" value={formData.name} onChange={handleChange} />
-                                </div>
-                                <div className="input-group">
-                                    <label>E-mail</label>
-                                    <input type="email" name="email" value={formData.email} onChange={handleChange} />
-                                </div>
-                                <div className="input-group">
-                                    <label>Nova Senha</label>
-                                    <input type="password" name="novaSenha"
-                                        value={formData.novaSenha} onChange={handleChange} />
-                                </div>
-                                <div className="input-group">
-                                    <label>Senha Atual</label>
-                                    <input type="password" name="passwordAtual"
-                                        value={formData.passwordAtual} onChange={handleChange} />
-                                </div>
-                                <div className="button-forms-edit">
-                                    <button className="edit-photo-button" onClick={handleSave}>Salvar</button>
-                                    <button className="edit-photo-button" onClick={handleCancel}>Cancelar</button>
-                                </div>
-                            </>
+                                    <div className="input-group">
+                                        <label>Nome de Exibição</label>
+                                        <p>{nameUser}</p>
+                                    </div>
+                                    <div className="input-group">
+                                        <label>E-mail</label>
+                                        <p>{emailUser}</p>
+                                    </div>
+                                    <div className="input-group">
+                                        <label>Senha</label>
+                                        <p>{'*'.repeat(passwordUser.length)}</p>
+                                    </div>
+                                    <button className="edit-photo-button" onClick={handleEdit}>Editar Informações</button>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="input-group">
+                                        <label>Nome</label>
+                                        <input type="text" name="name" value={formData.name} onChange={handleChange} />
+                                    </div>
+                                    <div className="input-group">
+                                        <label>E-mail</label>
+                                        <input type="email" name="email" value={formData.email} onChange={handleChange} />
+                                    </div>
+                                    <div className="input-group">
+                                        <label>Nova Senha</label>
+                                        <input type="password" name="novaSenha"
+                                            value={formData.novaSenha} onChange={handleChange} />
+                                    </div>
+                                    <div className="input-group">
+                                        <label>Senha Atual</label>
+                                        <input type="password" name="passwordAtual"
+                                            value={formData.passwordAtual} onChange={handleChange} />
+                                    </div>
+                                    <div className="button-forms-edit">
+                                        <button className="edit-photo-button" onClick={handleSave}>Salvar</button>
+                                        <button className="edit-photo-button" onClick={handleCancel}>Cancelar</button>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                    <div className="botoes-exclusivos">
+                        {typeUser === "Administrador" && (
+                            <div className="admin-buttons">
+                                <button className="edit-photo-button" onClick={goToManageSectors}>
+                                    Gerenciar Setores
+                                </button>
+                                <button className="edit-photo-button" onClick={goToManageUsers}>
+                                    Gerenciar Usuários
+                                </button>
+                            </div>
+                        )}
+                        {typeUser === "Lider" && (
+                            <div className="leader-button">
+                                <button className="edit-photo-button" onClick={viewTeam}>
+                                    Visualizar Pessoas Lideradas
+                                </button>
+                            </div>
                         )}
                     </div>
                 </div>
-                {message && <p className="message">{message}</p>}
             </div>
         </div>
     );

@@ -2,7 +2,7 @@
     display: flex;
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 25px;
-    flex-direction:row;
+    flex-direction:column;
     align-items: center; /* Centraliza verticalmente */
     justify-content: center; /* Centraliza horizontalmente */
     width: 100%;
@@ -13,7 +13,7 @@
 }
 
 .infosPrincipaisSettings > * {
-  transform: translateY(-50px); /* Move o conteúdo para cima */
+  transform: translateY(50px); /* Move o conteúdo para cima */
 }
 
 .profile-section {
@@ -79,6 +79,23 @@
     border-radius: 5px;
     padding: 10px;
     font-size: 16px;
+  }
+
+  .edit-Perfil{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    justify-content: space-around;
+    height: 65%;
+  }
+
+  .botoes-exclusivos, .admin-buttons, .leader-button{
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    gap: 7%;
+    padding-right: 2%;
+    padding-bottom: 1%;
   }
   
   .input-group input::placeholder {
