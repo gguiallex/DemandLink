@@ -9,12 +9,15 @@ const BotaoDemanda = ({ onDemandCreated }) => {
     const [showModal, setShowModal] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
 
+    const [idUser, setIdUser] = useState(""); // id usuario
+
     const [setores, setSetores] = useState([]); // Para armazenar opções de setores
     const [Usuarios, setUsuarios] = useState([]); // Usuários filtrados pelo setor
     const [selectedSetor, setSelectedSetor] = useState(""); // setor selecionada
     const [selectedEnvolvidos, setSelectedEnvolvidos] = useState([]); // Usuários selecionados
 
     const [projeto, setProjeto] = useState("");
+    const [tituloDemanda, setTituloDemanda] = useState("");
     const [descricaoDemanda, setDescricaoDemanda] = useState("");
     const [urgencia, setUrgencia] = useState("");
     const [prazo, setPrazo] = useState("");
@@ -23,6 +26,14 @@ const BotaoDemanda = ({ onDemandCreated }) => {
     const [attemptedSubmit, setAttemptedSubmit] = useState(false);
 
     const animatedComponents = makeAnimated();
+
+    // Carrega dados do LocalStorage/SessionStorage
+    useEffect(() => {
+        const storedIdUser = localStorage.getItem("IdUsuario") || sessionStorage.getItem("IdUsuario");
+
+        if (storedIdUser) setIdUser(storedIdUser);
+
+    }, []);
 
     const handleOpenModal = () => setShowModal(true);
 
@@ -93,7 +104,11 @@ const BotaoDemanda = ({ onDemandCreated }) => {
 
         if (currentStep === 2 || step === "all") {
             if (!projeto.trim()) {
-                newErrors.projeto = "Informe o nome do projeto.";
+                newErrors.projeto = "Informe o tipo do projeto.";
+            }
+
+            if (!tituloDemanda.trim()) {
+                newErrors.tituloDemanda = "Informe o nome do projeto.";
             }
 
             if (!descricaoDemanda.trim()) {
@@ -116,7 +131,9 @@ const BotaoDemanda = ({ onDemandCreated }) => {
             // Cria a nova demanda
             const newDemanda = {
                 tagSetor: selectedSetor,
+                idUsuario: idUser,
                 projeto,
+                titulo: tituloDemanda,
                 descricao: descricaoDemanda,
                 urgencia: urgencia,
                 dataFim: prazo, // Enviar a data de entrega como prazo
@@ -139,7 +156,7 @@ const BotaoDemanda = ({ onDemandCreated }) => {
 
             alert("Demanda criada com sucesso!");
             handleCloseModal(); // Fecha o modal
-            
+
             // Chama a função de recarregamento da `DemandPage`
             if (onDemandCreated) {
                 onDemandCreated();
@@ -225,7 +242,7 @@ const BotaoDemanda = ({ onDemandCreated }) => {
                             <div>
                                 <form>
                                     <label className="perguntaTexto">
-                                        Nome do Projeto
+                                        Tipo do Projeto
                                         <input
                                             className={attemptedSubmit && errors.projeto ? "error" : ""}
                                             type="text" placeholder="Projeto ao qual a demanda está relacionada"
@@ -233,6 +250,17 @@ const BotaoDemanda = ({ onDemandCreated }) => {
                                             onChange={(e) => setProjeto(e.target.value)} />
                                         {attemptedSubmit && errors.projeto && (
                                             <p className="errorText">{errors.projeto}</p>
+                                        )}
+                                    </label>
+                                    <label className="perguntaTexto">
+                                        Nome do Projeto
+                                        <input
+                                            className={attemptedSubmit && errors.tituloDemanda ? "error" : ""}
+                                            type="text" placeholder="Nome ao qual a demanda será chamada"
+                                            value={tituloDemanda}
+                                            onChange={(e) => setTituloDemanda(e.target.value)} />
+                                        {attemptedSubmit && errors.tituloDemanda && (
+                                            <p className="errorText">{errors.tituloDemanda}</p>
                                         )}
                                     </label>
                                     <label className="perguntaTexto">

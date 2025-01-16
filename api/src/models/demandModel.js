@@ -10,10 +10,13 @@ const getDemand = async (tagDemanda) => {
     return demand;
 }
 
-const addDemand = async (newDemand) => {
-    const { tagSetor, projeto, descricao, urgencia, dataFim } = newDemand;
+const getAllDemandsCreated = async (idUsuario) => {
+    const [demands] = await connection.execute('SELECT * FROM Demandas where idUsuario = ?', [idUsuario]);
+        return demands;
+};
 
-    console.log(tagSetor, projeto, descricao, urgencia, dataFim);
+const addDemand = async (newDemand) => {
+    const { tagSetor, idUsuario, projeto, titulo, descricao, urgencia, dataFim } = newDemand;
 
     //verificar se o setor existe
     const [sectorExists] = await connection.execute('SELECT 1 FROM Setores WHERE tagSetor = ?', [tagSetor]);
@@ -26,8 +29,8 @@ const addDemand = async (newDemand) => {
 
     const tagDemanda = `${idSize.length + 1}${tagSetor}`;
 
-    const query = 'INSERT INTO Demandas(tagDemanda, tagSetor, projeto, descricao, urgencia, status, DataPedido, dataFim) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)';
-    await connection.execute(query, [tagDemanda, tagSetor, projeto, descricao, urgencia, 'Não Iniciado', dataFim]);
+    const query = 'INSERT INTO Demandas(tagDemanda, tagSetor, idUsuario, projeto, titulo, descricao, urgencia, status, DataPedido, dataFim) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?)';
+    await connection.execute(query, [tagDemanda, tagSetor, idUsuario, projeto, titulo, descricao, urgencia, 'Não Iniciado', dataFim]);
 
     const [newDemanda] = await getDemand(tagDemanda);
 
@@ -106,6 +109,7 @@ module.exports = {
     getDemand,
     addDemand,
     getAllDemandUsers,
+    getAllDemandsCreated,
     getDemandUser,
     getUsersDemand,
     addDemandUsers,

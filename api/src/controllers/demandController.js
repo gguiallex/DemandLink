@@ -26,6 +26,12 @@ const getAllDemandUsers = async (req, res) => {
     return res.status(200).json(demandUsers);
 }
 
+// retorna todas as Demandas do criador das demandas
+const getAllDemandsCreated = async (req, res) => {
+    const demandsCreated = await demandModel.getAllDemandsCreated();
+    return res.status(200).json(demandsCreated);
+}
+
 // retorna todas as demandas de um usuário
 const getDemandUser = async (req, res) => {
     const {idUsuario} = req.params;
@@ -51,6 +57,7 @@ module.exports = {
     getDemand,
     addDemand,
     getAllDemandUsers,
+    getAllDemandsCreated,
     getDemandUser,
     getUsersDemand,
     addDemandUsers,
