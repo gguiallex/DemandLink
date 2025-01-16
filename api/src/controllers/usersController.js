@@ -47,12 +47,21 @@ const editUser = async (req, res) => {
 }
 
 // Função para fazer o upload no Cloudinary
-const uploadToCloudinary = async (file) => {
+const uploadToCloudinary = async (fileBuffer, fileName) => {
     try {
-        const result = await cloudinary.uploader.upload(file.path, {
-            folder: 'profile_pictures', // Pasta no Cloudinary onde as imagens serão armazenadas
-        });
-        return result.secure_url; // Retorna a URL segura da imagem
+        const result = await cloudinary.uploader.upload_stream(
+            {
+                folder: 'profile_pictures', // Pasta no Cloudinary
+                public_id: fileName,
+            },
+            (error, result) => {
+                if (error) {
+                    throw new Error('Erro ao fazer upload para o Cloudinary: ' + error.message);
+                }
+                return result;
+            }
+        ).end(fileBuffer); // Envia o buffer diretamente
+        return result.secure_url; // Retorna a URL da imagem
     } catch (error) {
         throw new Error('Erro ao fazer upload para o Cloudinary: ' + error.message);
     }
@@ -68,8 +77,8 @@ const updateUserPicture = async (req, res) => {
         return res.status(400).json({ error: 'Nenhum arquivo enviado.' });
       }
   
-      // Envia a imagem para o Cloudinary
-      const caminhoFotoPerfil = await uploadToCloudinary(file);
+      const fileName = `${idUsuario}_${Date.now()}`; // Nome único com base no ID e data
+      const caminhoFotoPerfil = await uploadToCloudinary(file.buffer, fileName);
   
       // Atualiza o caminho da foto no banco de dados
       await usersModel.updateUserPicture(idUsuario, caminhoFotoPerfil);
