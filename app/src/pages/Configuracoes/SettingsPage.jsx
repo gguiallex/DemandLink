@@ -49,13 +49,25 @@ const SettingsPage = () => {
     const handleUpload = async () => {
         if (!selectedFile) return alert('Selecione uma foto antes de enviar.');
 
+        // Validação do tipo de arquivo
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        if (!allowedTypes.includes(selectedFile.type)) {
+            return alert('Apenas imagens JPEG, PNG e JPG são permitidas.');
+        }
+
+        // Validação do tamanho do arquivo (limite de 5MB)
+        const maxSize = 5 * 1024 * 1024; // 5MB
+        if (selectedFile.size > maxSize) {
+            return alert('O arquivo não pode exceder 5MB.');
+        }
         const formData = new FormData();
         formData.append('profilePicture', selectedFile);
 
         try {
             const response = await uploadProfilePicture(idUser, formData);
-            setMessage(response.message);
+            setMessage("Foto de perfil modificada com sucesso!");
             setProfilePicture(response.caminhoFotoPerfil);
+            localStorage.setItem("FotoPerfil", response.caminhoFotoPerfil);
         } catch (error) {
             setMessage("Erro ao enviar a foto de perfil.");
         }
