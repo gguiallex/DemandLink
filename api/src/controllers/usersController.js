@@ -68,26 +68,25 @@ const uploadToCloudinary = (fileBuffer, fileName) => {
 // Controlador para atualizar a foto de perfil
 const updateUserPicture = async (req, res) => {
     try {
-      const { idUsuario } = req.params;
-      const file = req.file; // O arquivo enviado via multer
-  
-      if (!file) {
-        return res.status(400).json({ error: 'Nenhum arquivo enviado.' });
-      }
-  
-      const fileName = `${idUsuario}_${Date.now()}`; // Nome único com base no ID e data
-  
-      // Realiza o upload no Cloudinary e aguarda a URL da imagem
-      const result = await uploadToCloudinary(file.buffer, fileName);
-      const caminhoFotoPerfil = result.secure_url; // URL da foto no Cloudinary
-  
-      // Atualiza o caminho da foto no banco de dados
-      await usersModel.updateUserPicture(idUsuario, caminhoFotoPerfil);
-  
-      res.status(200).json({ message: 'Foto de perfil atualizada com sucesso!', caminhoFotoPerfil });
+        const { idUsuario } = req.params;
+        const file = req.file; // Arquivo processado pelo multer-storage-cloudinary
+
+        if (!file) {
+            return res.status(400).json({ error: 'Nenhum arquivo enviado.' });
+        }
+
+        const caminhoFotoPerfil = file.path; // URL segura da imagem (retorno do multer-storage-cloudinary)
+
+        // Atualiza o caminho da foto no banco de dados
+        await usersModel.updateUserPicture(idUsuario, caminhoFotoPerfil);
+
+        res.status(200).json({
+            message: 'Foto de perfil atualizada com sucesso!',
+            caminhoFotoPerfil,
+        });
     } catch (error) {
-      console.error('Erro ao atualizar foto de perfil:', error);
-      res.status(500).json({ error: 'Erro ao atualizar foto de perfil.' });
+        console.error('Erro ao atualizar foto de perfil:', error);
+        res.status(500).json({ error: 'Erro ao atualizar foto de perfil.' });
     }
 };
 
