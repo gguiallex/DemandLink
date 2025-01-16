@@ -15,7 +15,6 @@ const SettingsPage = () => {
     const [preview, setPreview] = useState(null);
     const [message, setMessage] = useState("");
 
-
     const API_URL = 'https://demand-link-backend.vercel.app';
     const DEFAULT_PROFILE_PICTURE = "/imgs/icone-padrao.png";
 
@@ -31,17 +30,20 @@ const SettingsPage = () => {
         if (storedTypeUser) setTypeUser(storedTypeUser);
         if (storedEmailUser) setEmailUser(storedEmailUser);
         if (storedPasswordUser) setPasswordUser(storedPasswordUser);
-        
-        // Verificando se storedPerfilPictureUser não é null nem vazio
-        if (storedPerfilPictureUser && storedPerfilPictureUser.trim() !== "") {
-            const urlCompleta = `${API_URL}${storedPerfilPictureUser}`;
-            setPerfilPictureUser(urlCompleta);
-        } else {
-            console.warn("Nenhuma foto de perfil encontrada no armazenamento.");
-            setPerfilPictureUser(DEFAULT_PROFILE_PICTURE);
-        }
-
-    }, [])
+    
+// Verificando a foto de perfil
+if (storedPerfilPictureUser && storedPerfilPictureUser !== 'null' && storedPerfilPictureUser.trim() !== "") {
+    // Corrigindo a URL da foto de perfil se não for 'null'
+    const urlCompleta = storedPerfilPictureUser.startsWith("http") 
+        ? storedPerfilPictureUser 
+        : `${API_URL}${storedPerfilPictureUser.startsWith('/') ? '' : '/'}${storedPerfilPictureUser}`;
+    console.log("URL completa da foto de perfil:", urlCompleta);
+    setPerfilPictureUser(urlCompleta);
+} else {
+    console.warn("Foto de perfil inválida ou não encontrada.");
+    setPerfilPictureUser(DEFAULT_PROFILE_PICTURE); // Usando imagem padrão
+}
+}, []);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
