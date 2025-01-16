@@ -26,7 +26,16 @@ const multer = require('multer');
     }
 });*/
 
-// Instância do multer
-const upload = multer({ dest: 'uploads/' });
+// Configuração do multer para usar o Cloudinary
+const storage = multerStorageCloudinary({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'profilePictures', // Pasta onde as imagens serão armazenadas no Cloudinary
+        allowed_formats: ['jpg', 'jpeg', 'png'],
+        transformation: [{ width: 500, height: 500, crop: 'limit' }], // Opcional: Limitar o tamanho das imagens
+    }
+});
+
+const upload = multer({ storage: storage });
 
 module.exports = upload;
