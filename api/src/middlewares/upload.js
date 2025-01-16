@@ -2,26 +2,24 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-require('dotenv').config();
-
-// Configurando o Cloudinary com as credenciais
+// Configurando o Cloudinary
 cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
-  });
-
-
-// Configuração do multer para usar o Cloudinary
-const storage = CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-        folder: 'profilePictures', // Pasta onde as imagens serão armazenadas no Cloudinary
-        allowed_formats: ['jpg', 'jpeg', 'png'], // Tipos de arquivos permitidos
-        transformation: [{ width: 500, height: 500, crop: 'limit' }], // Opcional: Limitar o tamanho das imagens
-    }
+    cloud_name: process.env.CLOUD_NAME, // Substitua pelo seu cloud_name
+    api_key: process.env.API_KEY,       // Substitua pelo seu api_key
+    api_secret: process.env.API_SECRET, // Substitua pelo seu api_secret
 });
 
+// Configuração do armazenamento no Cloudinary
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary, // Certifique-se de que esta variável foi configurada corretamente
+    params: {
+        folder: 'profilePictures', // Pasta no Cloudinary
+        allowed_formats: ['jpg', 'jpeg', 'png'], // Formatos permitidos
+        transformation: [{ width: 500, height: 500, crop: 'limit' }], // Limitar tamanho
+    },
+});
+
+// Configuração do multer
 const upload = multer({
     storage: storage,
     limits: {
