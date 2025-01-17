@@ -67,7 +67,7 @@ const SidebarMenu = () => {
             </div>
           )
         }
-        <div className={`menu-item ${isActive("/Configuracoes") ? "active" : ""}`} onClick={() => navigate("/Configuracoes")}>
+        <div className={`menu-item ${isActive("/Configuracoes" || "/Setores" || "/Usuarios" || "/Liderados") ? "active" : ""}`} onClick={() => navigate("/Configuracoes")}>
           <i className="icon"><BiCog/></i>
           {isOpen && <span>Configurações</span>}
         </div>

@@ -32,7 +32,8 @@ router.get('/setor/:tagSetor', sectorController.getSector); // exibir setor espe
 router.get('/demandas', demandController.getAllDemands); // exibir todas as demandas
 router.get('/demanda/:tagDemanda', demandController.getDemand); // exibir demanda específica
 router.get('/demandas/usuarios', demandController.getAllDemandUsers); // exibir todas as demandas e seus usuários
-router.get('/demandas/:idUsuario', demandController.getDemandUser); // exibir todas as demandas de um usuário expecífico
+router.get('/demandas/usuario/:idUsuario', demandController.getDemandUser); // exibir todas as demandas de um usuário atribuído
+router.get('/demandas/criador/:idUsuario', demandController.getAllDemandsCreated); // exibir todas as demandas criadas pelo usuário
 router.get('/usuarios/demanda/:tagDemanda', demandController.getUsersDemand); // exibir todos os usuários de uma demanda específica
 router.post('/demanda', demandController.addDemand); // adicionar uma nova demanda
 router.post('/demanda/usuario', demandController.addDemandUsers); // adicionar usuário a uma demanda 
