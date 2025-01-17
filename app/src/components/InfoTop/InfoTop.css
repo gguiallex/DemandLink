@@ -34,7 +34,7 @@
     gap: 10px;
 }
 
-.botoesTop button {
+.botoesTop p {
     width: 37px;
     height: 37px;
     border-radius: 50%;
@@ -44,12 +44,7 @@
     justify-content: center;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Leve sombra */
-    cursor: pointer;
     transition: background-color 0.2s;
-}
-
-.botoesTop button:hover {
-    background-color: #e0e0e0; /* Cor ao passar o mouse */
 }
 
 .topDireita p {

@@ -43,7 +43,7 @@ const InfoTop = () => {
 
           <div className="TopDireita">
             <div className="botoesTop">
-              <button><BiUser /></button>
+              <p><BiUser /></p>
             </div>
               <p>{userName || "Usuário"}</p>
             </div>
