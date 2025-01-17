@@ -58,16 +58,7 @@ const SidebarMenu = () => {
           <i className="icon"><BiBarChartAlt2/></i>
           {isOpen && <span>Solicitações</span>}
         </div>
-        {
-          storedTypeUser && storedTypeUser == "Administrador" &&
-          (
-            <div className={`menu-item ${isActive("/CriacaoUsuario") ? "active" : ""}`} onClick={() => navigate("/CriacaoUsuario")}>
-              <i className="icon"><BiUserPlus/></i>
-              {isOpen && <span>Criar Usuário</span>}
-            </div>
-          )
-        }
-        <div className={`menu-item ${isActive("/Configuracoes" || "/Setores" || "/Usuarios" || "/Liderados") ? "active" : ""}`} onClick={() => navigate("/Configuracoes")}>
+        <div className={`menu-item ${["/Configuracoes", "/Setores", "/Usuarios", "/Liderados"].includes(location.pathname) ? "active" : ""}`} onClick={() => navigate("/Configuracoes")}>
           <i className="icon"><BiCog/></i>
           {isOpen && <span>Configurações</span>}
         </div>

@@ -119,6 +119,7 @@ const ReportPage = ({ }) => {
                                             <th>Tag</th>
                                             <th>Setor</th>
                                             <th>Projeto</th>
+                                            <th>Nome</th>
                                             <th>Descrição</th>
                                             <th>Envolvidos</th>
                                             <th>Entrega</th>

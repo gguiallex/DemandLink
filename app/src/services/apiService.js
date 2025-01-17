@@ -21,6 +21,16 @@ export const fetchSetores = async () => {
     }
 };
 
+export const fetchTamanhoSetor = async (tagSetor) => {
+    try {
+        const response = await api.get(`/setor/${tagSetor}/quantidade`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar a quantidade de usuários do setor';
+    }
+};
+
+
 // Função para buscar todos os usuários
 export const fetchUsuarios = async () => {
     try {
@@ -98,6 +108,16 @@ export const createDemanda = async (data) => {
         return response.data; // Retorna os dados da nova demanda (incluindo o `tagDemanda`)
     } catch (error) {
         throw error.response?.data?.message || 'Erro ao criar demanda';
+    }
+};
+
+// Função para criar uma nova demanda
+export const createSetor = async (data) => {
+    try {
+        const response = await api.post('/setor', data);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao criar setor';
     }
 };
 

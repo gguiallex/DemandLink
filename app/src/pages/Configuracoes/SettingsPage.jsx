@@ -3,6 +3,7 @@ import "./SettingsPage.css"
 import SideMenu from "../../components/Menu/SidebarMenu"
 import InfoTop from "../../components/InfoTop/InfoTop"
 import { uploadProfilePicture, updateUserInfo } from "../../services/apiService";
+import { useNavigate } from "react-router-dom";
 
 const SettingsPage = () => {
 
@@ -16,6 +17,7 @@ const SettingsPage = () => {
     const [perfilPictureUser, setPerfilPictureUser] = useState(null); // foto de perfil do usuario
     const [preview, setPreview] = useState(null);
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
     const [isUploading, setIsUploading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
@@ -171,11 +173,11 @@ const SettingsPage = () => {
 
     // Redirecionamento para as funções específicas
     const goToManageSectors = () => {
-        console.log("Redirecionar para Gerenciar Setores");
+        navigate('/Setores');
     };
 
     const goToManageUsers = () => {
-        console.log("Redirecionar para Gerenciar Usuários");
+        navigate('/Usuarios');
     };
 
     const viewTeam = () => {

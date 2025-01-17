@@ -256,7 +256,6 @@ const FirstPage = ({ }) => {
           <div className="botoesInferioresGrade" >
             <div className="botoesInferiores">
               <BotaoDemanda />
-              <button>Atualizar Informações</button>
             </div>
           </div>
         </div>
