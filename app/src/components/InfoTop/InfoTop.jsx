@@ -43,7 +43,6 @@ const InfoTop = () => {
 
           <div className="TopDireita">
             <div className="botoesTop">
-              <button><BiBell /></button>
               <button><BiUser /></button>
             </div>
               <p>{userName || "Usuário"}</p>

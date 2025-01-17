@@ -4,12 +4,57 @@
     flex-direction: column;
     width: 95%;
     padding-top: 1%;
-    gap: 30px;
+    gap: 20px;
 }
 
 .BotaoDemandaa{
   display: flex;
   align-self: flex-end;
+}
+
+.search-bar-container {
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 50px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  padding: 5px;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 16px;
+  background: transparent;
+  border-radius: 8px;
+}
+
+.filter-button {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-left: 1px solid #ccc;
+  font-size: 14px;
+  color: #555;
+}
+
+.filter-icon {
+  margin-right: 5px;
 }
 
 /* Container da Tabela */

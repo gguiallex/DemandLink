@@ -40,6 +40,26 @@ export const fetchDemandas = async () => {
     }
 };
 
+// Função para buscar todas as demandas de um determinado usuário
+export const fetchDemandasByUser = async (idUsuario) => {
+    try {
+        const response = await api.get(`/demandas/usuario/${idUsuario}`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar demandas do usuário';
+    }
+};
+
+// Função para buscar todas as demandas de um determinado usuário
+export const fetchDemandasByCreator = async (idUsuario) => {
+    try {
+        const response = await api.get(`/demandas/criador/${idUsuario}`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar demandas criadas pelo usuário';
+    }
+};
+
 // Função para buscar todos os usuarios de uma demanda
 export const fetchUsuariosByDemanda = async (tagDemanda) => {
     try {
