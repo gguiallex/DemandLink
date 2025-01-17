@@ -6,7 +6,7 @@ const getAllSectors = async (req, res) => {
 }
 
 const getSector = async (req, res) => {
-    const {tagSetor} = req.params;
+    const { tagSetor } = req.params;
     const sector = await sectorModel.getSector(tagSetor);
     return res.status(200).json(sector);
 }
@@ -17,8 +17,24 @@ const addSector = async (req, res) => {
     return res.status(200).json(newSector);
 }
 
+const editSector = async (req, res) => {
+    const { tagSetor } = req.params;
+
+    const editedSector = await usersModel.editSector(tagSetor, req.body);
+    return res.status(200).json(editedSector);
+}
+
+const removeSector = async (req, res) => {
+    const { tagSetor } = req.params;
+
+    await sectorModel.removeSector(tagSetor);
+    return res.status(204).json({ message: 'Setor apagado com sucesso' });
+}
+
 module.exports = {
     getAllSectors,
     getSector,
-    addSector
+    addSector,
+    editSector,
+    removeSector
 };
