@@ -10,6 +10,14 @@ const getSector = async (tagSetor) => {
     return sector;
 }
 
+const getSizeSector = async (tagSetor) => {
+    const [result] = await connection.execute(
+        'SELECT COUNT(*) AS userCount FROM Usuarios WHERE tagSetor = ?',
+        [tagSetor]
+    );
+    return result[0].userCount;
+}
+
 const addSector = async (newSector) => {
     const { tagSetor, nome } = newSector;
 
@@ -35,6 +43,7 @@ const editSector = async (tagSetorAntigo, setor) => {
 module.exports = {
     getAllSectors,
     getSector,
+    getSizeSector,
     addSector,
     removeSector,
     editSector

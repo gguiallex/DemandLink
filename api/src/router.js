@@ -27,6 +27,7 @@ router.delete('/usuario/:idUsuario', usersController.removeUser); // remover usu
 // ====================== SETORES ======================
 router.get('/setores', sectorController.getAllSectors); // exibir todos os setores
 router.get('/setor/:tagSetor', sectorController.getSector); // exibir setor específico
+router.get('/setor/:tagSetor/quantidade', sectorController.getSizeSector); //exibir o total de pessoas do setor
 router.post('/setor', sectorController.addSector); // adicionar novo setor
 router.put('/setor/:tagSetor', sectorController.editSector)// editar um setor específico
 router.delete('setor/:tagSetor', sectorController.removeSector); // remover um setor

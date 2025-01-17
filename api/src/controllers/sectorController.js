@@ -11,6 +11,12 @@ const getSector = async (req, res) => {
     return res.status(200).json(sector);
 }
 
+const getSizeSector = async (req, res) => {
+    const {tagSetor} = req.params;
+    const sizeSector = await sectorModel.getSizeSector(tagSetor);
+    return res.status(200).json(sizeSector)
+}
+
 const addSector = async (req, res) => {
     const newSector = await sectorModel.addSector(req.body);
     console.log(newSector);
@@ -34,6 +40,7 @@ const removeSector = async (req, res) => {
 module.exports = {
     getAllSectors,
     getSector,
+    getSizeSector,
     addSector,
     editSector,
     removeSector
