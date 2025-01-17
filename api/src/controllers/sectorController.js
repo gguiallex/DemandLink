@@ -11,7 +11,14 @@ const getSector = async (req, res) => {
     return res.status(200).json(sector);
 }
 
+const addSector = async (req, res) => {
+    const newSector = await sectorModel.addSector(req.body);
+    console.log(newSector);
+    return res.status(200).json(newSector);
+}
+
 module.exports = {
     getAllSectors,
     getSector,
+    addSector
 };

@@ -10,7 +10,17 @@ const getSector = async (tagSetor) => {
     return sector;
 }
 
+const addSector = async (newSector) => {
+    const { tagSetor, nome } = newSector;
+
+    const query = 'INSERT INTO Setor(tagSetor, nome) VALUES (?, ?)';
+    const [newSector] = await connection.execute(query, [tagSetor, nome]);
+
+    return newSector;
+}
+
 module.exports = {
     getAllSectors,
     getSector,
+    addSector,
 };
