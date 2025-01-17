@@ -14,9 +14,9 @@ const addSector = async (newSector) => {
     const { tagSetor, nome } = newSector;
 
     const query = 'INSERT INTO Setores(tagSetor, nome) VALUES (?, ?)';
-    const [newSector] = await connection.execute(query, [tagSetor, nome]);
+    const [novoSetor] = await connection.execute(query, [tagSetor, nome]);
 
-    return newSector;
+    return novoSetor;
 }
 
 const removeSector = async (tagSetor) => {
