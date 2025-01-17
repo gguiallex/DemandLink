@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./SidebarMenu.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { BiCategory, BiChevronsRight, BiChevronsLeft, BiFile, BiBarChartAlt2, BiCog, BiLogOut, BiClinic } from "react-icons/bi";
+import { BiCategory, BiChevronsRight, BiChevronsLeft, BiFile, BiBarChartAlt2, BiCog, BiLogOut, BiUserPlus } from "react-icons/bi";
 
 const SidebarMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,6 +34,8 @@ const SidebarMenu = () => {
   // Verifica se a rota atual corresponde à rota do item
   const isActive = (path) => location.pathname === path;
 
+  const storedTypeUser = localStorage.getItem("Tipo") || sessionStorage.getItem("Tipo");
+
   return (
     <div className={`sidebar ${isOpen ? "open" : ""}`}>
       <div className="header">
@@ -56,6 +58,15 @@ const SidebarMenu = () => {
           <i className="icon"><BiBarChartAlt2/></i>
           {isOpen && <span>Solicitações</span>}
         </div>
+        {
+          storedTypeUser && storedTypeUser == "Administrador" &&
+          (
+            <div className={`menu-item ${isActive("/CriacaoUsuario") ? "active" : ""}`} onClick={() => navigate("/CriacaoUsuario")}>
+              <i className="icon"><BiUserPlus/></i>
+              {isOpen && <span>Criar Usuário</span>}
+            </div>
+          )
+        }
         <div className={`menu-item ${isActive("/Configuracoes") ? "active" : ""}`} onClick={() => navigate("/Configuracoes")}>
           <i className="icon"><BiCog/></i>
           {isOpen && <span>Configurações</span>}

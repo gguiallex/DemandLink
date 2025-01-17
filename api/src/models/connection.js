@@ -12,6 +12,7 @@ const connection = mysql.createPool({
     connectionLimit: 10, // Limite máximo de conexões simultâneas permitidas no pool
     queueLimit: 0,  // Limite de solicitações em fila quando o pool atinge o máximo de conexões (0 = sem limite)
     ssl: { rejectUnauthorized: false }, // Configuração para ignorar validação de certificado SSL (útil para ambientes de desenvolvimento)
+    //ssl: false  
 });
 
 module.exports = connection;

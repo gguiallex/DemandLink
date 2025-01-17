@@ -29,7 +29,7 @@ const getUsersBySector = async (req, res) => {
 
 const addUser = async (req, res) => {
     await usersModel.addUser(req.body);
-    return res.status(204).json({message: 'Usuário criado com sucesso'});
+    return res.status(200).json({message: 'Usuário criado com sucesso'});
 }
 
 const removeUser = async (req, res) => { 

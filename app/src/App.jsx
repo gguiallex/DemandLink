@@ -7,6 +7,7 @@ import FirstPage from './pages/Home/FirstPage'
 import DemandPage from './pages/Demandas/DemandPage'
 import ReportPage from './pages/Relatorios/ReportPage'
 import SettingsPage from './pages/Configuracoes/SettingsPage'
+import CriacaoUsuarioPage from './pages/CriacaoUsuario/CriacaoUsuarioPage'
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
         <Route path='/Demandas' element={<DemandPage/>}/>
         <Route path='/Solicitacoes' element={<ReportPage/>}/>
         <Route path='/Configuracoes' element={<SettingsPage/>}/>
+        <Route path='/CriacaoUsuario' element={<CriacaoUsuarioPage/>}/>
       </Routes>
 
     </BrowserRouter>

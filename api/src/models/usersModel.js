@@ -21,7 +21,7 @@ const getUsersBySector = async (tagSetor) => {
 }
 
 const addUser = async (newUsuario) => {
-    const { tagSetor, nomeSistema, tipo, nome, email, senha } = newUsuario;
+    const { tagSetor, fotoPerfil, tipo, nome, email, senha, idLider } = newUsuario;
 
     //verificar se o email já esta em uso
     const [existingUser] = await connection.execute('SELECT * FROM Usuarios WHERE email = ?', [email]);
@@ -31,14 +31,17 @@ const addUser = async (newUsuario) => {
     }
 
     //verificar se o setor existe
-    const [sectorExists] = await connection.execute('SELECT tagSetor FROM Setor WHERE tagSetor = ?', [tagSetor]);
+    const [sectorExists] = await connection.execute('SELECT tagSetor FROM Setores WHERE tagSetor = ?', [tagSetor]);
 
     if (sectorExists.length === 0) {
         throw new Error('O setor fornecido não é válido.');
     }
 
-    const query = 'INSERT INTO Usuarios(tagSetor, nomeSistema, tipo, nome, email, senha) VALUES (?, ?, ?, ?, ?, ?)';
-    const [newUser] = await connection.execute(query, [tagSetor, nomeSistema, tipo, nome, email, senha]);
+    const [rowsIdUsuario] = await connection.execute('SELECT idUsuario + 1 AS idUsuario FROM usuarios ORDER BY idUsuario DESC LIMIT 1;')
+    const idUsuario = rowsIdUsuario[0].idUsuario;
+    
+    const query = 'INSERT INTO Usuarios(idUsuario, tagSetor, fotoPerfil, tipo, nome, email, senha, idLider) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    const [newUser] = await connection.execute(query, [idUsuario, tagSetor, fotoPerfil, tipo, nome, email, senha, idLider]);
     return newUser;
 }
 
@@ -49,10 +52,10 @@ const removeUser = async (idUsuario) => {
 
 const editUser = async (idUsuario, Usuario) => {
 
-    const { tagSetor, nomeSistema, tipo, nome, email, senha } = Usuario;
+    const { tagSetor, fotoPerfil, tipo, nome, email, senha, idLider } = Usuario;
 
-    const query = 'UPDATE Usuarios set tagSetor = ?, nomeSistema = ?, tipo = ?, nome = ?, email = ?, senha = ? WHERE idUsuario = ?';
-    const [editedUser] = await connection.execute(query, [tagSetor, nomeSistema, tipo, nome, email, senha, idUsuario]);
+    const query = 'UPDATE Usuarios set tagSetor = ?, fotoPerfil = ?, tipo = ?, nome = ?, email = ?, senha = ?, idLider = ? WHERE idUsuario = ?';
+    const [editedUser] = await connection.execute(query, [tagSetor, fotoPerfil, tipo, nome, email, senha, idLider, idUsuario]);
     return editedUser;
 }
 

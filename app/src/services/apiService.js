@@ -1,6 +1,7 @@
 import axios from 'axios';
  
 const API_URL = 'https://demand-link-backend.vercel.app';
+// const API_URL = 'http://localhost:4444';
 
 // Instância do axios com configuração base
 const api = axios.create({
@@ -60,6 +61,16 @@ export const fetchUsuariosBySetor = async (tagSetor) => {
     }
 };
 
+// Função para buscar os usuários de um determinado tipo
+export const fetchUsuariosByType = async (tipoUsuario) => {
+    try {
+        const response = await api.get(`/usuarios/${tipoUsuario}`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar usuários desse tipo';
+    }
+};
+
 // Função para criar uma nova demanda
 export const createDemanda = async (data) => {
     try {
@@ -67,6 +78,15 @@ export const createDemanda = async (data) => {
         return response.data; // Retorna os dados da nova demanda (incluindo o `tagDemanda`)
     } catch (error) {
         throw error.response?.data?.message || 'Erro ao criar demanda';
+    }
+};
+
+export const createUsuario = async (data) => {
+    try {
+        const response = await api.post('/usuario', data);
+        return response; // Retorna os dados do novo usuario
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao criar usuario';
     }
 };
 
