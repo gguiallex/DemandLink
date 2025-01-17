@@ -64,7 +64,7 @@ const DemandPage = ({ }) => {
     const handleSearch = (e) => {
         const term = e.target.value.toLowerCase();
         setSearchTerm(term);
-    
+
         // Filtrar as demandas com base no termo digitado
         const filtered = demandas.filter((demanda) =>
             demanda.tagSetor.toLowerCase().includes(term) ||
@@ -72,12 +72,9 @@ const DemandPage = ({ }) => {
             demanda.envolvidos.toLowerCase().includes(term) ||
             demanda.descricao.toLowerCase().includes(term) // Opcional: busca também na descrição
         );
-    
+
         setFilteredDemandas(filtered);
     };
-
-    if (loading) return <div>Carregando...</div>;
-    if (error) return <div>Erro: {error}</div>;
 
     return (
         <div className="container-inicio">
@@ -106,42 +103,52 @@ const DemandPage = ({ }) => {
                             </div>
                         </div>
 
-                        <div class="table-container">
-                            <table class="custom-table">
-                                <thead>
-                                    <tr>
-                                        <th>Tag</th>
-                                        <th>Setor</th>
-                                        <th>Projeto</th>
-                                        <th>Nome</th>
-                                        <th>Descrição</th>
-                                        <th>Envolvidos</th>
-                                        <th>Entrega</th>
-                                        <th>Urgência</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {filteredDemandas.map((demanda, index) => (
-                                        <tr key={index}>
-                                            <td>{demanda.tagDemanda}</td>
-                                            <td>{demanda.tagSetor}</td>
-                                            <td>{demanda.projeto}</td>
-                                            <td>{demanda.titulo}</td>
-                                            <td onClick={() => toggleDescription(demanda.tagDemanda)}>
-                                                {expandedDescription === demanda.tagDemanda
-                                                    ? demanda.descricao
-                                                    : `${demanda.descricao.substring(0, 50)}...`}
-                                            </td>
-                                            <td>{demanda.envolvidos}</td>
-                                            <td>{formatDate(demanda.dataFim)}</td>
-                                            <td>{demanda.urgencia}</td>
-                                            <td><button class="status-btn">{demanda.status}</button></td>
+                        {/* Verificação de carregamento ou erro */}
+                        {loading ? (
+                            <div className="loading-message">Carregando...</div>
+                        ) : error ? (
+                            <div className="error-message">
+                                <p>Erro: Não foi possível carregar as demandas.</p>
+                                <p>Tente novamente mais tarde.</p>
+                            </div>
+                        ) : (
+                            <div class="table-container">
+                                <table class="custom-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Tag</th>
+                                            <th>Setor</th>
+                                            <th>Projeto</th>
+                                            <th>Nome</th>
+                                            <th>Descrição</th>
+                                            <th>Envolvidos</th>
+                                            <th>Entrega</th>
+                                            <th>Urgência</th>
+                                            <th>Status</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tbody>
+                                        {filteredDemandas.map((demanda, index) => (
+                                            <tr key={index}>
+                                                <td>{demanda.tagDemanda}</td>
+                                                <td>{demanda.tagSetor}</td>
+                                                <td>{demanda.projeto}</td>
+                                                <td>{demanda.titulo}</td>
+                                                <td onClick={() => toggleDescription(demanda.tagDemanda)}>
+                                                    {expandedDescription === demanda.tagDemanda
+                                                        ? demanda.descricao
+                                                        : `${demanda.descricao.substring(0, 50)}...`}
+                                                </td>
+                                                <td>{demanda.envolvidos}</td>
+                                                <td>{formatDate(demanda.dataFim)}</td>
+                                                <td>{demanda.urgencia}</td>
+                                                <td><button class="status-btn">{demanda.status}</button></td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
