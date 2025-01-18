@@ -43,7 +43,9 @@ const BotaoDemanda = ({ onDemandCreated }) => {
         setSelectedSetor(""); // Resetar setor
         setSelectedEnvolvidos([]); // Resetar usuários selecionados
         setProjeto("");
+        setTituloDemanda("");
         setDescricaoDemanda("");
+        setUrgencia("");
         setPrazo("");
         setErrors({});
         setAttemptedSubmit(false);
