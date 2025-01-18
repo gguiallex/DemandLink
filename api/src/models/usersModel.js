@@ -20,6 +20,11 @@ const getUsersBySector = async (tagSetor) => {
     return users;
 }
 
+const getUsersByLider = async (idLider) => {
+    const [users] = await connection.execute('SELECT * FROM Usuarios WHERE idLider = ?', [idLider]);
+    return users;
+}
+
 const addUser = async (newUsuario) => {
     const { tagSetor, fotoPerfil, tipo, nome, email, senha, idLider } = newUsuario;
 
@@ -69,6 +74,7 @@ module.exports = {
     getUser,
     getUsersByType,
     getUsersBySector,
+    getUsersByLider,
     addUser,
     removeUser,
     editUser,
