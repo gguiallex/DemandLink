@@ -29,7 +29,7 @@ const addDemand = async (newDemand) => {
 
     const tagDemanda = `${idSize.length + 1}${tagSetor}`;
 
-    const query = 'INSERT INTO Demandas(tagDemanda, tagSetor, idUsuario, projeto, titulo, descricao, urgencia, status, DataPedido, dataFim) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?)';
+    const query = 'INSERT INTO Demandas(tagDemanda, tagSetor, idUsuario, projeto, titulo, descricao, urgencia, status, DataPedido, dataFim) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)';
     await connection.execute(query, [tagDemanda, tagSetor, idUsuario, projeto, titulo, descricao, urgencia, 'Não Iniciado', dataFim]);
 
     const [newDemanda] = await getDemand(tagDemanda);
