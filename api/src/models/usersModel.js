@@ -15,6 +15,11 @@ const getUsersByType = async (tipo) => {
     return users;
 }
 
+const getLidersBySector = async (tagSetor) => {
+    const [lideres] = await connection.execute('SELECT * FROM Usuarios WHERE tagSetor = ? tipo = ?', [tagSetor, "Lider"]);
+    return lideres;
+}
+
 const getUsersBySector = async (tagSetor) => {
     const [users] = await connection.execute('SELECT * FROM Usuarios WHERE tagSetor = ?', [tagSetor]);
     return users;
@@ -79,4 +84,5 @@ module.exports = {
     removeUser,
     editUser,
     updateUserPicture,
+    getLidersBySector,
 }
