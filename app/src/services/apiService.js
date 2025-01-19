@@ -1,7 +1,7 @@
 import axios from 'axios';
  
-// const API_URL = 'https://demand-link-backend.vercel.app';
-const API_URL = 'http://localhost:4444';
+ const API_URL = 'https://demand-link-backend.vercel.app';
+
 
 // Instância do axios com configuração base
 const api = axios.create({
