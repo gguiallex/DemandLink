@@ -15,6 +15,11 @@ const getUsersByType = async (tipo) => {
     return users;
 }
 
+const getLidersBySector = async (tagSetor) => {
+    const [lideres] = await connection.execute('SELECT * FROM Usuarios WHERE tagSetor = ? AND tipo = ?', [tagSetor, "Lider"]);
+    return lideres;
+}
+
 const getUsersBySector = async (tagSetor) => {
     const [users] = await connection.execute('SELECT * FROM Usuarios WHERE tagSetor = ?', [tagSetor]);
     return users;
@@ -57,10 +62,10 @@ const removeUser = async (idUsuario) => {
 
 const editUser = async (idUsuario, Usuario) => {
 
-    const { tagSetor, fotoPerfil, tipo, nome, email, senha, idLider } = Usuario;
+    const { tagSetor, tipo, nome, email, senha, idLider } = Usuario;
 
-    const query = 'UPDATE Usuarios set tagSetor = ?, fotoPerfil = ?, tipo = ?, nome = ?, email = ?, senha = ?, idLider = ? WHERE idUsuario = ?';
-    const [editedUser] = await connection.execute(query, [tagSetor, fotoPerfil, tipo, nome, email, senha, idLider, idUsuario]);
+    const query = 'UPDATE Usuarios set tagSetor = ?, tipo = ?, nome = ?, email = ?, senha = ?, idLider = ? WHERE idUsuario = ?';
+    const [editedUser] = await connection.execute(query, [tagSetor, tipo, nome, email, senha, idLider, idUsuario]);
     return editedUser;
 }
 
@@ -79,4 +84,5 @@ module.exports = {
     removeUser,
     editUser,
     updateUserPicture,
+    getLidersBySector,
 }

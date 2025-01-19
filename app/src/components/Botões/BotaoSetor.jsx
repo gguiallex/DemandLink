@@ -59,9 +59,7 @@ const BotaoSetor = (onSectorCreated) => {
             handleCloseModal(); // Fecha o modal
 
             // Chama a função de recarregamento do `SectorPage`
-            if (onSectorCreated) {
-                onSectorCreated();
-            }
+            onSectorCreated();
         } catch (error) {
             console.error("Erro ao criar setor:", error);
             alert("Erro ao criar o setor. Tente novamente.");

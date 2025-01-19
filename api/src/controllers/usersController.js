@@ -19,6 +19,13 @@ const getUsersByType = async (req, res) => {
     return res.status(200).json(users);
 }
 
+const getLidersBySector = async (req, res) => {
+    const {tagSetor} = req.params;
+
+    const lideres = await usersModel.getLidersBySector(tagSetor);
+    return res.status(200).json(lideres);
+}
+
 const getUsersByLider = async (req, res) => {
     const {idUsuario} = req.params;
 
@@ -102,6 +109,7 @@ module.exports = {
     getUsersByType,
     getUsersBySector,
     getUsersByLider,
+    getLidersBySector,
     addUser,
     removeUser,
     editUser,

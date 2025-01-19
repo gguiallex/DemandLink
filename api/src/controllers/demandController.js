@@ -10,7 +10,7 @@ const getAllDemands = async (req, res) => {
 // retorna uma demanda expecífica atravez de sua tag
 const getDemand = async (req, res) => {
     const {tagDemanda} = req.params;
-    const demand = await sectorModel.getSector(tagDemanda);
+    const demand = await demandModel.getDemand(tagDemanda);
     return res.status(200).json(demand);
 }
 
@@ -19,6 +19,43 @@ const addDemand = async (req, res) => {
     const newDemand = await demandModel.addDemand(req.body);
     console.log(newDemand);
     return res.status(200).json(newDemand);
+}
+
+// apaga uma demanda
+const removeDemand = async (req, res) => {
+    const {tagDemanda} = req.params;
+
+    await demandModel.removeDemand(tagDemanda);
+    return res.status(204).json({message: 'Demanda apagada com sucesso!'});
+}
+
+// remove um usuário da demanda
+const removeUserDemand = async (req, res) => {
+    const {tagDemanda, idUsuario} = req.params;
+
+    await demandModel.removeUserDemand(tagDemanda, idUsuario);
+    return res.status(204).json({message: 'Usuario removido da demanda com sucesso!'});
+}
+
+const editDemand = async (req, res) => {
+    const {tagDemanda} = req.params;
+
+    const editedDemand = await demandModel.editDemand(tagDemanda, req.body);
+    return res.status(200).json(editedDemand);
+}
+
+const startDemand = async (req, res) => {
+    const {tagDemanda} = req.params;
+
+    const editedDemand = await demandModel.startDemand(tagDemanda);
+    return res.status(200).json(editedDemand);
+}
+
+const endDemand = async (req, res) => {
+    const {tagDemanda} = req.params;
+
+    const editedDemand = await demandModel.endDemand(tagDemanda);
+    return res.status(200).json(editedDemand);
 }
 
 // retorna todos os usuários de todas as demandas
@@ -112,11 +149,16 @@ module.exports = {
     getAllDemands,
     getDemand,
     addDemand,
+    removeDemand,
+    removeUserDemand,
     getAllDemandUsers,
     getAllDemandsCreated,
     getDemandUser,
     getUsersDemand,
     addDemandUsers,
+    editDemand,
+    startDemand,
+    endDemand
     getDemandUrgency,
     getDemandByStatus,
     getDemandByWeek,

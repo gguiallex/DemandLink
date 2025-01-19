@@ -108,8 +108,52 @@
     transition: all 0.3s ease;
   }
   
-  .status-btn:hover {
+   .status-btn:hover {
     background-color: #007BFF;
     color: #fff;
   }
+
+  /* Cores para cada status */
+.status-nãoiniciado .status-btn {
+  border: 1px solid rgba(40, 0, 71, 1);
+  color: rgba(40, 0, 71, 1);
+  /*background-color: blue;*/
+  /*color: white;*/
+}
+
+.status-nãoiniciado .status-btn:hover {
+  background-color: rgba(40, 0, 71, 1);
+  color: #fff;
+}
+
+.status-emandamento .status-btn {
+  border: 1px solid #007BFF;
+  color: #007BFF;
+}
+
+.status-emandamento .status-btn:hover {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+.status-concluído .status-btn {
+  border: 1px solid rgb(2, 192, 2);
+  color: rgb(2, 192, 2);
+}
+
+.status-concluído .status-btn:hover {
+  background-color: rgb(2, 192, 2);
+  color: #fff;
+}
+
+.status-ematraso .status-btn {
+  border: 1px solid red;
+  color: red;
+}
+
+.status-ematraso .status-btn:hover {
+  background-color: red;
+  color: #fff;
+}
+
   

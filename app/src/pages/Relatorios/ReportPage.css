@@ -5,3 +5,48 @@
     align-items: flex-start;
     background-color: rgba(240, 240, 240, 1);
 }
+
+/* Estilo para o menu de opções */
+.options-menu {
+    position: absolute; /* Para permitir o posicionamento no local do clique */
+    background-color: white; /* Cor de fundo para o menu */
+    border: 1px solid #ccc; /* Borda ao redor do menu */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+    z-index: 1000; /* Certificar que o menu fica acima de outros elementos */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 0; /* Remove o espaçamento interno */
+    list-style: none; /* Remove os marcadores de lista */
+    overflow: hidden; /* Para evitar que o conteúdo "vaze" */
+    width: 150px; /* Largura fixa para o menu */
+}
+
+/* Estilo para os itens do menu */
+.options-menu ul {
+    margin: 0; /* Remove margem da lista */
+    padding: 0; /* Remove padding da lista */
+}
+
+.options-menu ul li {
+    padding: 10px 15px; /* Espaçamento interno dos itens */
+    cursor: pointer; /* Mostrar o ícone de "mãozinha" no hover */
+    background-color: white; /* Fundo branco */
+    font-size: 14px; /* Tamanho da fonte */
+    color: #333; /* Cor do texto */
+    text-align: left; /* Texto alinhado à esquerda */
+    transition: background-color 0.3s ease; /* Suavizar a transição no hover */
+}
+
+/* Hover nos itens */
+.options-menu ul li:hover {
+    background-color: #f5f5f5; /* Alterar cor de fundo ao passar o mouse */
+}
+
+/* Quando o menu de opções aparece, ele deve estar visível */
+.options-menu.show {
+    display: block;
+}
+
+/* Ocultar o menu quando não estiver ativo */
+.options-menu:not(.show) {
+    display: none;
+}

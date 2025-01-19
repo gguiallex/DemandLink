@@ -26,7 +26,7 @@ const addSector = async (req, res) => {
 const editSector = async (req, res) => {
     const { tagSetor } = req.params;
 
-    const editedSector = await usersModel.editSector(tagSetor, req.body);
+    const editedSector = await sectorModel.editSector(tagSetor, req.body);
     return res.status(200).json(editedSector);
 }
 

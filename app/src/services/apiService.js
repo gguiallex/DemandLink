@@ -81,6 +81,26 @@ export const fetchUsuariosByDemanda = async (tagDemanda) => {
     }
 };
 
+// Função para buscar todos os lideres de um setor
+export const fetchLideresBysetor = async (tagSetor) => {
+    try {
+        const response = await api.get(`/lideres/${tagSetor}`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar lideres vinculados ao setor';
+    }
+};
+
+// Função para buscar os usuários de um determinado setor
+export const fetchUsuariosByID = async (idUsuario) => {
+    try {
+        const response = await api.get(`/usuario/${idUsuario}`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar usuário';
+    }
+};
+
 // Função para buscar os usuários de um determinado setor
 export const fetchUsuariosBySetor = async (tagSetor) => {
     try {
@@ -88,6 +108,16 @@ export const fetchUsuariosBySetor = async (tagSetor) => {
         return response.data;
     } catch (error) {
         throw error.response?.data?.message || 'Erro ao buscar usuários do setor';
+    }
+};
+
+// Função para buscar os usuários de um determinado lider
+export const fetchUsuariosByLider = async (idUsuario) => {
+    try {
+        const response = await api.get(`/usuarios/lider/${idUsuario}`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar usuários do lider';
     }
 };
 
@@ -140,6 +170,36 @@ export const createEnvolvidoDemanda = async (data) => {
     }
 };
 
+// Função para deletar o usuario
+export const deleteUsuario = async (idUsuario) => {
+    try {
+        const response = await api.delete(`/usuario/${idUsuario}`);
+        return response;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao deletar usuario';
+    }
+};
+
+// Função para deletar o setor
+export const deleteSetor = async (tagSetor) => {
+    try {
+        const response = await api.delete(`/setor/${tagSetor}`);
+        return response;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao deletar setor';
+    }
+};
+
+// Função para deletar a demanda
+export const deleteDemanda = async (tagDemanda) => {
+    try {
+        const response = await api.delete(`/setor/${tagDemanda}`);
+        return response;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao deletar demanda';
+    }
+};
+
 // Função para atualizar informações do usuário
 export const updateUserInfo = async (idUsuario, data) => {
     try{
@@ -147,6 +207,55 @@ export const updateUserInfo = async (idUsuario, data) => {
         return response.data;
     } catch (error) {
         throw error.response?.data?.message || 'Erro ao atualizar informações do usuário';
+    }
+}
+
+export const deleteUserDemand = async (tagDemanda, idUsuario) => {
+    try {
+        const response = await api.delete(`/demanda/${tagDemanda}/usuario/${idUsuario}`);
+        return response.data;
+    } catch(error) {
+        throw error.response?.data?.message || 'Erro ao deletar usuário da demanda';
+    }
+}
+
+// Função para atualizar informações da demanda
+export const updateDemanda = async (tagDemanda, data) => {
+    try{
+        const response = await api.put(`/demanda/${tagDemanda}/editar`, data);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao atualizar informações da demanda';
+    }
+}
+
+// Função para atualizar informações da demanda
+export const updateSetor = async (tagSetor, data) => {
+    try{
+        const response = await api.put(`/setor/${tagSetor}`, data);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao atualizar informações do setor';
+    }
+}
+
+// Função para finalizar uma demanda
+export const updateDemandaFinish = async (tagDemanda) => {
+    try{
+        const response = await api.put(`/demanda/${tagDemanda}/finalizar`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao finalizar demanda';
+    }
+}
+
+// Função para comecar uma demanda
+export const updateDemandaStart = async (tagDemanda) => {
+    try{
+        const response = await api.put(`/demanda/${tagDemanda}/comecar`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao começar demanda';
     }
 }
 

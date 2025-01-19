@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react"
 import SideMenu from "../../../../components/Menu/SidebarMenu"
 import InfoTop from "../../../../components/InfoTop/InfoTop"
 import BotaoSetor from "../../../../components/Botões/BotaoSetor"
-import { fetchSetores, fetchTamanhoSetor } from "../../../../services/apiService";
+import EditSectorModal from "../../../../components/Edits/EditSectorModal"
+import { fetchSetores, fetchTamanhoSetor, deleteSetor } from "../../../../services/apiService";
 import { BiTrash, BiEdit } from "react-icons/bi";
+import { SlReload } from "react-icons/sl";
 
 const SectorPage = () => {
     const [setores, setSetores] = useState([]);
+    const [selectedSector, setSelectedSector] = useState([]);
     const [filteredSetores, setFilteredSetores] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     useEffect(() => {
         loadSetores();
@@ -48,6 +52,11 @@ const SectorPage = () => {
         }
     };
 
+    const handleEdit = (setor) => {
+        setSelectedSector(setor); // Define o usuário selecionado
+        setIsEditModalOpen(true); // Abre o modal
+    };
+
     const handleSearch = (e) => {
         const term = e.target.value.toLowerCase();
         setSearchTerm(term);
@@ -59,6 +68,26 @@ const SectorPage = () => {
         );
 
         setFilteredSetores(filtered);
+    };
+
+    const handleDelete = async (tagSetor, setor, tamanho) => {
+        if (tamanho > 0) {
+            alert(`O setor ${setor} não pode ser excluído porque ainda possui ${tamanho} membro(s).`);
+            return;
+        }
+    
+        const confirmed = window.confirm(`Tem certeza que deseja excluir o setor ${setor}?`);
+    
+        if (confirmed) {
+            try {
+                await deleteSetor(tagSetor); // Chama a API para deletar o setor
+                loadSetores(); // Atualiza a lista de setores
+                alert("Setor deletado com sucesso!");
+            } catch (err) {
+                console.error("Erro ao deletar setor:", err);
+                alert("Erro ao deletar setor. Tente novamente.");
+            }
+        }
     };
 
     return (
@@ -75,14 +104,11 @@ const SectorPage = () => {
                             <div className="search-bar">
                                 <input
                                     type="text"
-                                    placeholder="Pesquisar por setor, projeto, envolvidos..."
+                                    placeholder="Pesquisar por tag ou setor..."
                                     value={searchTerm}
                                     onChange={handleSearch}
                                     className="search-input"
                                 />
-                                <button className="filter-button">
-                                    <span className="filter-icon">🔍</span> Filter
-                                </button>
                             </div>
                             <BotaoSetor onSectorCreated={loadSetores} />
                         </div>
@@ -103,7 +129,8 @@ const SectorPage = () => {
                                             <th>Setor</th>
                                             <th>Quantidade de Membros</th>
                                             <th></th>
-                                            <th></th>
+                                            <th>< SlReload style={{ cursor: "pointer" }}
+                                            onClick={() => loadSetores()}/></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -112,8 +139,10 @@ const SectorPage = () => {
                                                 <td>{setor.tagSetor}</td>
                                                 <td>{setor.nome}</td>
                                                 <td>{setor.tamanho}</td>
-                                                <td><BiEdit/></td>
-                                                <td><BiTrash /></td>
+                                                <td><BiEdit style={{ cursor: "pointer", color: "blue" }}
+                                                        onClick={() => handleEdit(setor)}/></td>
+                                                <td><BiTrash style={{ cursor: "pointer", color: "red" }}
+                                                        onClick={() => handleDelete(setor.tagSetor, setor.nome, setor.tamanho)}/></td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -123,6 +152,12 @@ const SectorPage = () => {
                     </div>
                 </div>
             </div>
+            {isEditModalOpen && (
+                <EditSectorModal
+                    setor={selectedSector}
+                    onClose={() => setIsEditModalOpen(false)}
+                />
+            )}
         </div>
     )
 }
