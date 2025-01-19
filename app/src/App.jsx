@@ -8,7 +8,8 @@ import DemandPage from './pages/Demandas/DemandPage'
 import ReportPage from './pages/Relatorios/ReportPage'
 import SettingsPage from './pages/Configuracoes/SettingsPage'
 import SectorPage from './pages/PaginasSuperiores/Administradores/Setores/SectorPage'
-import CriacaoUsuarioPage from './pages/CriacaoUsuario/CriacaoUsuarioPage'
+import UsersPage from './pages/PaginasSuperiores/Administradores/Usuarios/UsersPage'
+import LeadersPage from './pages/PaginasSuperiores/Liders/Liderados/LeadersPage'
 
 function App() {
 
@@ -22,8 +23,9 @@ function App() {
         <Route path='/Demandas' element={<DemandPage/>}/>
         <Route path='/Solicitacoes' element={<ReportPage/>}/>
         <Route path='/Configuracoes' element={<SettingsPage/>}/>
-        <Route path='/Usuarios' element={<CriacaoUsuarioPage/>}/>
+        <Route path='/Usuarios' element={<UsersPage/>}/>
         <Route path='/Setores' element={<SectorPage/>}/>
+        <Route path='/Liderados' element={<LeadersPage/>}/>
       </Routes>
 
     </BrowserRouter>

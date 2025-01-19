@@ -268,7 +268,7 @@ const BotaoDemanda = ({ onDemandCreated }) => {
                                     <label className="perguntaTexto">
                                         Descreva detalhadamente a sua demanda.
                                         <textarea
-                                            className={attemptedSubmit && errors.descricaoDemanda ? "error" : ""}
+                                            className={attemptedSubmit && errors.selectedSetor ? "error" : ""}
                                             placeholder="Inclua o tipo de material a ser produzido, o objetivo do projeto e, se possível, adicione links de referência ou exemplos que possam complementar as informações e ajudar no desenvolvimento. Quanto mais detalhes, melhor será o atendimento à sua solicitação!"
                                             value={descricaoDemanda}
                                             onChange={(e) => setDescricaoDemanda(e.target.value)}
@@ -280,7 +280,7 @@ const BotaoDemanda = ({ onDemandCreated }) => {
                                     <label className="perguntaTexto">
                                         Nivel de urgencia
                                         <select
-                                            className={attemptedSubmit && errors.urgencia ? "error" : ""}
+                                            className={`selectField ${attemptedSubmit && errors.urgencia ? "error" : ""}`}
                                             value={urgencia}
                                             onChange={(e) => setUrgencia(e.target.value)}
                                         >

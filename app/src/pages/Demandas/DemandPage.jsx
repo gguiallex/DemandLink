@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react"
 import "./DemandPage.css"
 import SideMenu from "../../components/Menu/SidebarMenu"
 import InfoTop from "../../components/InfoTop/InfoTop"
-import { fetchDemandasByUser, fetchUsuariosByDemanda } from "../../services/apiService";
+import { fetchDemandasByUser, fetchUsuariosByDemanda, updateDemandaStart, updateDemandaFinish } from "../../services/apiService";
+import { SlReload } from "react-icons/sl";
 
 const DemandPage = ({ }) => {
     const [demandas, setDemandas] = useState([]);
@@ -70,10 +71,44 @@ const DemandPage = ({ }) => {
             demanda.tagSetor.toLowerCase().includes(term) ||
             demanda.projeto.toLowerCase().includes(term) ||
             demanda.envolvidos.toLowerCase().includes(term) ||
-            demanda.descricao.toLowerCase().includes(term) // Opcional: busca também na descrição
+            demanda.descricao.toLowerCase().includes(term)
         );
 
         setFilteredDemandas(filtered);
+    };
+
+    const sortedDemandas = [...filteredDemandas].sort((a, b) => {
+        const statusPriority = {
+            "Em Atraso": 0, // Maior prioridade (fica no topo)
+            "Não Iniciado": 1,
+            "Em Andamento": 2,
+            "Concluído": 3, // Menor prioridade (fica no final)
+        };
+
+        return statusPriority[a.status] - statusPriority[b.status];
+    });
+
+    // Lógica para atualizar o status da demanda
+    const handleStatusClick = async (demanda) => {
+        try {
+            if (demanda.status === "Não Iniciado") {
+                const confirmStart = window.confirm("Você deseja iniciar esta demanda?");
+                if (confirmStart) {
+                    await updateDemandaStart(demanda.tagDemanda);
+                    alert("Demanda iniciada com sucesso!");
+                    loadDemandas(); // Recarregar demandas
+                }
+            } else if (demanda.status === "Em Andamento") {
+                const confirmFinish = window.confirm("Você deseja finalizar esta demanda?");
+                if (confirmFinish) {
+                    await updateDemandaFinish(demanda.tagDemanda);
+                    alert("Demanda finalizada com sucesso!");
+                    loadDemandas(); // Recarregar demandas
+                }
+            }
+        } catch (error) {
+            alert(error.message || "Erro ao atualizar demanda!");
+        }
     };
 
     return (
@@ -97,9 +132,6 @@ const DemandPage = ({ }) => {
                                     onChange={handleSearch}
                                     className="search-input"
                                 />
-                                <button className="filter-button">
-                                    <span className="filter-icon">🔍</span> Filter
-                                </button>
                             </div>
                         </div>
 
@@ -125,11 +157,13 @@ const DemandPage = ({ }) => {
                                             <th>Entrega</th>
                                             <th>Urgência</th>
                                             <th>Status</th>
+                                            <th>< SlReload style={{ cursor: "pointer" }}
+                                                onClick={() => loadDemandas()} /></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {filteredDemandas.map((demanda, index) => (
-                                            <tr key={index}>
+                                        {sortedDemandas.map((demanda, index) => (
+                                            <tr key={index} className={`status-${demanda.status.replace(/\s/g, "").toLowerCase()}`}>
                                                 <td>{demanda.tagDemanda}</td>
                                                 <td>{demanda.tagSetor}</td>
                                                 <td>{demanda.projeto}</td>
@@ -142,7 +176,8 @@ const DemandPage = ({ }) => {
                                                 <td>{demanda.envolvidos}</td>
                                                 <td>{formatDate(demanda.dataFim)}</td>
                                                 <td>{demanda.urgencia}</td>
-                                                <td><button class="status-btn">{demanda.status}</button></td>
+                                                <td><button class="status-btn"
+                                                    onClick={() => handleStatusClick(demanda)}>{demanda.status}</button></td>
                                             </tr>
                                         ))}
                                     </tbody>
