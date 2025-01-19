@@ -181,7 +181,7 @@ const SettingsPage = () => {
     };
 
     const viewTeam = () => {
-        console.log("Redirecionar para Visualizar Pessoas Lideradas");
+        navigate('/Liderados');
     };
 
 
