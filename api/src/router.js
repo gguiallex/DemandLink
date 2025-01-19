@@ -42,6 +42,9 @@ router.get('/demandas/criador/:idUsuario', demandController.getAllDemandsCreated
 router.get('/usuarios/demanda/:tagDemanda', demandController.getUsersDemand); // exibir todos os usuários de uma demanda específica
 router.post('/demanda', demandController.addDemand); // adicionar uma nova demanda
 router.post('/demanda/usuario', demandController.addDemandUsers); // adicionar usuário a uma demanda
-router.delete('/demanda:tagDemanda', demandController.removeDemand);
+router.delete('/demanda:tagDemanda', demandController.removeDemand); //  apaga uma demanda
+router.delete('/demanda/:tagDemanda/usuario/:idUsuario', demandController.removeUserDemand); // apaga um usuário da demanda
+router.put('/demanda/:tagDemanda/finalizar', demandController.endDemand); // altera a demanda como finalizada
+router.put('/demanda/:tagDemanda/comecar', demandController.startDemand); // altera a demanda para em andamento
 
 module.exports = router;
