@@ -20,7 +20,7 @@ router.get('/usuario/:idUsuario', usersController.getUser); // exibir usuário e
 router.get('/usuarios/:tipo', usersController.getUsersByType); // exibir todos os usuários de um tipo expecífico
 router.get('/usuarios/setor/:tagSetor', usersController.getUsersBySector); // exibir todos os usuários de um setor expecífico
 router.get('/usuarios/lider/:idUsuario', usersController.getUsersByLider); // exibir todos os usuários de um lider específico
-router.get('/liders/:tagSetor', usersController.getLidersBySector); // exibir todos os líderes de um setor específico
+router.get('/lideres/:tagSetor', usersController.getLidersBySector); // exibir todos os líderes de um setor específico
 router.post('/usuario', usersController.addUser); // adicionar um novo usuário
 router.put('/usuario/:idUsuario',usersController.editUser); // editar usuário expecífico
 router.post('/:idUsuario/atualizarFotoPerfil', upload.single('profilePicture'), usersController.updateUserPicture); // upload da foto de perfil
