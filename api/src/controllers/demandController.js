@@ -158,7 +158,7 @@ module.exports = {
     addDemandUsers,
     editDemand,
     startDemand,
-    endDemand
+    endDemand,
     getDemandUrgency,
     getDemandByStatus,
     getDemandByWeek,

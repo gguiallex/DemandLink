@@ -25,7 +25,6 @@ function App() {
         <Route path='/Configuracoes' element={<SettingsPage/>}/>
         <Route path='/Usuarios' element={<UsersPage/>}/>
         <Route path='/Setores' element={<SectorPage/>}/>
-        <Route path='/CriacaoUsuario' element={<CriacaoUsuarioPage/>}/>
         <Route path='/Liderados' element={<LeadersPage/>}/>
       </Routes>
 
