@@ -123,7 +123,7 @@ const getDemandUrgency = async (idUsuario) => {
     }
     const [demand] = await connection.execute(
         `SELECT COUNT(*) AS total_demandas 
-        FROM demandas 
+        FROM Demandas 
         WHERE tagDemanda IN (${idsDemandas.map(() => '?').join(', ')})
         AND dataFim BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 2 DAY)`,
         idsDemandas
@@ -132,7 +132,7 @@ const getDemandUrgency = async (idUsuario) => {
 }
 
 const getDemandByStatus = async (statusDemanda) => {
-    const [demand] = await connection.execute(`SELECT * FROM demandas WHERE status = ?`, [statusDemanda]);
+    const [demand] = await connection.execute(`SELECT * FROM Demandas WHERE status = ?`, [statusDemanda]);
     return demand;
 }
 
@@ -179,7 +179,7 @@ const getDemandByMonth = async (mes, idUsuario) => {
 
     const [demand] = await connection.execute(`
         SELECT * 
-        FROM demandas 
+        FROM Demandas 
         WHERE tagDemanda IN (${idsDemandas.map(() => '?').join(', ')}) 
             AND dataPedido >= ? 
             AND dataPedido <= ?;    
