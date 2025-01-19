@@ -65,7 +65,7 @@ const editUser = async (idUsuario, Usuario) => {
     const { tagSetor, tipo, nome, email, senha, idLider } = Usuario;
 
     const query = 'UPDATE Usuarios set tagSetor = ?, tipo = ?, nome = ?, email = ?, senha = ?, idLider = ? WHERE idUsuario = ?';
-    const [editedUser] = await connection.execute(query, [tagSetor, fotoPerfil, tipo, nome, email, senha, idLider, idUsuario]);
+    const [editedUser] = await connection.execute(query, [tagSetor, tipo, nome, email, senha, idLider, idUsuario]);
     return editedUser;
 }
 
