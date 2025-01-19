@@ -114,12 +114,12 @@ const addDemandUsers = async (newDemandUsers) => {
     return demandaComUsuario;
 }
 
-const editDemand = async (tagDemandaAntiga, Demanda) => {
+const editDemand = async (tagDemanda, Demanda) => {
 
-    const { tagDemanda, tagSetor, projeto, titulo, descricao, urgencia, dataFim } = Demanda;
+    const { tagSetor, projeto, titulo, descricao, urgencia, dataFim } = Demanda;
 
-    const query = 'UPDATE Demandas set tagDemanda = ?, tagSetor = ?, projeto = ?, titulo = ?, descricao = ?, urgencia = ?, dataFim = ? WHERE tagDemanda = ?';
-    const [editedDemand] = await connection.execute(query, [tagDemanda, tagSetor, projeto, titulo, descricao, urgencia, dataFim, tagDemandaAntiga]);
+    const query = 'UPDATE Demandas set, tagSetor = ?, projeto = ?, titulo = ?, descricao = ?, urgencia = ?, dataFim = ? WHERE tagDemanda = ?';
+    const [editedDemand] = await connection.execute(query, [ tagSetor, projeto, titulo, descricao, urgencia, dataFim, tagDemanda]);
     return editedDemand;
 }
 
