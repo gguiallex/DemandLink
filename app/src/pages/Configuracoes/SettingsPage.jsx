@@ -27,6 +27,7 @@ const SettingsPage = () => {
     });
 
     const API_URL = 'https://demand-link-backend.vercel.app';
+    
     const DEFAULT_PROFILE_PICTURE = "/imgs/icone-padrao.png";
 
     // Carrega dados do LocalStorage/SessionStorage

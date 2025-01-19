@@ -4,6 +4,7 @@ const usersController =  require('./controllers/usersController');
 const sectorController = require('./controllers/sectorController');
 const demandController = require('./controllers/demandController');
 const authController = require('./controllers/authController');
+const weekController = require('./controllers/weekController');
 
 const router = express.Router();
 
@@ -42,5 +43,12 @@ router.get('/demandas/criador/:idUsuario', demandController.getAllDemandsCreated
 router.get('/usuarios/demanda/:tagDemanda', demandController.getUsersDemand); // exibir todos os usuários de uma demanda específica
 router.post('/demanda', demandController.addDemand); // adicionar uma nova demanda
 router.post('/demanda/usuario', demandController.addDemandUsers); // adicionar usuário a uma demanda 
+router.get('/demandas/urgente/:idUsuario', demandController.getDemandUrgency);
+router.get('/demandas/:status', demandController.getDemandByStatus);
+router.get('/demandas/semana/:idUsuario/:dom/:sab', demandController.getDemandByWeek);
+router.get('/demandas/mes/:mes/:idUsuario', demandController.getDemandByMonth);
+
+// ================ Controle de semana =================
+router.get('/calculoTempo', weekController.getWeek);
 
 module.exports = router;

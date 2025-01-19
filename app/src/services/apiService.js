@@ -1,7 +1,7 @@
 import axios from 'axios';
  
-const API_URL = 'https://demand-link-backend.vercel.app';
-// const API_URL = 'http://localhost:4444';
+// const API_URL = 'https://demand-link-backend.vercel.app';
+const API_URL = 'http://localhost:4444';
 
 // Instância do axios com configuração base
 const api = axios.create({
@@ -167,7 +167,46 @@ export const uploadProfilePicture = async (idUsuario, formData) => {
       console.error("Erro ao fazer upload da foto de perfil:", error);
       throw error;
     }
-  };
+};
+
+export const getDemandUrgency = async (idUsuario) => {
+    try{
+        const response = await api.get(`/demandas/urgente/${idUsuario}`)
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar demandas urgentes';
+    }
+}
+
+export const getDemandByWeek = async (idUsuario) => {   
+    try{
+        const semana = await api.get(`/calculoTempo`);
+        const sunday = semana.data.sunday;  
+        const saturday = semana.data.saturday;
+        const response = await api.get(`/demandas/semana/${idUsuario}/${sunday}/${saturday}`)
+        return response;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar demandas da semana';
+    }
+}
+
+export const getDemandByStatus = async (status) => {
+    try{    
+        const response = await api.get(`/demandas/${status}`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar demandas urgentes';
+    }
+}
+
+export const getDemandByMonth = async (mes, idUsuario) => {
+    try{
+        const response = await api.get(`/demandas/mes/${mes}/${idUsuario}`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Erro ao buscar demandas pelo mês';
+    }
+}
 
 // Exportar o objeto axios caso precise fazer chamadas customizadas
 export default api;

@@ -12,7 +12,7 @@ const getDemand = async (tagDemanda) => {
 
 const getAllDemandsCreated = async (idUsuario) => {
     const [demands] = await connection.execute('SELECT * FROM Demandas where idUsuario = ?', [idUsuario]);
-        return demands;
+    return demands;
 };
 
 const addDemand = async (newDemand) => {
@@ -64,8 +64,8 @@ const getDemandUser = async (idUsuario) => {
 }
 
 const getUsersDemand = async (tagDemanda) => {
-    const [UsersDemand] = await connection.execute
-        (`SELECT u.nome, e.tagDemanda, e.tagSetor
+    const [UsersDemand] = await connection.execute(
+        `SELECT u.nome, e.tagDemanda, e.tagSetor
         FROM EnvolvidosDemanda e
         JOIN Usuarios u ON e.idUsuario = u.idUsuario
         WHERE e.tagDemanda = ?`, [tagDemanda]
@@ -96,12 +96,86 @@ const addDemandUsers = async (newDemandUsers) => {
     if (setorUsuarioResult.length === 0) {
         throw new Error('O usuário fornecido não é válido.');
     }
-
+    
     const setorUsuario = setorUsuarioResult[0].tagSetor;
 
     const query = 'INSERT INTO EnvolvidosDemanda(idUsuario, tagDemanda, tagSetor, setorUsuario) VALUES (?, ?, ?, ?)';
     const [demandaComUsuario] = await connection.execute(query, [idUsuario, tagDemanda, tagSetor, setorUsuario]);
     return demandaComUsuario;
+}
+
+const getDemandUrgency = async (idUsuario) => {
+    const [demandasfiltradas] = await connection.execute(`SELECT * FROM EnvolvidosDemanda WHERE idUsuario = ?`, [idUsuario]);
+    const idsDemandas = demandasfiltradas.map((demanda) => demanda.tagDemanda);
+    if (idsDemandas.length === 0) {
+        // Se não houver demandas associadas ao usuário, retorne 0
+        return { total_demandas: 0 };
+    }
+    const [demand] = await connection.execute(
+        `SELECT COUNT(*) AS total_demandas 
+        FROM demandas 
+        WHERE tagDemanda IN (${idsDemandas.map(() => '?').join(', ')})
+        AND dataFim BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 2 DAY)`,
+        idsDemandas
+    );
+    return demand[0];
+}
+
+const getDemandByStatus = async (statusDemanda) => {
+    const [demand] = await connection.execute(`SELECT * FROM demandas WHERE status = ?`, [statusDemanda]);
+    return demand;
+}
+
+const getDemandByWeek = async (idUsuario, sunday, saturday) => {
+    const [demandasfiltradas] = await connection.execute(`SELECT * FROM EnvolvidosDemanda WHERE idUsuario = ?`, [idUsuario]);
+    const idsDemandas = demandasfiltradas.map((demanda) => demanda.tagDemanda);
+    if (idsDemandas.length === 0) {
+        return [];
+    }
+
+    const formatDate = (date) => {
+        const d = new Date(date);
+        const day = String(d.getDate()).padStart(2, '0'); // Adiciona 0 à esquerda se for menor que 10
+        const month = String(d.getMonth() + 1).padStart(2, '0'); // Meses começam em 0
+        const year = d.getFullYear();
+        return `${year}-${month}-${day}`;
+    };
+
+    const sundayFormatted = formatDate(sunday);
+    const saturdayFormatted = formatDate(saturday);
+
+    const [demandas] = await connection.execute(`
+        SELECT *
+        FROM Demandas
+        WHERE tagDemanda IN (${idsDemandas.map(() => '?').join(', ')})
+        AND dataFim BETWEEN ? AND ?
+    `, [...idsDemandas, sundayFormatted, saturdayFormatted]);
+    return demandas;
+};
+
+const getDemandByMonth = async (mes, idUsuario) => {
+    const anoAtual = new Date().getUTCFullYear();
+    
+    const inicioMes = new Date(anoAtual, mes - 1, 1).toISOString(); // Início do mês em ISO
+    const fimMes = new Date(anoAtual, mes, 0, 23, 59, 59, 999).toISOString(); // inicio do mes em iso
+    
+    const [demandasfiltradas] = await connection.execute(`SELECT * FROM EnvolvidosDemanda WHERE idUsuario = ?`, [idUsuario]);
+    const idsDemandas = demandasfiltradas.map((demanda) => demanda.tagDemanda);
+
+    if (idsDemandas.length === 0) {
+        // Se não houver demandas associadas ao usuário, retorne 0
+        return { total_demandas: 0 };
+    }
+
+    const [demand] = await connection.execute(`
+        SELECT * 
+        FROM demandas 
+        WHERE tagDemanda IN (${idsDemandas.map(() => '?').join(', ')}) 
+            AND dataPedido >= ? 
+            AND dataPedido <= ?;    
+    `, [...idsDemandas, inicioMes, fimMes]);
+
+    return demand;
 }
 
 module.exports = {
@@ -113,4 +187,8 @@ module.exports = {
     getDemandUser,
     getUsersDemand,
     addDemandUsers,
+    getDemandUrgency,
+    getDemandByStatus,
+    getDemandByWeek,
+    getDemandByMonth,
 };

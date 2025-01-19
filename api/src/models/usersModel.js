@@ -42,7 +42,7 @@ const addUser = async (newUsuario) => {
         throw new Error('O setor fornecido não é válido.');
     }
 
-    const [rowsIdUsuario] = await connection.execute('SELECT idUsuario + 1 AS idUsuario FROM usuarios ORDER BY idUsuario DESC LIMIT 1;')
+    const [rowsIdUsuario] = await connection.execute('SELECT idUsuario + 1 AS idUsuario FROM Usuarios ORDER BY idUsuario DESC LIMIT 1;')
     const idUsuario = rowsIdUsuario[0].idUsuario;
     
     const query = 'INSERT INTO Usuarios(idUsuario, tagSetor, fotoPerfil, tipo, nome, email, senha, idLider) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';

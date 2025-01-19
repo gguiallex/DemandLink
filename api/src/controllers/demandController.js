@@ -1,4 +1,5 @@
 const demandModel = require('../models/demandModel');
+const sectorModel = require('../models/sectorModel')
 
 // retorna todas as demandas
 const getAllDemands = async (req, res) => {
@@ -53,6 +54,60 @@ const addDemandUsers = async (req, res) => {
     return res.status(204).json({message: 'Usuário(s) registrado(s) com sucesso na demanda!'})
 }
 
+const getDemandUrgency = async (req, res) => {
+    const {idUsuario} = req.params;
+    const demands = await demandModel.getDemandUrgency(idUsuario);
+    return res.status(200).json(demands);
+}
+
+const getDemandByStatus = async (req, res) => {
+    const {status} = req.params
+    const demands = await demandModel.getDemandByStatus(status);
+    return res.status(200).json(demands);
+}
+
+const getDemandByWeek = async (req, res) => {
+    try {
+        const { idUsuario, dom, sab } = req.params;
+
+        // Obtém as demandas no intervalo de datas fornecido
+        const demands = await demandModel.getDemandByWeek(idUsuario, dom, sab);
+
+        return res.status(200).json({
+            success: true,
+            data: demands,
+            message: `Demandas do usuário ${idUsuario} entre ${dom} e ${sab}`,
+        });
+    } catch (error) {
+        console.error('Erro ao buscar demandas da semana:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Erro ao buscar demandas da semana',
+        });
+    }
+};
+
+
+
+const getDemandByMonth = async (req, res) => {
+    try {
+        const {mes, idUsuario} = req.params;
+        const demands = await demandModel.getDemandByMonth(mes, idUsuario);
+        return res.status(200).json({
+            success: true,
+            data: demands,
+            message: `Demandas do usuário no mês ${mes}`,
+        });
+    } catch (error) {
+        console.error('Erro ao buscar demandas desse mês:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Erro ao buscar demandas desse mês',
+        });
+    }
+}
+
+
 module.exports = {
     getAllDemands,
     getDemand,
@@ -62,4 +117,8 @@ module.exports = {
     getDemandUser,
     getUsersDemand,
     addDemandUsers,
+    getDemandUrgency,
+    getDemandByStatus,
+    getDemandByWeek,
+    getDemandByMonth,
 };

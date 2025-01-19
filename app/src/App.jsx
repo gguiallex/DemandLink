@@ -24,6 +24,7 @@ function App() {
         <Route path='/Configuracoes' element={<SettingsPage/>}/>
         <Route path='/Usuarios' element={<CriacaoUsuarioPage/>}/>
         <Route path='/Setores' element={<SectorPage/>}/>
+        <Route path='/CriacaoUsuario' element={<CriacaoUsuarioPage/>}/>
       </Routes>
 
     </BrowserRouter>

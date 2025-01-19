@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import "./FirstPage.css"
 import { Chart } from "react-google-charts"
 import { BiFile, BiUser } from "react-icons/bi"
-import { fetchDemandasByUser } from "../../services/apiService"
+import { fetchDemandasByUser, getDemandUrgency, getDemandByStatus, getDemandByWeek, getDemandByMonth } from "../../services/apiService"
 import SideMenu from "../../components/Menu/SidebarMenu"
 import InfoTop from "../../components/InfoTop/InfoTop"
 import BotaoDemanda from "../../components/Botões/BotaoDemanda"
@@ -13,7 +13,22 @@ const FirstPage = ({ }) => {
   const [demandasUrgentes, setDemandasUrgentes] = useState(0);
   const [demandasSemana, setDemandasSemana] = useState(0);
   const [demandasAtraso, setDemandasAtraso] = useState(0);
-  const [demandasPorMes, setDemandasPorMes] = useState([]);
+  const [demandasConcluidas, setDemandasConcluidas] = useState(0);
+  const [demandasNaoIniciadas, setDemandasNaoIniciadas] = useState(0);
+  const [demandasEmAndamento, setDemandasEmAndamento] = useState(0);
+  const [mesJan, setMesJan] = useState(0);
+  const [mesFev, setMesFev] = useState(0);
+  const [mesMar, setMesMar] = useState(0);
+  const [mesAbr, setMesAbr] = useState(0);
+  const [mesMai, setMesMai] = useState(0);
+  const [mesJun, setMesJun] = useState(0);
+  const [mesJul, setMesJul] = useState(0);
+  const [mesAgo, setMesAgo] = useState(0);
+  const [mesSet, setMesSet] = useState(0);
+  const [mesOut, setMesOut] = useState(0);
+  const [mesNov, setMesNov] = useState(0);
+  const [mesDez, setMesDez] = useState(0);
+  
 
   useEffect(() => {
     const storedIdUser = localStorage.getItem("IdUsuario") || sessionStorage.getItem("IdUsuario");
@@ -32,85 +47,89 @@ const FirstPage = ({ }) => {
             .slice(0, 3);
           setNovasDemandas(demandasRecentes);
 
-         // Calcular métricas
-        const agora = new Date();
-        const semanaPassada = new Date();
-        semanaPassada.setDate(agora.getDate() - 7);
+            // Calcular métricas
+          const agora = new Date();
+          const semanaPassada = new Date();
+          semanaPassada.setDate(agora.getDate() - 7);
 
-        const urgentes = demandas.filter((d) => d.urgencia.toLowerCase() === "alta");
-        const semana = demandas.filter((d) => new Date(d.DataPedido) >= semanaPassada);
-        const atrasadas = demandas.filter((d) => new Date(d.DataPrazo) < agora && d.status.toLowerCase() !== "concluída");
+          const urgentes = await getDemandUrgency(idUser);
+          const semana = await getDemandByWeek(idUser);
+          const emAtraso = await getDemandByStatus("Em atraso");
+          const concluidas = await getDemandByStatus("Concluído");
+          const naoIniciadas = await getDemandByStatus("Não Iniciado");
+          const emAndamento = await getDemandByStatus("Em Andamento");
+          const mesJan = await getDemandByMonth("1", idUser);
+          const mesFev = await getDemandByMonth("2", idUser);
+          const mesMar = await getDemandByMonth("3", idUser);
+          const mesAbr = await getDemandByMonth("4", idUser);
+          const mesMai = await getDemandByMonth("5", idUser);
+          const mesJun = await getDemandByMonth("6", idUser);
+          const mesJul = await getDemandByMonth("7", idUser);
+          const mesAgo = await getDemandByMonth("8", idUser);
+          const mesSet = await getDemandByMonth("9", idUser);
+          const mesOut = await getDemandByMonth("10", idUser);
+          const mesNov = await getDemandByMonth("11", idUser);
+          const mesDez = await getDemandByMonth("12", idUser);
 
-        setDemandasUrgentes(urgentes.length);
-        setDemandasSemana(semana.length);
-        setDemandasAtraso(atrasadas.length);
-
-        // Determinar o semestre atual
-        const dataAtual = new Date();
-        const mesAtual = dataAtual.getMonth() + 1; // Janeiro = 0, então somamos 1
-        const anoAtual = dataAtual.getFullYear();
-
-        const semestreAtual = mesAtual <= 6 ? "primeiro" : "segundo";
-        const mesesSemestre =
-          semestreAtual === "primeiro" ? [1, 2, 3, 4, 5, 6] : [7, 8, 9, 10, 11, 12];
-
-        // Filtrar demandas para o semestre atual
-        const demandasSemestre = demandas.filter((demanda) => {
-          const dataDemanda = new Date(demanda.DataPedido); // Converter para objeto Date
-          const mesDemanda = dataDemanda.getMonth() + 1; // Extrair o mês (1 a 12)
-          const anoDemanda = dataDemanda.getFullYear(); // Extrair o ano
-
-          // Garantir que estamos no ano correto e no semestre correto
-          return anoDemanda === anoAtual && mesesSemestre.includes(mesDemanda);
-        });
-
-        // Agrupar demandas por mês
-        const demandasMensais = mesesSemestre.map((mes) => {
-          const totalMes = demandasSemestre.filter(
-            (demanda) => new Date(demanda.DataPedido).getMonth() + 1 === mes
-          ).length;
-          return [new Date(anoAtual, mes - 1).toLocaleString("default", { month: "short" }), totalMes];
-        });
-
-        const dadosGrafico = [["Meses", "Quantidade"], ...demandasMensais];
-        setDemandasPorMes(dadosGrafico);
-
-        console.log("Demandas por semestre:", dadosGrafico);
+          setDemandasUrgentes(urgentes.total_demandas);
+          setDemandasSemana(semana.data.data.length);
+          setDemandasAtraso(emAtraso.length);
+          setDemandasConcluidas(concluidas.length);
+          setDemandasNaoIniciadas(naoIniciadas.length);
+          setDemandasEmAndamento(emAndamento.length);
+          setMesJan(mesJan.data.length);
+          setMesFev(mesFev.data.length);
+          setMesMar(mesMar.data.length);
+          setMesAbr(mesAbr.data.length);
+          setMesMai(mesMai.data.length);
+          setMesJun(mesJun.data.length);
+          setMesJul(mesJul.data.length);
+          setMesAgo(mesAgo.data.length);
+          setMesSet(mesSet.data.length);
+          setMesOut(mesOut.data.length);
+          setMesNov(mesNov.data.length);
+          setMesDez(mesDez.data.length);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar demandas:", error);
       }
-    } catch (error) {
-      console.error("Erro ao carregar demandas:", error);
-    }
-  };
-  carregarDemandas();
-}, [idUser]);
+    };
+    carregarDemandas();
+  }, [idUser]);
 
   const data = [
     ["Semanas", "Concluidas", "Atrasadas"],
-    ["Seg", 480, 220],
-    ["Ter", 320, 110],
-    ["Qua", 310, 250],
-    ["Qui", 480, 380],
-    ["Sex", 150, 230],
-    ["Sab", 390, 230],
-    ["Dom", 390, 310],
+    ["Dom", 3, 2],
+    ["Seg", 4, 2],
+    ["Ter", 3, 1],
+    ["Qua", 3, 0],
+    ["Qui", 4, 0],
+    ["Sex", 1, 2],
+    ["Sab", 2, 1],
   ];
 
   const diario = [
     ["Estado", "Quantidade"],
-    ["Concluidas", 10],
-    ["Em andamento", 12],
-    ["Não iniciadas", 5],
-    ["Em atraso", 8],
+    ["Concluidas", demandasConcluidas],
+    ["Em andamento", demandasEmAndamento],
+    ["Não iniciadas", demandasNaoIniciadas],
+    ["Em atraso", demandasAtraso],
   ];
-
+  
   const mes = [
     ["Meses", "Quantidade"],
-    ["Jan", 30],
-    ["Fev", 0],
-    ["Mar", 0],
-    ["Abr", 0],
-    ["Mai", 0],
-    ["Jun", 0],
+    ["Jan", mesJan],
+    ["Fev", mesFev],
+    ["Mar", mesMar],
+    ["Abr", mesAbr],
+    ["Mai", mesMai],
+    ["Jun", mesJun],
+    ["Jul", mesJul],
+    ["Ago", mesAgo],
+    ["Set", mesSet],
+    ["Out", mesOut],
+    ["Nov", mesNov],
+    ["Dez", mesDez],
   ];
 
   const options = {
@@ -191,7 +210,12 @@ const FirstPage = ({ }) => {
             </div>
 
             <div className="graficoMensal">
-              <Chart chartType="ColumnChart" options={optionsMes} width="350px" height="287px" data={demandasPorMes} />
+              <Chart chartType="ColumnChart" 
+                data={mes} 
+                options={optionsMes} 
+                width="350px" 
+                height="287px" 
+              />
             </div>
 
             <div className="demandasNovas">
