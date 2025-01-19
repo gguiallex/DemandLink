@@ -45,7 +45,7 @@ router.post('/demanda', demandController.addDemand); // adicionar uma nova deman
 router.post('/demanda/usuario', demandController.addDemandUsers); // adicionar usuário a uma demanda
 router.delete('/demanda:tagDemanda', demandController.removeDemand); //  apaga uma demanda
 router.delete('/demanda/:tagDemanda/usuario/:idUsuario', demandController.removeUserDemand); // apaga um usuário da demanda
-router.put('/demanda/:tagDemanda', demandController.editDemand); // altera a demanda como finalizada
+router.put('/demanda/:tagDemanda/editar', demandController.editDemand); // altera a demanda como finalizada
 router.put('/demanda/:tagDemanda/finalizar', demandController.endDemand); // altera a demanda como finalizada
 router.put('/demanda/:tagDemanda/comecar', demandController.startDemand); // altera a demanda para em andamento
 
