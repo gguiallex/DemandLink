@@ -41,6 +41,7 @@ router.get('/demandas/usuario/:idUsuario', demandController.getDemandUser); // e
 router.get('/demandas/criador/:idUsuario', demandController.getAllDemandsCreated); // exibir todas as demandas criadas pelo usuário
 router.get('/usuarios/demanda/:tagDemanda', demandController.getUsersDemand); // exibir todos os usuários de uma demanda específica
 router.post('/demanda', demandController.addDemand); // adicionar uma nova demanda
-router.post('/demanda/usuario', demandController.addDemandUsers); // adicionar usuário a uma demanda 
+router.post('/demanda/usuario', demandController.addDemandUsers); // adicionar usuário a uma demanda
+router.delete('/demanda:tagDemanda', demandController.removeDemand);
 
 module.exports = router;

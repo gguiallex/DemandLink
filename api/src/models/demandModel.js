@@ -37,6 +37,16 @@ const addDemand = async (newDemand) => {
     return newDemanda;
 }
 
+const removeDemand = async (tagDemanda) => {
+    const [removedDemand] = await connection.execute('DELETE FROM Demandas WHERE tagDemanda = ?', [tagDemanda]);
+    return removedDemand;
+}
+
+const removeUserDemand = async (idUsuario, tagDemanda) => {
+    const [removedUserDemand] = await connection.execute('DELETE FROM Demandas WHERE tagDemanda = ? AND idUsuario = ?', [tagDemanda, idUsuario]);
+    return removedUserDemand;
+}
+
 const getAllDemandUsers = async () => {
     const [demandUsers] = await connection.execute(' SELECT * FROM EnvolvidosDemanda');
     return demandUsers;
@@ -104,13 +114,39 @@ const addDemandUsers = async (newDemandUsers) => {
     return demandaComUsuario;
 }
 
+const editDemand = async (tagDemandaAntiga, Demanda) => {
+
+    const { tagDemanda, tagSetor, projeto, titulo, descricao, urgencia, dataFim } = Demanda;
+
+    const query = 'UPDATE Demandas set tagDemanda = ?, tagSetor = ?, projeto = ?, titulo = ?, descricao = ?, urgencia = ?, dataFim = ? WHERE tagDemanda = ?';
+    const [editedDemand] = await connection.execute(query, [tagDemanda, tagSetor, projeto, titulo, descricao, urgencia, dataFim, tagDemandaAntiga]);
+    return editedDemand;
+}
+
+const startDemand = async (tagDemanda) => {
+    const query = 'UPDATE Demandas set DataInicio = NOW(), status = ? WHERE tagDemanda = ?';
+    const [progressDemand] = await connection.execute(query, ["Em Andamento", tagDemanda]);
+    return progressDemand;
+}
+
+const endDemand = async (tagDemanda) => {
+    const query = 'UPDATE Demandas set DataEntrega = NOW(), status = ? WHERE tagDemanda = ?';
+    const [finalizedDemand] = await connection.execute(query, ["Concluído", tagDemanda]);
+    return finalizedDemand;
+}
+
 module.exports = {
     getAllDemands,
     getDemand,
     addDemand,
+    removeDemand,
+    removeUserDemand,
     getAllDemandUsers,
     getAllDemandsCreated,
     getDemandUser,
     getUsersDemand,
     addDemandUsers,
+    editDemand,
+    startDemand,
+    endDemand
 };
