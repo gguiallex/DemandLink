@@ -32,7 +32,7 @@ router.get('/setor/:tagSetor', sectorController.getSector); // exibir setor espe
 router.get('/setor/:tagSetor/quantidade', sectorController.getSizeSector); //exibir o total de pessoas do setor
 router.post('/setor', sectorController.addSector); // adicionar novo setor
 router.put('/setor/:tagSetor', sectorController.editSector)// editar um setor específico
-router.delete('setor/:tagSetor', sectorController.removeSector); // remover um setor
+router.delete('/setor/:tagSetor', sectorController.removeSector); // remover um setor
 
 // ====================== DEMANDAS ======================
 router.get('/demandas', demandController.getAllDemands); // exibir todas as demandas
