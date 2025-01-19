@@ -71,6 +71,7 @@ const LoginPage = ({ }) => {
                                 <div className="inputSenha">
                                     <BiHide /><input type='password' placeholder="Senha" onChange={(e) => setPassword(e.target.value)} />
                                 </div>
+                                <br></br>
                                 <div className="conectadoSenha">
                                     <label className="checkbox-container">
                                         <input 
@@ -80,7 +81,6 @@ const LoginPage = ({ }) => {
                                         <span className="custom-checkbox"></span>
                                         Manter-me Conectado
                                     </label>
-                                    <a href="/" className="esqueceuSenha">Esqueci a senha!</a>
                                 </div>
 
                                 <button className='entrar' type='submit'>Entrar</button>
