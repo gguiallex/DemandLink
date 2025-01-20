@@ -136,7 +136,7 @@ const SettingsPage = () => {
 
         // Dados para enviar à API
         const dataToUpdate = {
-            tagSetor: "S&B",
+            tagSetor: sectorUser,
             tipo: typeUser,
             idLider: liderUser === 'null' || liderUser === undefined ? null : liderUser,
             nome: formData.name,
