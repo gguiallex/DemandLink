@@ -34,7 +34,7 @@ const SettingsPage = () => {
     // Carrega dados do LocalStorage/SessionStorage
     useEffect(() => {
         const storedIdUser = localStorage.getItem("IdUsuario") || sessionStorage.getItem("IdUsuario");
-        const storedSectorUser = localStorage.getItem("tagSetor") || sessionStorage.getItem("tagSetor");
+        const storedSectorUser = localStorage.getItem("TagSetor") || sessionStorage.getItem("TagSetor");
         const storedNameUser = localStorage.getItem("Nome") || sessionStorage.getItem("Nome");
         const storedTypeUser = localStorage.getItem("Tipo") || sessionStorage.getItem("Tipo");
         const storedEmailUser = localStorage.getItem("Email") || sessionStorage.getItem("Email");
@@ -143,8 +143,6 @@ const SettingsPage = () => {
             email: formData.email,
             senha: novaSenha
         };
-
-        console.log(dataToUpdate);
 
         try {
             await updateUserInfo(idUser, dataToUpdate);
