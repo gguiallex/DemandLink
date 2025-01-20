@@ -50,7 +50,6 @@ const SettingsPage = () => {
         if (storedPasswordUser) setPasswordUser(storedPasswordUser);
         if (storedLiderUser) setLiderUser(storedLiderUser);
 
-
         // Verificando a foto de perfil
         if (storedPerfilPictureUser && storedPerfilPictureUser !== 'null' && storedPerfilPictureUser.trim() !== "") {
             // Corrigindo a URL da foto de perfil se não for 'null'
@@ -143,6 +142,7 @@ const SettingsPage = () => {
             email: formData.email,
             senha: novaSenha
         };
+        console.log(dataToUpdate);
 
         try {
             await updateUserInfo(idUser, dataToUpdate);
