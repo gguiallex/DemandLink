@@ -193,7 +193,7 @@ export const deleteSetor = async (tagSetor) => {
 // Função para deletar a demanda
 export const deleteDemanda = async (tagDemanda) => {
     try {
-        const response = await api.delete(`/setor/${tagDemanda}`);
+        const response = await api.delete(`/demanda/${tagDemanda}`);
         return response;
     } catch (error) {
         throw error.response?.data?.message || 'Erro ao deletar demanda';

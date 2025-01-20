@@ -14,6 +14,7 @@ const SettingsPage = () => {
     const [sectorUser, setSectorUser] = useState(""); // setor usuario
     const [emailUser, setEmailUser] = useState(""); // email usuario
     const [passwordUser, setPasswordUser] = useState(""); // senha usuario
+    const [liderUser, setLiderUser] = useState(null); // lider usuario
     const [perfilPictureUser, setPerfilPictureUser] = useState(null); // foto de perfil do usuario
     const [preview, setPreview] = useState(null);
     const [message, setMessage] = useState("");
@@ -38,6 +39,7 @@ const SettingsPage = () => {
         const storedTypeUser = localStorage.getItem("Tipo") || sessionStorage.getItem("Tipo");
         const storedEmailUser = localStorage.getItem("Email") || sessionStorage.getItem("Email");
         const storedPasswordUser = localStorage.getItem("Senha") || sessionStorage.getItem("Senha");
+        const storedLiderUser = localStorage.getItem("IdLider") || sessionStorage.getItem("IdLider");
         const storedPerfilPictureUser = localStorage.getItem("FotoPerfil") || sessionStorage.getItem("FotoPerfil");
 
         if (storedIdUser) setIdUser(storedIdUser);
@@ -46,6 +48,7 @@ const SettingsPage = () => {
         if (storedTypeUser) setTypeUser(storedTypeUser);
         if (storedEmailUser) setEmailUser(storedEmailUser);
         if (storedPasswordUser) setPasswordUser(storedPasswordUser);
+        if (storedLiderUser) setLiderUser(storedLiderUser);
 
         // Verificando a foto de perfil
         if (storedPerfilPictureUser && storedPerfilPictureUser !== 'null' && storedPerfilPictureUser.trim() !== "") {
@@ -137,10 +140,11 @@ const SettingsPage = () => {
             nome: formData.name,
             email: formData.email,
             senha: novaSenha,
+            idLider: liderUser
         };
 
         try {
-            const response = await updateUserInfo(idUser, dataToUpdate);
+            await updateUserInfo(idUser, dataToUpdate);
             setNameUser(formData.name);
             setEmailUser(formData.email);
             setPasswordUser(novaSenha);

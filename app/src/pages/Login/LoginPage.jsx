@@ -30,7 +30,7 @@ const LoginPage = ({ }) => {
             // Faz a requisição para a API
             const response = await login(email, password, rememberMe);
 
-            const { token, IdUsuario, Nome, Tipo, TagSetor, FotoPerfil, Email, Senha } = response // Supondo que a API retorne um token
+            const { token, IdUsuario, Nome, Tipo, TagSetor, FotoPerfil, Email, Senha, IdLider } = response // Supondo que a API retorne um token
 
             const storage = rememberMe ? localStorage : sessionStorage;
             // Armazenando os dados no armazenamento local ou de sessão
@@ -42,6 +42,7 @@ const LoginPage = ({ }) => {
             storage.setItem("FotoPerfil", FotoPerfil);
             storage.setItem("Email", Email);
             storage.setItem("Senha", Senha);
+            storage.setItem("IdLider", IdLider);
 
             setTimeout(() => {
                 alert('login bem-sucedido!');

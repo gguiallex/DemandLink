@@ -204,7 +204,7 @@ const BotaoUsuario = ({ onUsuarioCreated }) => {
                                         >
                                             <option value="">Selecione</option>
                                             {lideresFiltrados.map((lider) => (
-                                                <option key={lider.id} value={lider.id}>
+                                                <option key={lider.idUsuario} value={lider.idUsuario}>
                                                     {lider.nome}
                                                 </option>
                                             ))}
