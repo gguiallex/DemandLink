@@ -50,6 +50,7 @@ const SettingsPage = () => {
         if (storedPasswordUser) setPasswordUser(storedPasswordUser);
         if (storedLiderUser) setLiderUser(storedLiderUser);
 
+
         // Verificando a foto de perfil
         if (storedPerfilPictureUser && storedPerfilPictureUser !== 'null' && storedPerfilPictureUser.trim() !== "") {
             // Corrigindo a URL da foto de perfil se não for 'null'
@@ -135,13 +136,15 @@ const SettingsPage = () => {
 
         // Dados para enviar à API
         const dataToUpdate = {
-            tagSetor: sectorUser,
+            tagSetor: "S&B",
             tipo: typeUser,
+            idLider: liderUser === 'null' || liderUser === undefined ? null : liderUser,
             nome: formData.name,
             email: formData.email,
-            senha: novaSenha,
-            idLider: liderUser
+            senha: novaSenha
         };
+
+        console.log(dataToUpdate);
 
         try {
             await updateUserInfo(idUser, dataToUpdate);

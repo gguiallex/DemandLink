@@ -60,6 +60,7 @@ const ReportPage = ({ }) => {
     const handleDeleteDemanda = async (tagDemanda) => {
         try {
             await deleteDemanda(tagDemanda);
+            
             Swal.fire("Sucesso!", "Demanda apagada com sucesso.", "success");
             loadDemandas();
         } catch (error) {

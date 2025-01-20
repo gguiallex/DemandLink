@@ -165,7 +165,6 @@ const BotaoDemanda = ({ onDemandCreated }) => {
             }
         } catch (error) {
             console.error("Erro ao criar demanda e/ou envolvidos:", error);
-            alert("Erro ao criar a demanda. Tente novamente.");
         }
     };
 
