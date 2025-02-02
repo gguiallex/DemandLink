@@ -30,13 +30,13 @@ describe('Testando as funcionalidades da tela de configurações', () => {
 })
 
 describe('Testando a função de deslogar', () => {
-it('Usuário deveria ser capaz de deslogar', () => {
-  cy.get('button.toggle-button').should('be.visible').click()
+  it('Usuário deveria ser capaz de deslogar', () => {
+    cy.get('button.toggle-button').should('be.visible').click()
 
-  // Aguardar o menu abrir e clicar na opção "Sair"
-  cy.get('.menu-item').contains('Sair').click() 
+    // Aguardar o menu abrir e clicar na opção "Sair"
+    cy.get('.menu-item').contains('Sair').click()
 
-  // Verify successful navigation
-  cy.url().should('include', '/')
-})
+    // Verify successful navigation
+    cy.url().should('include', '/')
+  })
 })

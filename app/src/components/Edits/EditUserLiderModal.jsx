@@ -162,6 +162,7 @@ const EditUserLiderModal = ({ usuario, onClose }) => {
                             <label>
                                 Selecione o líder:
                                 <select
+                                    name="selectedLiderUsuario"
                                     value={selectedLiderUsuario}
                                     onChange={(e) => setSelectedLiderUsuario(e.target.value)}
                                     className={`selectField ${errors.selectedLiderUsuario ? "error" : ""}`}

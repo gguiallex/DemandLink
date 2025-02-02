@@ -14,34 +14,34 @@ describe('Fazendo o login do usuário', () => {
   })
 })
 
-// describe('Testando as funcionalidades da tela do DashBoard', () => {
+describe('Testando as funcionalidades da tela do DashBoard', () => {
 
-//   it('Usuário deveria ser capaz de criar nova demanda', () => {
-//      // Assumindo que existe um comando customizado para login
+  it('Usuário deveria ser capaz de criar nova demanda', () => {
+     // Assumindo que existe um comando customizado para login
 
-//     //cy.visit('/Dashboard')
-//     cy.get('button').contains('Solicitar Demanda').click()
+    //cy.visit('/Dashboard')
+    cy.get('button').contains('Solicitar Demanda').click()
 
-//     // fill in the form
-//     cy.get('select[class="selectSetor "]').select('AP - Administração de Pessoal')
-//     cy.get('.selectEnvolvidos').click().type('Maria Luiza{enter}')
-//     cy.get('button').contains('Continuar').click()
+    // fill in the form
+    cy.get('select[class="selectSetor "]').select('AP - Administração de Pessoal')
+    cy.get('.selectEnvolvidos').click().type('Maria Luiza{enter}')
+    cy.get('button').contains('Continuar').click()
 
-//     cy.get('input[placeholder="Projeto ao qual a demanda está relacionada"]').type('Digital')
-//     cy.get('input[placeholder="Nome ao qual a demanda será chamada"]').type('Carnaval')
-//     cy.get('textarea').type('Poster sobre o carnaval da Anitta que vai ser apresentado no centro de Lavras')
-//     cy.get('select[class="selectField "]').select('Alta')
-//     cy.get('button').contains('Continuar').click()
-//     cy.get('button').contains('Voltar').click()
-//     cy.get('button').contains('Continuar').click()
+    cy.get('input[placeholder="Projeto ao qual a demanda está relacionada"]').type('Digital')
+    cy.get('input[placeholder="Nome ao qual a demanda será chamada"]').type('Carnaval')
+    cy.get('textarea').type('Poster sobre o carnaval da Anitta que vai ser apresentado no centro de Lavras')
+    cy.get('select[class="selectField "]').select('Alta')
+    cy.get('button').contains('Continuar').click()
+    cy.get('button').contains('Voltar').click()
+    cy.get('button').contains('Continuar').click()
 
-//     cy.get('input[type="date"]').type('2025-02-13')
+    cy.get('input[type="date"]').type('2025-02-13')
 
-//     // submit the form
-//     cy.get('button').contains('Mudar').click()
-//     //cy.contains('Demanda registrada com sucesso!').should('be.visible')
-//   })
-// })
+    // submit the form
+    cy.get('button').contains('Mudar').click()
+    //cy.contains('Demanda registrada com sucesso!').should('be.visible')
+  })
+})
 
 describe('Testando as funcionalidades da tela das Demandas Atribuídas ao Usuário', () => {
   it('Usuário deveria ser capaz navegar para a tela de Minhas Demandas', () => {
@@ -163,13 +163,13 @@ describe('Testando as funcionalidades da tela de configurações', () => {
 })
 
 describe('Testando a função de deslogar', () => {
-it('Usuário deveria ser capaz de deslogar', () => {
-  cy.get('button.toggle-button').should('be.visible').click()
+  it('Usuário deveria ser capaz de deslogar', () => {
+    cy.get('button.toggle-button').should('be.visible').click()
 
-  // Aguardar o menu abrir e clicar na opção "Sair"
-  cy.get('.menu-item').contains('Sair').click() 
+    // Aguardar o menu abrir e clicar na opção "Sair"
+    cy.get('.menu-item').contains('Sair').click()
 
-  // Verify successful navigation
-  cy.url().should('include', '/')
-})
+    // Verify successful navigation
+    cy.url().should('include', '/')
+  })
 })
