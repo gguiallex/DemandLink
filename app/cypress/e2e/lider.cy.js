@@ -42,17 +42,21 @@ describe('Testando as funcionalidades da tela de configurações', () => {
         cy.get('select[name="selectedLiderUsuario"]').should('exist');
 
         cy.get('select[name="selectedLiderUsuario"]').should('be.visible').select('Guilherme Alexandre');
+
+        cy.get('button').contains('Salvar Alterações').click()
+
+        cy.get('.swal2-confirm').should('contain', 'OK').click();
     })
 })
 
-// describe('Testando a função de deslogar', () => {
-//     it('Usuário deveria ser capaz de deslogar', () => {
-//         cy.get('button.toggle-button').should('be.visible').click()
+describe('Testando a função de deslogar', () => {
+    it('Usuário deveria ser capaz de deslogar', () => {
+        cy.get('button.toggle-button').should('be.visible').click()
 
-//         // Aguardar o menu abrir e clicar na opção "Sair"
-//         cy.get('.menu-item').contains('Sair').click()
+        // Aguardar o menu abrir e clicar na opção "Sair"
+        cy.get('.menu-item').contains('Sair').click()
 
-//         // Verify successful navigation
-//         cy.url().should('include', '/')
-//     })
-// })
+        // Verify successful navigation
+        cy.url().should('include', '/')
+    })
+})
