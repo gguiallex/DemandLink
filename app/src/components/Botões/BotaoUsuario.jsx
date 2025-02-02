@@ -217,7 +217,7 @@ const BotaoUsuario = ({ onUsuarioCreated }) => {
 
                             <br></br>
 
-                            <button type="button" onClick={handleSave}>
+                            <button name="cadastrarUsuarioLogo" type="button" onClick={handleSave}>
                                 Cadastrar
                             </button>
                         </form>
