@@ -115,7 +115,7 @@ const BotaoSetor = (onSectorCreated) => {
                                 </div>
 
                                 <div className="modalActions">
-                                    <button type="submit" onClick={(e) => {
+                                    <button name="cadastrarSetorLogo" type="submit" onClick={(e) => {
                                         e.preventDefault();
                                         setAttemptedSubmit(true);
                                         if (validateFields()) criarSetor();
