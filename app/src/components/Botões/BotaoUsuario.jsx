@@ -158,6 +158,7 @@ const BotaoUsuario = ({ onUsuarioCreated }) => {
                                 <label>
                                     Nome do usuário:
                                     <input
+                                        name="NovoUsuario"
                                         type="text"
                                         value={formData.nome}
                                         onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
