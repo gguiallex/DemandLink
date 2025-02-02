@@ -24,6 +24,8 @@ describe('Testando as funcionalidades da tela do DashBoard', () => {
 
     // fill in the form
     cy.get('select[class="selectSetor "]').select('AP - Administração de Pessoal')
+    cy.get('button').contains('Continuar').click()
+
     cy.get('.selectEnvolvidos').click().type('Maria Luiza{enter}')
     cy.get('button').contains('Continuar').click()
 
@@ -38,8 +40,12 @@ describe('Testando as funcionalidades da tela do DashBoard', () => {
     cy.get('input[type="date"]').type('2025-02-13')
 
     // submit the form
-    cy.get('button').contains('Mudar').click()
+    cy.get('button').contains('Finalizar').click()
     //cy.contains('Demanda registrada com sucesso!').should('be.visible')
+  })
+
+  it('Usuário deverá ser capaz de baixar relatorios semanais', () => {
+    cy.get('button').contains('Gerar Relatório').click()
   })
 })
 
@@ -62,7 +68,7 @@ describe('Testando as funcionalidades da tela das Demandas Atribuídas ao Usuár
     cy.get('.custom-table').should('be.visible');
 
     // Seleciona a primeira descrição da tabela (ajuste se necessário)
-    cy.get('.custom-table tbody tr').eq(1).within(() => {
+    cy.get('.custom-table tbody tr').eq(0).within(() => {
       cy.get('td').eq(4).as('descricaoDemanda');
 
       // Captura o texto truncado antes do clique
@@ -86,7 +92,7 @@ describe('Testando as funcionalidades da tela das Demandas Atribuídas ao Usuár
 
   it('Usuário deveria ser capaz de alterar o status da demanda', () => {
 
-    cy.get('.custom-table tbody tr').eq(1).within(() => {
+    cy.get('.custom-table tbody tr').eq(0).within(() => {
       cy.get('td').eq(8).find('.status-btn').click();
 
       // Interceptar o confirm e simular a resposta "OK" (confirmando a ação)
@@ -154,8 +160,14 @@ describe('Testando as funcionalidades da tela de configurações', () => {
   it('Usuário deveria ser capaz de editar suas informações', () => {
     cy.get('button').contains('Editar Informações').click();
 
-    cy.get('input[name="novaSenha"]').type('marialuizabm@gmail.com');
+    cy.get('input[name="passwordAtual"]').type('batata46');
+    cy.get('input[name="novaSenha"]').type('batata45');
+
+    // Clicar no botão "Salvar"
+    cy.get('button').contains('Salvar').click();
+
     cy.get('input[name="passwordAtual"]').type('batata45');
+    cy.get('input[name="novaSenha"]').type('batata45');
 
     // Clicar no botão "Salvar"
     cy.get('button').contains('Salvar').click();
